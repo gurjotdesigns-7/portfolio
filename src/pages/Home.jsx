@@ -285,8 +285,19 @@ function PlaygroundSection({ navigate }) {
   )
 }
 
+/* ─── Cursor label per section ──────────────────────── */
+// Ordered top → bottom so the deepest visible section wins
+const SECTION_LABELS = [
+  { id: 'work',         label: 'Explore'    },
+  { id: 'playground',   label: 'Dive in'    },
+  { id: 'testimonials', label: "Let's talk" },
+  { id: 'contact',      label: "Let's talk" },
+]
+
 /* ─── Page ───────────────────────────────────────────── */
 export default function Home({ navigate }) {
+  const [cursorLabel, setCursorLabel] = useState('Hello')
+
   useEffect(() => {
     const cursor = document.querySelector('.custom-cursor')
     if (!cursor) return
@@ -297,9 +308,31 @@ export default function Home({ navigate }) {
     return () => window.removeEventListener('mousemove', move)
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 80) { setCursorLabel('Hello'); return }
+      let label = 'Explore'
+      for (const s of SECTION_LABELS) {
+        const el = document.getElementById(s.id)
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.6) {
+          label = s.label
+        }
+      }
+      setCursorLabel(label)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div className="page home-page">
-      <img src="/cursor.png" className="custom-cursor" alt="" aria-hidden="true" />
+      <div className="custom-cursor" aria-hidden="true">
+        <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0L0 17.5L4.5 13.5L7.5 21L10.5 19.8L7.5 12.5H13L0 0Z" fill="black" stroke="white" strokeWidth="1" strokeLinejoin="round"/>
+        </svg>
+        <span className="cursor-label">{cursorLabel}</span>
+      </div>
 
       <HeroSection />
 
@@ -399,6 +432,14 @@ export default function Home({ navigate }) {
                   <circle cx="4" cy="4" r="2"/>
                 </svg>
                 <span>LinkedIn</span>
+              </a>
+              <a href="https://drive.google.com/file/d/1AbjAHlgRoUkZ3RQXphBshh06tcpeZ4Ng/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Download Resume">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Resume</span>
               </a>
             </div>
             <div className="footer-bottom-v2">

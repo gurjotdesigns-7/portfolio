@@ -5,11 +5,27 @@ body { cursor: none; }
   position: fixed;
   top: 0;
   left: 0;
-  width: 80px;
   pointer-events: none;
   z-index: 9999;
   transform: translate(0px, 0px);
   will-change: transform;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.cursor-label {
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-top: 1px;
+  letter-spacing: 0.01em;
+  font-family: inherit;
+  transition: opacity 0.2s ease;
 }
 
 .app {
@@ -84,6 +100,10 @@ body { cursor: none; }
 .nav-pill-link:hover {
   color: var(--text);
   background: var(--surface-2);
+}
+.nav-pill-active {
+  color: var(--accent) !important;
+  background: var(--accent-dim) !important;
 }
 
 /* Page top padding for fixed pill */
