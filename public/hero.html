@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gurjot — UX Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F7F5EF;
+      --ink:       #0D0D0B;
+      --ink-2:     #3A3A35;
+      --muted:     #7A7A6E;
+      --accent:    #BFA07A;
+      --border:    rgba(15,15,13,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, rgba(15,15,13,0.085) 1px, transparent 1px);
+      background-size: 26px 26px;
+      background-attachment: fixed;
+      color: var(--ink);
+      min-height: 100vh;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* ── Film grain overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9000;
+    }
+
+    /* ────────────────────────────────────────────────
+       CUSTOM CURSOR
+       Two layers: sharp dot (snaps) + soft ring (lags)
+    ──────────────────────────────────────────────── */
+    .c-dot {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: var(--ink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: multiply;
+    }
+
+    .c-ring {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border: 1.5px solid rgba(15,15,13,0.22);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    }
+
+    .c-ring.expanded {
+      width: 52px;
+      height: 52px;
+      border-color: var(--accent);
+      background: rgba(191,160,122,0.06);
+    }
+
+    /* ────────────────────────────────────────────────
+       LAYOUT
+    ──────────────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* ────────────────────────────────────────────────
+       LEFT COLUMN
+    ──────────────────────────────────────────────── */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(80px,7vh,120px) clamp(36px,3.5vw,64px) clamp(80px,7vh,120px) clamp(52px,5vw,96px);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* All children start offscreen — animated in on .ready */
+    .hero-left > * {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+
+    /* Staggered entrance */
+    .ready .l-tag      { animation: rise 0.7s cubic-bezier(0.22,0.61,0.36,1) 0.08s forwards; }
+    .ready .l-pre      { animation: rise 0.7s cubic-bezier(0.22,0.61,0.36,1) 0.20s forwards; }
+    .ready .l-name     { animation: rise 0.9s cubic-bezier(0.22,0.61,0.36,1) 0.30s forwards; }
+    .ready .l-bio      { animation: rise 0.7s cubic-bezier(0.22,0.61,0.36,1) 0.50s forwards; }
+    .ready .l-scroll   { animation: rise 0.7s cubic-bezier(0.22,0.61,0.36,1) 0.66s forwards; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tag */
+    .l-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .l-tag::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* "Hi, I'm" */
+    .l-pre {
+      font-size: clamp(15px, 1.5vw, 19px);
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 0;
+    }
+
+    /* Name */
+    .l-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(72px, 8.6vw, 118px);
+      font-weight: 400;
+      line-height: 0.88;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 38px;
+    }
+    .l-name .dot { color: var(--accent); font-style: normal; }
+
+    /* Bio */
+    .l-bio {
+      font-size: clamp(13px, 1.05vw, 15px);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.78;
+      max-width: 348px;
+      margin-bottom: 44px;
+    }
+    .l-bio strong { color: var(--ink-2); font-weight: 500; }
+
+    /* Scroll indicator */
+    .l-scroll {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .scroll-bar {
+      width: 1px;
+      height: 44px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .scroll-bar::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent));
+      animation: scroll-tick 2.2s ease-in-out infinite 2s;
+    }
+    @keyframes scroll-tick {
+      0%   { top: -100%; opacity: 0; }
+      20%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { top: 200%; opacity: 0; }
+    }
+
+    .scroll-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ────────────────────────────────────────────────
+       RIGHT COLUMN
+    ──────────────────────────────────────────────── */
+    .hero-right {
+      position: relative;
+      height: 100vh;
+      overflow: visible;
+    }
+
+    /* Bottom fade — blends person into background */
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -8%; right: -8%;
+      height: 32%;
+      background: linear-gradient(to bottom, transparent, var(--bg) 90%);
+      z-index: 25;
+      pointer-events: none;
+    }
+
+    /* ────────────────────────────────────────────────
+       PERSON
+       Anchored bottom-centre, 88vh tall.
+       Entrance: fade + subtle lift from below.
+       Hover: intentionally disabled — tilt is applied
+       to the whole right column by JS.
+    ──────────────────────────────────────────────── */
+    .person {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 88vh;
+      width: auto;
+      z-index: 10;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      filter: drop-shadow(0 28px 72px rgba(15,15,13,0.07));
+    }
+
+    .ready .person {
+      animation: personIn 1.1s cubic-bezier(0.22,0.61,0.36,1) 0.46s forwards;
+    }
+    @keyframes personIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);    }
+    }
+
+    /* ────────────────────────────────────────────────
+       FLOATING OBJECTS
+       Two-wrapper pattern:
+         .fw (outer) → absolute position + JS parallax
+         img (inner) → CSS float keyframe with baked rotation
+       The two transforms target different elements so they
+       never clobber each other.
+    ──────────────────────────────────────────────── */
+    .fw {
+      position: absolute;
+      z-index: 5;
+      will-change: transform;
+      opacity: 0;
+    }
+
+    /* Spring entrance with stagger */
+    .ready .fw-notepad    { animation: springIn 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.96s  forwards; }
+    .ready .fw-bulb       { animation: springIn 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.08s  forwards; }
+    .ready .fw-controller { animation: springIn 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.18s  forwards; }
+    .ready .fw-football   { animation: springIn 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.00s  forwards; }
+    .ready .fw-sneaker    { animation: springIn 0.55s cubic-bezier(0.34,1.56,0.64,1) 1.27s  forwards; }
+
+    @keyframes springIn {
+      from { opacity: 0; transform: scale(0.45); }
+      to   { opacity: 1; transform: scale(1);    }
+    }
+
+    /* Object image shared base */
+    .fi {
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 8px 22px rgba(15,15,13,0.12));
+    }
+
+    /* ── Positions ── */
+    .fw-notepad    { top: 9vh;     left: 6%;   }
+    .fw-bulb       { top: 5vh;     right: 8%;  }
+    .fw-controller { top: 42vh;    right: 3%;  }
+    .fw-football   { bottom: 10vh; left: 6%;   }
+    .fw-sneaker    { bottom: 4vh;  right: 4%;  }
+
+    /* ── Sizes + float keyframes (rotation baked in) ── */
+
+    /* Notepad — top-left, tilted left */
+    .fw-notepad .fi {
+      width: 148px;
+      animation: f-notepad 4.5s ease-in-out infinite 0.3s;
+    }
+    @keyframes f-notepad {
+      0%,100% { transform: rotate(-12deg) translateY(0px);   }
+      50%     { transform: rotate(-12deg) translateY(-14px); }
+    }
+
+    /* Bulb — top-right, tilted right */
+    .fw-bulb .fi {
+      width: 96px;
+      animation: f-bulb 3.8s ease-in-out infinite 1.2s;
+    }
+    @keyframes f-bulb {
+      0%,100% { transform: rotate(10deg) translateY(-4px); }
+      50%     { transform: rotate(10deg) translateY(8px);  }
+    }
+
+    /* Controller — mid-right */
+    .fw-controller .fi {
+      width: 138px;
+      animation: f-ctrl 4.2s ease-in-out infinite 0.7s;
+    }
+    @keyframes f-ctrl {
+      0%,100% { transform: rotate(14deg) translateY(0px);   }
+      50%     { transform: rotate(14deg) translateY(-12px); }
+    }
+
+    /* Football — bottom-left */
+    .fw-football .fi {
+      width: 152px;
+      animation: f-ball 4.0s ease-in-out infinite 0s;
+    }
+    @keyframes f-ball {
+      0%,100% { transform: rotate(-6deg) translateY(-6px); }
+      50%     { transform: rotate(-6deg) translateY(6px);  }
+    }
+
+    /* Sneaker — bottom-right */
+    .fw-sneaker .fi {
+      width: 182px;
+      animation: f-shoe 5.0s ease-in-out infinite 0.9s;
+    }
+    @keyframes f-shoe {
+      0%,100% { transform: rotate(8deg) translateY(0px);   }
+      50%     { transform: rotate(8deg) translateY(-10px); }
+    }
+
+    /* ────────────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body   { cursor: auto; overflow: auto; }
+      .c-dot, .c-ring { display: none; }
+      .hero  { grid-template-columns: 1fr; }
+      .hero-left {
+        order: 2;
+        padding: 40px 28px 60px;
+        text-align: center;
+        align-items: center;
+      }
+      .l-bio  { max-width: 100%; }
+      .hero-right { order: 1; height: 52vh; }
+      .fw    { display: none; }
+      .person { height: 48vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="c-dot"  id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <section class="hero">
+
+    <!-- ── LEFT ── -->
+    <div class="hero-left">
+      <span class="l-tag">UX Designer</span>
+      <p class="l-pre">Hi, I'm</p>
+      <h1 class="l-name">Gurjot<span class="dot">.</span></h1>
+      <p class="l-bio">
+        <strong>UX Designer-II at ShareChat</strong> — working across
+        Moj, FriendZone, and Vibely.<br /><br />
+        4+ years designing for growth, retention &amp; creator monetisation.
+        Background in architecture; obsessed with how structure shapes behaviour.
+      </p>
+      <div class="l-scroll">
+        <div class="scroll-bar"></div>
+        <span class="scroll-label">Scroll</span>
+      </div>
+    </div>
+
+    <!-- ── RIGHT ── -->
+    <div class="hero-right" id="heroRight">
+
+      <div class="fw fw-notepad"    data-speed="0.70"><img src="/notepad.png"    class="fi" alt="" /></div>
+      <div class="fw fw-bulb"       data-speed="1.10"><img src="/bulb.png"       class="fi" alt="" /></div>
+      <div class="fw fw-controller" data-speed="0.85"><img src="/controller.png" class="fi" alt="" /></div>
+      <div class="fw fw-football"   data-speed="1.00"><img src="/Football.png"   class="fi" alt="" /></div>
+      <div class="fw fw-sneaker"    data-speed="0.75"><img src="/Sneaker.png"    class="fi" alt="" /></div>
+
+      <img src="/person.png" class="person" alt="Gurjot Ahluwalia" />
+
+    </div>
+
+  </section>
+
+  <script>
+    /* ────────────────────────────────────────────────
+       CURSOR
+       Dot snaps instantly. Ring lerps behind.
+    ──────────────────────────────────────────────── */
+    const cDot  = document.getElementById('cDot')
+    const cRing = document.getElementById('cRing')
+    let ringX = -100, ringY = -100, ringTX = -100, ringTY = -100
+
+    document.addEventListener('mousemove', e => {
+      cDot.style.left = e.clientX + 'px'
+      cDot.style.top  = e.clientY + 'px'
+      ringTX = e.clientX
+      ringTY = e.clientY
+    })
+
+    ;(function lerpRing() {
+      ringX += (ringTX - ringX) * 0.11
+      ringY += (ringTY - ringY) * 0.11
+      cRing.style.left = ringX + 'px'
+      cRing.style.top  = ringY + 'px'
+      requestAnimationFrame(lerpRing)
+    })()
+
+    document.querySelectorAll('.fw').forEach(el => {
+      el.addEventListener('mouseenter', () => cRing.classList.add('expanded'))
+      el.addEventListener('mouseleave', () => cRing.classList.remove('expanded'))
+    })
+
+    /* ────────────────────────────────────────────────
+       ENTRANCE
+       Two rAF ticks ensures layout is painted first.
+    ──────────────────────────────────────────────── */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.body.classList.add('ready')
+    }))
+
+    /* ────────────────────────────────────────────────
+       MAGNETIC PARALLAX
+       On mousemove over the right column, each .fw
+       drifts toward the cursor (different speeds).
+       On mouseleave, everything lerps back to origin.
+
+       Only starts after entrance animations finish
+       (1.4s) to avoid fighting the springIn.
+
+       Two-wrapper pattern means JS transform on .fw
+       never conflicts with CSS animation on .fi inside.
+    ──────────────────────────────────────────────── */
+    const heroRight = document.getElementById('heroRight')
+    const fws       = [...heroRight.querySelectorAll('.fw')]
+    const curr      = fws.map(() => ({ x: 0, y: 0 }))
+    let tx = 0, ty = 0, ticking = false
+
+    function attachParallax() {
+      heroRight.addEventListener('mousemove', e => {
+        const r = heroRight.getBoundingClientRect()
+        tx = (e.clientX - r.left  - r.width  * 0.5) / (r.width  * 0.5) // −1 → 1
+        ty = (e.clientY - r.top   - r.height * 0.5) / (r.height * 0.5)
+        if (!ticking) { ticking = true; requestAnimationFrame(tick) }
+      })
+
+      heroRight.addEventListener('mouseleave', () => {
+        tx = 0; ty = 0
+        if (!ticking) { ticking = true; requestAnimationFrame(tick) }
+      })
+    }
+
+    function tick() {
+      let live = false
+      fws.forEach((el, i) => {
+        const spd  = parseFloat(el.dataset.speed || '1')
+        const dx   = tx * 18 * spd
+        const dy   = ty * 18 * spd
+        curr[i].x += (dx - curr[i].x) * 0.07
+        curr[i].y += (dy - curr[i].y) * 0.07
+        if (Math.abs(dx - curr[i].x) > 0.05 || Math.abs(dy - curr[i].y) > 0.05) live = true
+        el.style.transform = `translate(${curr[i].x.toFixed(2)}px,${curr[i].y.toFixed(2)}px)`
+      })
+      ticking = live
+      if (live) requestAnimationFrame(tick)
+    }
+
+    setTimeout(attachParallax, 1400)
+  </script>
+
+</body>
+</html>
