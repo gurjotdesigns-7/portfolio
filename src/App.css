@@ -3028,8 +3028,8 @@ body { cursor: none; }
   body { cursor: auto !important; }
 }
 
-/* ── iPad landscape & large tablet (max 1100px) ── */
-@media (max-width: 1100px) {
+/* ── iPad landscape & large tablet (max 1300px) ── */
+@media (max-width: 1300px) {
   /* Playground — force single row with smaller cards */
   .pg-content { padding: 140px 20px 0 !important; }
   .pg-paper { transform: scaleX(1.02) !important; }
@@ -3038,7 +3038,7 @@ body { cursor: none; }
     gap: 20px !important;
     justify-content: center !important;
   }
-  .playground-card { width: 240px !important; }
+  .playground-card { width: 260px !important; }
   .card-minerva { transform: translateY(-6px) rotate(-3deg) !important; }
   .card-bloom   { transform: translateY(6px)  rotate(3deg)  !important; }
   .card-photo   { transform: translateY(3px)  rotate(1.5deg) !important; }
