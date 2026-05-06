@@ -3028,6 +3028,22 @@ body { cursor: none; }
   body { cursor: auto !important; }
 }
 
+/* ── iPad landscape & large tablet (max 1100px) ── */
+@media (max-width: 1100px) {
+  /* Playground — force single row with smaller cards */
+  .pg-content { padding: 140px 20px 0 !important; }
+  .pg-paper { transform: scaleX(1.02) !important; }
+  .pg-cards {
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    justify-content: center !important;
+  }
+  .playground-card { width: 240px !important; }
+  .card-minerva { transform: translateY(-6px) rotate(-3deg) !important; }
+  .card-bloom   { transform: translateY(6px)  rotate(3deg)  !important; }
+  .card-photo   { transform: translateY(3px)  rotate(1.5deg) !important; }
+}
+
 /* ── Tablet (max 900px) ── */
 @media (max-width: 900px) {
 
@@ -3039,18 +3055,10 @@ body { cursor: none; }
   .section-h2 { font-size: clamp(24px, 4vw, 40px) !important; }
   .section-sub { font-size: 14px !important; }
 
-  /* Playground — keep cards in a single row, scaled down */
-  .pg-content { padding: 160px 20px 0 !important; }
-  .pg-paper { transform: scaleX(1.02) !important; }
-  .pg-cards {
-    flex-wrap: nowrap !important;
-    gap: 20px !important;
-    justify-content: center !important;
-  }
-  .playground-card { width: 220px !important; }
-  .card-minerva { transform: translateY(-6px) rotate(-3deg) !important; }
-  .card-bloom   { transform: translateY(6px)  rotate(3deg)  !important; }
-  .card-photo   { transform: translateY(3px)  rotate(1.5deg) !important; }
+  /* Playground — tighter on smaller tablets */
+  .pg-content { padding: 120px 16px 0 !important; }
+  .pg-cards { gap: 14px !important; }
+  .playground-card { width: 200px !important; }
 
   /* Testimonials */
   .testimonials-section { padding: 64px 0 80px !important; }
