@@ -350,7 +350,7 @@ export default function Home({ navigate }) {
               body="A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments."
               cta="View case study" onClick={() => {}} />
           </a>
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=702-19958&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762" target="_blank" rel="noopener noreferrer" className="cs-row-link">
+          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=182%3A76113&node-id=1166-143377&viewport=395%2C823%2C0.03&t=crlJh790HneX3WER-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1166%3A143377" target="_blank" rel="noopener noreferrer" className="cs-row-link">
             <CaseStudyRow side="left" image="/cineflow.png" alt="Cineflow characters screen"
               eyebrow="02 — Cineflow · 48hr Sprint" title="First-time UX for AI Episode Creation"
               body="A 48-hour sprint to collapse a fragmented six-tool workflow into one guided experience. Defined a consistent generative pattern — dual options + persistent chat — that scales from idea to exported episode."
