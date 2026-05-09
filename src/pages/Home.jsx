@@ -50,9 +50,10 @@ function HeroSection() {
 
           <Reveal delay={150}>
             <p className="hs-sub">
-              <span className="muted">UX Designer-II at ShareChat. 4+ years designing systems that activate users, retain creators, and move revenue metrics. Background in architecture, obsessed with how structure shapes behaviour.</span>
+              <strong>UX Designer-II at ShareChat.</strong>{' '}
+              <span className="muted"><strong>4+ years</strong> designing systems that activate users, retain creators, and move revenue metrics. Background in <strong>architecture,</strong> obsessed with how structure shapes behaviour.</span>
               <br /><br />
-              <span className="muted">Fuelled by football, long drives, and nature. I believe the best design ideas come when you're not at a desk.</span>
+              <span className="muted">Fuelled by <strong>football, long drives, and nature.</strong> I believe the best design ideas come when you're not at a desk.</span>
             </p>
           </Reveal>
 
