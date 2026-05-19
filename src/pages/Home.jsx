@@ -44,36 +44,38 @@ function HeroSection() {
         {/* LEFT: text */}
         <div className="hs-left">
 
-          <Reveal>
+          <div className="hs-enter-greeting">
             <h1 className="hs-headline">Hi, I'm<br />Gurjot.</h1>
-          </Reveal>
+          </div>
 
-          <Reveal delay={150}>
+          <div className="hs-enter-bio">
             <p className="hs-sub">
               <span className="muted">UX Designer-II at <strong>ShareChat.</strong> <strong>4+ years</strong> designing systems that <strong>activate users, retain creators, and move revenue metrics.</strong> Background in architecture, obsessed with how structure shapes behaviour.</span>
               <br /><br />
               <span className="muted">Fuelled by <strong>football, long drives, and nature.</strong> I believe <strong>the best design ideas come when you're not at a desk.</strong></span>
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal delay={300}>
+          <div className="hs-enter-scroll">
             <div className="hs-scroll-indicator">
               <div className="hs-scroll-line" />
               <span className="hs-scroll-label">Scroll</span>
             </div>
-          </Reveal>
+          </div>
 
         </div>
 
         {/* RIGHT: image — outer div floats, inner img zooms on hover */}
         <div className="hs-right">
-          <div className="hs-img-float">
-            <img
-              className="hs-person-img"
-              src="/hero.png"
-              alt="Gurjot Ahluwalia"
-              draggable="false"
-            />
+          <div className="hs-enter-photo">
+            <div className="hs-img-float">
+              <img
+                className="hs-person-img"
+                src="/hero.png"
+                alt="Gurjot Ahluwalia"
+                draggable="false"
+              />
+            </div>
           </div>
         </div>
 

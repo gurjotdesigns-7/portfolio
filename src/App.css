@@ -30,13 +30,49 @@ body { cursor: none; }
 
 .app {
   min-height: 100vh;
-  animation: page-dissolve 1s ease both;
 }
 
-/* Opacity only — no transform/filter, so fixed nav stays anchored to viewport */
-@keyframes page-dissolve {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+/* ── Page background fades from white to off-white dot grid ── */
+@keyframes bg-fade-in {
+  from { background-color: #ffffff; }
+  to   { background-color: var(--bg); }
+}
+body {
+  animation: bg-fade-in 1.2s ease-out both;
+}
+
+/* ── Hero entrance keyframes ── */
+@keyframes hs-enter {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes hs-enter-scale {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* ── Hero text staggered entrance ── */
+.hs-enter-greeting {
+  opacity: 0;
+  animation: hs-enter 0.6s ease-out 0.05s both;
+}
+.hs-enter-name {
+  opacity: 0;
+  animation: hs-enter 0.6s ease-out 0.2s both;
+}
+.hs-enter-bio {
+  opacity: 0;
+  animation: hs-enter 0.6s ease-out 0.35s both;
+}
+.hs-enter-scroll {
+  opacity: 0;
+  animation: hs-enter 0.6s ease-out 0.45s both;
+}
+
+/* ── Hero image entrance ── */
+.hs-enter-photo {
+  opacity: 0;
+  animation: hs-enter 0.7s ease-out 0.9s both;
 }
 
 /* Nav slides down from top edge — its own independent animation */
