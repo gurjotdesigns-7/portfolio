@@ -274,6 +274,20 @@ const TESTI_DATA = [
    Cards in flex row — no absolute positioning on cards.
 ────────────────────────────────────────────────────────── */
 function PlaygroundSection({ navigate }) {
+  const cardsRef = useRef(null)
+  const [cardsVisible, setCardsVisible] = useState(false)
+
+  useEffect(() => {
+    const el = cardsRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setCardsVisible(true) },
+      { threshold: 0.15 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <div id="playground" className="playground-section">
       <div className="pg-paper-wrapper">
@@ -284,48 +298,54 @@ function PlaygroundSection({ navigate }) {
           <h2 className="pg-title">Playground</h2>
           <p className="pg-sub">Sketches, side projects, and craft explorations.</p>
 
-          <div className="pg-cards">
+          <div className={`pg-cards${cardsVisible ? ' pg-cards-visible' : ''}`} ref={cardsRef}>
 
-            <a
-              href="https://www.behance.net/gallery/147058973/Minerva-Training-Complex-Architectural-Design"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="playground-card card-minerva"
-            >
-              <span className="pg-tape"></span>
-              <img src="/Minerva.png" alt="Minerva Training Complex" />
-              <div className="pg-card-label">
-                <h4>Minerva Training Complex</h4>
-                <p>Architectural Design</p>
-              </div>
-            </a>
+            <div className="pg-float-wrap pg-float-1">
+              <a
+                href="https://www.behance.net/gallery/147058973/Minerva-Training-Complex-Architectural-Design"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="playground-card card-minerva"
+              >
+                <span className="pg-tape"></span>
+                <img src="/Minerva.png" alt="Minerva Training Complex" />
+                <div className="pg-card-label">
+                  <h4>Minerva Training Complex</h4>
+                  <p>Architectural Design</p>
+                </div>
+              </a>
+            </div>
 
-            <a
-              href="https://www.behance.net/gallery/146945907/Bloom-Nursery-Responsive-Website-UXUI"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="playground-card card-bloom"
-            >
-              <span className="pg-tape"></span>
-              <img src="/Bloom Nursery.png" alt="Bloom Nursery UX/UI" />
-              <div className="pg-card-label">
-                <h4>Bloom Nursery</h4>
-                <p>Responsive Website UX/UI</p>
-              </div>
-            </a>
+            <div className="pg-float-wrap pg-float-2">
+              <a
+                href="https://www.behance.net/gallery/146945907/Bloom-Nursery-Responsive-Website-UXUI"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="playground-card card-bloom"
+              >
+                <span className="pg-tape"></span>
+                <img src="/Bloom Nursery.png" alt="Bloom Nursery UX/UI" />
+                <div className="pg-card-label">
+                  <h4>Bloom Nursery</h4>
+                  <p>Responsive Website UX/UI</p>
+                </div>
+              </a>
+            </div>
 
-            <a
-              href="#"
-              onClick={(e) => { e.preventDefault(); navigate('photography') }}
-              className="playground-card card-photo"
-            >
-              <span className="pg-tape"></span>
-              <img src={photoCardThumb} alt="Photography" />
-              <div className="pg-card-label">
-                <h4>Photography</h4>
-                <p>Moments I didn't design, but framed.</p>
-              </div>
-            </a>
+            <div className="pg-float-wrap pg-float-3">
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); navigate('photography') }}
+                className="playground-card card-photo"
+              >
+                <span className="pg-tape"></span>
+                <img src={photoCardThumb} alt="Photography" />
+                <div className="pg-card-label">
+                  <h4>Photography</h4>
+                  <p>Moments I didn't design, but framed.</p>
+                </div>
+              </a>
+            </div>
 
           </div>
         </div>
