@@ -101,7 +101,8 @@ function useCsReveal() {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('cs-row-visible')
-            obs.unobserve(entry.target)
+          } else {
+            entry.target.classList.remove('cs-row-visible')
           }
         })
       },
