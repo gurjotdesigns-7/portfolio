@@ -90,23 +90,47 @@ function HeroSection() {
   )
 }
 
+/* ─── Case study scroll-in animation ─────────────────── */
+function useCsReveal() {
+  const imgRef = useRef(null)
+  const txtRef = useRef(null)
+  useEffect(() => {
+    const els = [imgRef.current, txtRef.current].filter(Boolean)
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('cs-row-visible')
+            obs.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0, rootMargin: '0px 0px -100px 0px' }
+    )
+    els.forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+  return { imgRef, txtRef }
+}
+
 /* ─── Case-study row ─────────────────────────────────── */
 function CaseStudyRow({ side, image, alt, eyebrow, title, body, cta, onClick }) {
+  const { imgRef, txtRef } = useCsReveal()
   return (
-    <Reveal className="cs-row">
+    <div className="cs-row">
       <div className={`cs-row-grid ${side === 'right' ? 'cs-row-reverse' : ''}`}>
-        <div className="cs-row-image" onClick={onClick}>
+        <div className="cs-row-image cs-row-anim" ref={imgRef} onClick={onClick}>
           <img src={image} alt={alt} />
           <div className="cs-row-image-overlay" />
         </div>
-        <div className="cs-row-text">
+        <div className="cs-row-text cs-row-anim cs-row-anim-delay" ref={txtRef}>
           {eyebrow && <div className="cs-row-eyebrow">{eyebrow}</div>}
           <h3 className="cs-row-title">{title}</h3>
           <p className="cs-row-body">{body}</p>
           <button className="cs-row-cta" onClick={onClick}>{cta}</button>
         </div>
       </div>
-    </Reveal>
+    </div>
   )
 }
 

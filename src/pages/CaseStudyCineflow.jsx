@@ -1,4 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+function useParallaxHeadings() {
+  useEffect(() => {
+    const update = () => {
+      document.querySelectorAll('.cs-section-title').forEach(el => {
+        const rect = el.getBoundingClientRect()
+        const center = rect.top + rect.height / 2 - window.innerHeight / 2
+        el.style.transform = `translateY(${center * 0.3}px)`
+      })
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    update()
+    return () => window.removeEventListener('scroll', update)
+  }, [])
+}
 
 function BackArrow() {
   return (
@@ -67,6 +82,7 @@ function StepHeader({ num, name, title, summary }) {
 }
 
 export default function CaseStudyCineflow({ navigate }) {
+  useParallaxHeadings()
   const [activeStep, setActiveStep] = useState(0)
 
   return (
