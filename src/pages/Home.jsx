@@ -493,9 +493,9 @@ export default function Home({ navigate }) {
               </a>
             </div>
             <div className="footer-bottom-v2">
-              <span>© 2026 Gurjot Ahluwalia</span>
-              <span>❤️</span>
-              <span>Designed &amp; built with care</span>
+              <span>© 2026 Gurjot Singh Ahluwalia</span>
+              <span className="footer-heart">❤️</span>
+              <span className="footer-tagline">Designed &amp; built with care</span>
             </div>
           </div>
         </Reveal>
