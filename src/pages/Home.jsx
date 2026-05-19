@@ -117,11 +117,40 @@ function useCsReveal() {
 /* ─── Case-study row ─────────────────────────────────── */
 function CaseStudyRow({ side, image, alt, eyebrow, title, body, cta, onClick }) {
   const { imgRef, txtRef } = useCsReveal()
+  const tiltRef = useRef(null)
+
+  const handleMouseMove = (e) => {
+    const el = tiltRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width  - 0.5  // -0.5 to 0.5
+    const y = (e.clientY - rect.top)  / rect.height - 0.5
+    const rotY =  x * 8   // max 4deg each side
+    const rotX = -y * 8
+    el.style.transition = 'transform 0.1s ease-out, box-shadow 0.1s ease-out'
+    el.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`
+    el.style.boxShadow = '0 24px 48px rgba(0,0,0,0.22)'
+  }
+
+  const handleMouseLeave = () => {
+    const el = tiltRef.current
+    if (!el) return
+    el.style.transition = 'transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out'
+    el.style.transform = ''
+    el.style.boxShadow = ''
+  }
+
   return (
     <div className="cs-row">
       <div className={`cs-row-grid ${side === 'right' ? 'cs-row-reverse' : ''}`}>
-        <div className="cs-row-image cs-row-anim" ref={imgRef} onClick={onClick}>
-          <img src={image} alt={alt} />
+        <div
+          className="cs-row-image cs-row-anim cs-row-tilt"
+          ref={(el) => { imgRef.current = el; tiltRef.current = el }}
+          onClick={onClick}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <img src={image} alt={alt} className="cs-row-img-inner" />
           <div className="cs-row-image-overlay" />
         </div>
         <div className="cs-row-text cs-row-anim cs-row-anim-delay" ref={txtRef}>

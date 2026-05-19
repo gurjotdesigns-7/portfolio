@@ -557,6 +557,23 @@ body {
 }
 .cs-row:last-child { margin-bottom: 0; }
 
+/* ── Case study card hover + tilt ── */
+.cs-row-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.cs-row-tilt .cs-row-img-inner {
+  transition: transform 0.3s ease-out;
+  transform: scale(1);
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cs-row-tilt:hover .cs-row-img-inner {
+  transform: scale(1.03);
+}
+
 /* ── Case study scroll-in animation ── */
 .cs-row-anim {
   opacity: 0;
@@ -617,13 +634,6 @@ body {
   pointer-events: none;
 }
 
-.cs-row-image:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 24px 60px rgba(20, 20, 30, 0.12);
-}
-.cs-row-image:hover img {
-  transform: scale(1.04);
-}
 .cs-row-image:hover .cs-row-image-overlay {
   opacity: 1;
 }
