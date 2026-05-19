@@ -281,7 +281,10 @@ function PlaygroundSection({ navigate }) {
         <img src="/PaperBG.png" alt="" className="pg-paper" />
 
         <div className="pg-content">
-          <h2 className="pg-title">Playground</h2>
+          <div className="pg-sticky-wrap">
+            <img src="/Sticky-note.png" alt="" className="pg-sticky-bg" />
+            <h2 className="pg-title pg-sticky-text">Playground</h2>
+          </div>
           <p className="pg-sub">Sketches, side projects, and craft explorations.</p>
 
           <div className="pg-cards">

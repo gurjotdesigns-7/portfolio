@@ -736,6 +736,33 @@ body {
   padding-top: 90px;
 }
 
+.pg-sticky-wrap {
+  position: relative;
+  width: 280px;
+  margin: -30px auto 24px;
+  transform: rotate(-2.5deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pg-sticky-bg {
+  width: 280px;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pg-sticky-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+
 .pg-title {
   font-size: 44px;
   margin-bottom: 12px;
