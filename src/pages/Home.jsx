@@ -394,10 +394,10 @@ export default function Home({ navigate }) {
           </Reveal>
         </div>
         <div className="container case-studies-container">
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=392-24762&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="right" image="/kyc.png" alt="KYC wallet earnings screen"
-              eyebrow="01 — ShareChat · Vibely" title="KYC, Wallet & Cash-out System Redesign"
-              body="A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments."
+          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307" target="_blank" rel="noopener noreferrer" className="cs-row-link">
+            <CaseStudyRow side="right" image="/referral.png" alt="Starter Challenge screens"
+              eyebrow="01 — ShareChat · Vibely" title="Referral & Starter Challenge Growth System"
+              body="A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift."
               cta="View case study" onClick={() => {}} />
           </a>
           <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=182%3A76113&node-id=1166-143377&viewport=395%2C823%2C0.03&t=crlJh790HneX3WER-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1166%3A143377" target="_blank" rel="noopener noreferrer" className="cs-row-link">
@@ -406,10 +406,10 @@ export default function Home({ navigate }) {
               body="A 48-hour sprint to collapse a fragmented six-tool workflow into one guided experience. Defined a consistent generative pattern — dual options + persistent chat — that scales from idea to exported episode."
               cta="View case study" onClick={() => {}} />
           </a>
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="right" image="/referral.png" alt="Starter Challenge screens"
-              eyebrow="03 — ShareChat · Vibely" title="Referral & Starter Challenge Growth System"
-              body="A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift."
+          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=392-24762&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762" target="_blank" rel="noopener noreferrer" className="cs-row-link">
+            <CaseStudyRow side="right" image="/kyc.png" alt="KYC wallet earnings screen"
+              eyebrow="03 — ShareChat · Vibely" title="KYC, Wallet & Cash-out System Redesign"
+              body="A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments."
               cta="View case study" onClick={() => {}} />
           </a>
         </div>
