@@ -1,5 +1,110 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
+
+/* ─── Splash screen ──────────────────────────────────
+   45 sticky notes fall once on first load per session.
+   sessionStorage key 'splashShown' prevents replay.
+────────────────────────────────────────────────────── */
+const _SC = ['#FFF3B0', '#E8D5FF', '#FFD6D6']
+const _SL = [
+  'Retention','Onboarding','Revenue','Brainstorming',
+  'Collaboration','Focus Mode','Activation','Growth',
+  'Trust','Monetisation','Conversion','Iteration','Systems','Craft',
+]
+const _SD = [
+  ['M12 32 Q28 24 44 34','M50 58 Q66 50 80 60'],
+  ['M15 26 L46 21','M20 46 L54 42','M25 64 L50 60'],
+  ['M12 38 C24 26 40 50 56 36','M63 54 L79 62'],
+  ['M14 33 Q34 20 52 36 Q65 48 77 38','M26 60 L54 56'],
+  ['M20 24 L42 32','M54 46 Q70 38 82 50','M16 64 L36 58'],
+  ['M18 40 Q36 30 54 42','M60 62 L78 56','M10 58 L22 52'],
+]
+
+function _rnd(a, b) { return a + Math.random() * (b - a) }
+function _ri(a, b)  { return Math.floor(_rnd(a, b + 1)) }
+function _pick(a)   { return a[_ri(0, a.length - 1)] }
+
+function genSplashNotes() {
+  // shuffle label indices so 14 random notes get labels
+  const labelSlots = new Set()
+  while (labelSlots.size < 14) labelSlots.add(_ri(0, 44))
+
+  const labelList = [..._SL]
+  let li = 0
+
+  return Array.from({ length: 45 }, (_, i) => {
+    const rotFrom = _rnd(-20, 20)
+    const rotTo   = rotFrom + _rnd(8, 20) * (Math.random() > 0.5 ? 1 : -1)
+    return {
+      id:    i,
+      w:     _ri(65, 100),
+      h:     _ri(60, 90),
+      color: _pick(_SC),
+      left:  _rnd(0, 93),
+      top:   -_ri(60, 250),
+      rotFrom,
+      rotTo,
+      dur:   _rnd(1.8, 2.6).toFixed(2),
+      delay: _rnd(0, 1.0).toFixed(2),
+      label: labelSlots.has(i) ? labelList[li++] : null,
+      lines: _pick(_SD),
+    }
+  })
+}
+
+function SplashScreen() {
+  const [phase, setPhase] = useState(
+    () => sessionStorage.getItem('splashShown') ? 'gone' : 'visible'
+  )
+  const notes = useMemo(() => genSplashNotes(), [])
+
+  useEffect(() => {
+    if (phase === 'gone') return
+    sessionStorage.setItem('splashShown', 'true')
+    const t1 = setTimeout(() => setPhase('fading'), 2500)
+    const t2 = setTimeout(() => setPhase('gone'),   2900)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [])
+
+  if (phase === 'gone') return null
+
+  return (
+    <div className="splash-overlay" style={{ opacity: phase === 'fading' ? 0 : 1 }}>
+      {notes.map(n => (
+        <div
+          key={n.id}
+          className="splash-note"
+          style={{
+            width:          n.w,
+            height:         n.h,
+            background:     n.color,
+            left:           `${n.left}%`,
+            top:            n.top,
+            '--rot-from':   `${n.rotFrom}deg`,
+            '--rot-to':     `${n.rotTo}deg`,
+            '--fall-dur':   `${n.dur}s`,
+            '--fall-delay': `${n.delay}s`,
+          }}
+        >
+          <svg
+            width="100%" height="100%"
+            viewBox="0 0 100 100"
+            fill="none"
+            style={{ position: 'absolute', inset: 0 }}
+            aria-hidden="true"
+          >
+            {n.lines.map((d, j) => (
+              <path key={j} d={d} stroke="#999999" strokeWidth="1" opacity="0.25" strokeLinecap="round" />
+            ))}
+          </svg>
+          {n.label && (
+            <span className="splash-note-label">{n.label}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
 
 /* ─── Reveal on scroll ─────────────────────────────── */
 function useReveal(delay = 0, threshold = 0.15) {
@@ -377,6 +482,8 @@ export default function Home({ navigate }) {
 
   return (
     <div className="page home-page">
+      <SplashScreen />
+
       <div className="custom-cursor" aria-hidden="true">
         <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0L0 17.5L4.5 13.5L7.5 21L10.5 19.8L7.5 12.5H13L0 0Z" fill="black" stroke="white" strokeWidth="1" strokeLinejoin="round"/>
