@@ -12,12 +12,22 @@ const _SL = [
   'Trust','Monetisation','Conversion','Iteration','Systems','Craft',
 ]
 const _SD = [
-  ['M12 32 Q28 24 44 34','M50 58 Q66 50 80 60'],
-  ['M15 26 L46 21','M20 46 L54 42','M25 64 L50 60'],
-  ['M12 38 C24 26 40 50 56 36','M63 54 L79 62'],
-  ['M14 33 Q34 20 52 36 Q65 48 77 38','M26 60 L54 56'],
-  ['M20 24 L42 32','M54 46 Q70 38 82 50','M16 64 L36 58'],
-  ['M18 40 Q36 30 54 42','M60 62 L78 56','M10 58 L22 52'],
+  // image placeholder: box + X
+  ['M8 14 L92 14 L92 86 L8 86 Z', 'M8 14 L92 86', 'M92 14 L8 86'],
+  // three text placeholder lines
+  ['M10 28 L88 32', 'M10 46 L90 44', 'M10 64 L74 67'],
+  // rounded button + label inside
+  ['M20 28 Q20 18 34 18 L66 18 Q80 18 80 28 L80 72 Q80 82 66 82 L34 82 Q20 82 20 72 Z', 'M36 50 L64 50'],
+  // card with header bar + content lines
+  ['M8 12 L92 12 L92 88 L8 88 Z', 'M8 32 L92 32', 'M14 48 L86 48', 'M14 64 L74 64'],
+  // input field with cursor blink
+  ['M8 36 L92 36 L92 64 L8 64 Z', 'M16 50 L42 50', 'M44 42 L44 58'],
+  // nav bar + two content lines
+  ['M8 14 L92 14 L92 36 L8 36 Z', 'M16 25 L28 25', 'M36 25 L52 25', 'M60 25 L72 25', 'M8 52 L92 52', 'M8 66 L68 66'],
+  // avatar circle + name lines
+  ['M14 38 A18 18 0 1 1 13.99 38', 'M52 22 L88 24', 'M52 36 L82 38', 'M10 62 L90 62', 'M10 76 L68 76'],
+  // checkbox list
+  ['M10 18 L28 18 L28 36 L10 36 Z', 'M10 48 L28 48 L28 66 L10 66 Z', 'M34 27 L78 27', 'M34 57 L72 57'],
 ]
 
 function _rnd(a, b) { return a + Math.random() * (b - a) }
@@ -90,7 +100,7 @@ function SplashScreen() {
             aria-hidden="true"
           >
             {n.lines.map((d, j) => (
-              <path key={j} d={d} stroke="#999999" strokeWidth="1" opacity="0.25" strokeLinecap="round" />
+              <path key={j} d={d} stroke="#2a2a2a" strokeWidth="1.5" opacity="0.28" strokeLinecap="round" fill="none" />
             ))}
           </svg>
           {n.label && (
