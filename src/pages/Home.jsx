@@ -63,11 +63,6 @@ function HeroSection() {
             </div>
           </div>
 
-          {/* Sticky notes floating near bio text */}
-          <div className="hs-sticky hs-sticky-1">4 yrs at ShareChat →</div>
-          <div className="hs-sticky hs-sticky-2">form follows function</div>
-          <div className="hs-sticky hs-sticky-3">ships real stuff ✓</div>
-
         </div>
 
         {/* RIGHT: image — outer div floats, inner img zooms on hover */}
