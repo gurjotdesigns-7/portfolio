@@ -738,7 +738,11 @@ body {
 
 
 .pg-title {
-  font-size: 44px;
+  font-family: 'Caveat', cursive;
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
   margin-bottom: 12px;
 }
 
@@ -2931,8 +2935,11 @@ body {
 }
 
 .pg-title {
-  font-size: clamp(24px, 5vw, 44px) !important;
+  font-family: 'Caveat', cursive !important;
+  font-size: clamp(36px, 6vw, 64px) !important;
   font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.1 !important;
   margin-bottom: 16px !important;
   text-align: center !important;
 }
