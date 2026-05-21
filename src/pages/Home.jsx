@@ -348,24 +348,24 @@ function Ticker() {
 ────────────────────────────────────────────────────────── */
 const TESTI_DATA = [
   {
-    quote: "Gurjot turns ambiguous policy and engineering constraints into flows that feel inevitable. The KYC redesign moved every metric we cared about.",
-    name: 'Product Lead', role: 'ShareChat · Monetisation', initial: 'P', color: '#E0E7FF',
+    quote: "Gurjot is one of the rare designers who makes engineering execution genuinely easier. Handoffs were detailed, edge cases covered, interaction states documented before we started building. He understood engineering constraints without needing them explained twice.",
+    name: 'Lavish Bansal', role: 'Senior Software Engineer · ShareChat', initial: 'L', color: '#DCFCE7',
   },
   {
-    quote: "One of the few designers who treats growth surfaces with the same craft as core product. The starter-challenge framework is still the model we benchmark against.",
-    name: 'Growth PM', role: 'ShareChat · FriendZone', initial: 'G', color: '#DCFCE7',
+    quote: "I was consistently impressed by Gurjot's design skills and thoughtful approach to problem-solving. Strong eye for detail, user-centric thinking, and genuinely collaborative. I truly enjoyed working with him.",
+    name: 'Nidhi Erandole', role: 'Product Design · PayU, Ex-ShareChat', initial: 'N', color: '#FCE7F3',
   },
   {
-    quote: "Sharp instincts, fast iteration, low ego. The Cineflow sprint was 48 hours but felt like a complete product story by the time he was done.",
-    name: 'Engineering Lead', role: 'Cineflow', initial: 'E', color: '#FEF3C7',
+    quote: "Incredibly thoughtful and collaborative, with strong clarity in problem-solving. What stood out was his sense of ownership and ability to balance user needs with business goals. A great teammate I'd gladly work with again.",
+    name: 'Shubhi Goyal', role: 'Founder · ByteLabs, Ex-ShareChat', initial: 'S', color: '#FEF3C7',
   },
   {
-    quote: "Brings architectural rigour to interface design. Spends time on the structural decisions most designers skip — and the result is flows that hold up under load.",
-    name: 'Design Director', role: 'ShareChat', initial: 'D', color: '#FCE7F3',
+    quote: "Gurjot's design contributions created a new revenue stream for our organisation. Moj Spot hit ~₹180K daily revenue from 1000+ creators. His commitment and proactive approach were instrumental in that success.",
+    name: 'Zeenal Patel', role: 'Design Leadership · ShareChat', initial: 'Z', color: '#E0E7FF',
   },
   {
-    quote: "A rare combination of systems thinking and craft. The way he scaled the FriendZone growth loop into Vibely with almost no rework is the textbook case for modular design.",
-    name: 'Senior PM', role: 'ShareChat · Vibely', initial: 'S', color: '#E0F2FE',
+    quote: "Gurjot is a dedicated and extremely talented designer. His expertise in Product Design is beyond par and his hardworking nature is a major plus. A talented, promising, and committed asset.",
+    name: 'Simrat Kaur', role: 'Human Resources Executive', initial: 'S', color: '#E0F2FE',
   },
 ]
 
