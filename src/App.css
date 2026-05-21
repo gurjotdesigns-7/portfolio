@@ -75,6 +75,27 @@ body {
   animation: hs-enter 0.7s ease-out 0.9s both;
 }
 
+/* ── Splash screen ──────────────────────────────────── */
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #F5F4EF;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+.splash-note {
+  position: absolute;
+  border-radius: 2px;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.10);
+  animation: splash-fall var(--fall-dur) ease-in var(--fall-delay) both;
+}
+@keyframes splash-fall {
+  from { transform: translateY(0)     rotate(var(--rot-from)); }
+  to   { transform: translateY(120vh) rotate(var(--rot-to));   }
+}
+
 /* Nav slides down from top edge — its own independent animation */
 .nav-pill-wrap {
   animation: nav-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
