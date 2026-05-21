@@ -1,87 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
-
-/* ─── Splash screen ──────────────────────────────────
-   28 sticky notes fall from the top on first page load.
-   sessionStorage flag 'splashShown' prevents replay.
-────────────────────────────────────────────────────── */
-const SPLASH_COLORS = ['#FFF3B0', '#E8D5FF', '#FFD6D6']
-const SPLASH_DOODLES = [
-  ['M15 35 Q30 28 45 38', 'M55 60 Q68 52 82 62'],
-  ['M18 28 L48 23', 'M22 48 L56 45', 'M28 66 L52 62'],
-  ['M14 40 C26 28 42 52 58 38', 'M65 55 L80 62'],
-  ['M16 35 Q35 22 54 38 Q66 50 78 40', 'M28 62 L56 58'],
-  ['M22 26 L42 34', 'M56 48 Q70 40 80 52', 'M18 66 L38 60'],
-]
-
-function rnd(min, max) { return min + Math.random() * (max - min) }
-function rndInt(min, max) { return Math.floor(rnd(min, max + 1)) }
-function pick(arr) { return arr[rndInt(0, arr.length - 1)] }
-
-function genSplashNotes(count) {
-  return Array.from({ length: count }, (_, i) => {
-    const rotFrom = rnd(-18, 18)
-    const rotTo   = rotFrom + rnd(5, 15) * (Math.random() > 0.5 ? 1 : -1)
-    return {
-      id:     i,
-      w:      rndInt(60, 95),
-      h:      rndInt(55, 85),
-      color:  pick(SPLASH_COLORS),
-      left:   rnd(0, 92),
-      top:    -rndInt(80, 200),
-      rotFrom,
-      rotTo,
-      dur:    rnd(1.6, 2.4).toFixed(2),
-      delay:  rnd(0, 0.9).toFixed(2),
-      doodle: pick(SPLASH_DOODLES),
-    }
-  })
-}
-
-function SplashScreen() {
-  const [phase, setPhase] = useState(
-    () => sessionStorage.getItem('splashShown') ? 'gone' : 'visible'
-  )
-  const notes = useMemo(() => genSplashNotes(28), [])
-
-  useEffect(() => {
-    if (phase === 'gone') return
-    sessionStorage.setItem('splashShown', 'true')
-    const t1 = setTimeout(() => setPhase('fading'), 2500)
-    const t2 = setTimeout(() => setPhase('gone'),   2800)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
-  }, [])
-
-  if (phase === 'gone') return null
-
-  return (
-    <div className="splash-overlay" style={{ opacity: phase === 'fading' ? 0 : 1 }}>
-      {notes.map(n => (
-        <div
-          key={n.id}
-          className="splash-note"
-          style={{
-            width:           n.w,
-            height:          n.h,
-            background:      n.color,
-            left:            `${n.left}%`,
-            top:             n.top,
-            '--rot-from':    `${n.rotFrom}deg`,
-            '--rot-to':      `${n.rotTo}deg`,
-            '--fall-dur':    `${n.dur}s`,
-            '--fall-delay':  `${n.delay}s`,
-          }}
-        >
-          <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-            {n.doodle.map((d, j) => (
-              <path key={j} d={d} stroke="#888888" strokeWidth="1" opacity="0.35" strokeLinecap="round" />
-            ))}
-          </svg>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 /* ─── Reveal on scroll ─────────────────────────────── */
 function useReveal(delay = 0, threshold = 0.15) {
@@ -459,8 +377,6 @@ export default function Home({ navigate }) {
 
   return (
     <div className="page home-page">
-      <SplashScreen />
-
       <div className="custom-cursor" aria-hidden="true">
         <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0L0 17.5L4.5 13.5L7.5 21L10.5 19.8L7.5 12.5H13L0 0Z" fill="black" stroke="white" strokeWidth="1" strokeLinejoin="round"/>
