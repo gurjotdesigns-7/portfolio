@@ -40,35 +40,33 @@ function HeroSection() {
   return (
     <section className="hs">
 
-      {/* Hand-drawn pencil lines — full-screen background, draws on load */}
+      {/* Hand-drawn pencil lines — right half only, drawn on load */}
       <svg className="hs-pencil-lines" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 800" preserveAspectRatio="none">
-        {/* ── HORIZONTAL (left → right) ── */}
-        {/* H1 — long gentle arc, upper-left region */}
-        <path className="hs-pl hs-pl-1" d="M 28 118 C 180 96 390 134 588 112" stroke="#2a2a2a" strokeWidth="1.4" strokeLinecap="round" fill="none" />
-        {/* H2 — wide wobble, mid-left */}
-        <path className="hs-pl hs-pl-2" d="M 85 268 Q 295 244 498 270" stroke="#2a2a2a" strokeWidth="1.0" strokeLinecap="round" fill="none" />
-        {/* H3 — long crossing center, upper */}
-        <path className="hs-pl hs-pl-3" d="M 505 172 C 695 150 892 188 1088 165" stroke="#2a2a2a" strokeWidth="1.7" strokeLinecap="round" fill="none" />
-        {/* H4 — gentle arc across center */}
-        <path className="hs-pl hs-pl-4" d="M 635 374 Q 848 350 1058 376" stroke="#2a2a2a" strokeWidth="1.1" strokeLinecap="round" fill="none" />
-        {/* H5 — lower-left spread */}
-        <path className="hs-pl hs-pl-5" d="M 138 465 C 335 444 542 472 745 454" stroke="#2a2a2a" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-        {/* H6 — lower-right sweep */}
-        <path className="hs-pl hs-pl-6" d="M 812 518 Q 1018 494 1228 520" stroke="#2a2a2a" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-        {/* H7 — near bottom, organic wobble */}
-        <path className="hs-pl hs-pl-7" d="M 275 628 C 482 606 692 635 898 615" stroke="#2a2a2a" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-        {/* H8 — right-side mid, shorter */}
-        <path className="hs-pl hs-pl-8" d="M 955 308 Q 1148 282 1348 310" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round" fill="none" />
-        {/* ── VERTICAL (top → bottom) ── */}
-        {/* V1 — left column, long flowing */}
-        <path className="hs-pl hs-pl-9" d="M 192 52 C 175 198 214 348 190 492" stroke="#2a2a2a" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-        {/* V2 — center, slight sway */}
-        <path className="hs-pl hs-pl-10" d="M 718 35 Q 742 190 720 345" stroke="#2a2a2a" strokeWidth="1.0" strokeLinecap="round" fill="none" />
-        {/* V3 — right column */}
-        <path className="hs-pl hs-pl-11" d="M 1108 68 C 1126 222 1092 368 1115 508" stroke="#2a2a2a" strokeWidth="1.4" strokeLinecap="round" fill="none" />
-        {/* V4 — center-left, shorter drop */}
-        <path className="hs-pl hs-pl-12" d="M 468 92 Q 450 255 465 415" stroke="#2a2a2a" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+        {/* P1 — gentle arc, upper area */}
+        <path className="hs-pl hs-pl-1" d="M 778 92 Q 868 62 952 98" stroke="#2a2a2a" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+        {/* P2 — cubic, top right */}
+        <path className="hs-pl hs-pl-2" d="M 1082 58 C 1132 43 1192 74 1242 53" stroke="#2a2a2a" strokeWidth="1.0" strokeLinecap="round" fill="none" />
+        {/* P3 — mid-upper diagonal curve */}
+        <path className="hs-pl hs-pl-3" d="M 912 188 Q 988 152 1048 194" stroke="#2a2a2a" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        {/* P4 — upper far-right arc */}
+        <path className="hs-pl hs-pl-4" d="M 1172 152 Q 1262 128 1312 164" stroke="#2a2a2a" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        {/* P5 — organic S-ish, mid area */}
+        <path className="hs-pl hs-pl-5" d="M 748 278 C 812 258 872 296 924 268" stroke="#2a2a2a" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+        {/* P6 — short diagonal, mid-right */}
+        <path className="hs-pl hs-pl-6" d="M 1022 318 Q 1092 292 1148 330" stroke="#2a2a2a" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+        {/* P7 — gentle curve, lower-left of right half */}
+        <path className="hs-pl hs-pl-7" d="M 832 394 Q 898 368 942 406" stroke="#2a2a2a" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+        {/* P8 — cubic, right side mid */}
+        <path className="hs-pl hs-pl-8" d="M 1202 258 C 1256 238 1302 274 1352 252" stroke="#2a2a2a" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+        {/* P9 — flowing curve, lower-mid */}
+        <path className="hs-pl hs-pl-9" d="M 968 454 C 1022 474 1082 442 1112 468" stroke="#2a2a2a" strokeWidth="1.7" strokeLinecap="round" fill="none" />
+        {/* P10 — short arc, right area */}
+        <path className="hs-pl hs-pl-10" d="M 1132 388 Q 1188 362 1228 394" stroke="#2a2a2a" strokeWidth="1.0" strokeLinecap="round" fill="none" />
+        {/* P11 — lower left of right half */}
+        <path className="hs-pl hs-pl-11" d="M 852 518 Q 922 492 978 524" stroke="#2a2a2a" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+        {/* P12 — lower right cubic */}
+        <path className="hs-pl hs-pl-12" d="M 1052 558 C 1104 538 1154 564 1194 544" stroke="#2a2a2a" strokeWidth="1.2" strokeLinecap="round" fill="none" />
       </svg>
 
       <div className="hs-container">
