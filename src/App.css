@@ -82,13 +82,12 @@ body {
   z-index: 9999;
   background: transparent;
   pointer-events: none;
-  overflow: hidden;
   transition: opacity 0.4s ease;
 }
 .splash-note {
   position: absolute;
   border-radius: 2px;
-  opacity: 0.92;
+  opacity: 1;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;

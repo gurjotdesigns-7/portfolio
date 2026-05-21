@@ -44,8 +44,8 @@ function genSplashNotes() {
       top:   -_ri(60, 250),
       rotFrom,
       rotTo,
-      dur:   _rnd(1.8, 2.6).toFixed(2),
-      delay: _rnd(0, 1.0).toFixed(2),
+      dur:   _rnd(1.4, 2.0).toFixed(2),
+      delay: _rnd(0, 0.6).toFixed(2),
       label: labelSlots.has(i) ? labelList[li++] : null,
       lines: _pick(_SD),
     }
@@ -54,13 +54,13 @@ function genSplashNotes() {
 
 function SplashScreen() {
   const [phase, setPhase] = useState(
-    () => sessionStorage.getItem('splashShown') ? 'gone' : 'visible'
+    () => sessionStorage.getItem('splashSeen_1') ? 'gone' : 'visible'
   )
   const notes = useMemo(() => genSplashNotes(), [])
 
   useEffect(() => {
     if (phase === 'gone') return
-    sessionStorage.setItem('splashShown', 'true')
+    sessionStorage.setItem('splashSeen_1', 'true')
     const t1 = setTimeout(() => setPhase('fading'), 2500)
     const t2 = setTimeout(() => setPhase('gone'),   2900)
     return () => { clearTimeout(t1); clearTimeout(t2) }
