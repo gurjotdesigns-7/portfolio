@@ -492,7 +492,7 @@ export default function Home({ navigate }) {
       <section id="work" className="case-studies-section">
         <div className="container container-narrow">
           <Reveal className="section-heading">
-            <h2 className="section-h2">Case Studies</h2>
+            <h2 className="section-h2">Curated Projects</h2>
             <p className="section-sub">Three projects that shaped how I think about design.</p>
           </Reveal>
         </div>
