@@ -307,6 +307,44 @@ body {
   text-transform: uppercase;
 }
 
+/* ──────────────── STICKY NOTES ──────────────── */
+.hs-left {
+  position: relative;
+}
+.hs-sticky {
+  position: absolute;
+  width: 120px;
+  min-height: 50px;
+  padding: 8px 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333333;
+  border-radius: 2px;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.12);
+  line-height: 1.4;
+  pointer-events: none;
+  user-select: none;
+}
+.hs-sticky-1 {
+  background: #FFF3B0;
+  transform: rotate(-3deg);
+  top: 178px;
+  left: -18px;
+}
+.hs-sticky-2 {
+  background: #FFD6D6;
+  transform: rotate(2deg);
+  top: 232px;
+  left: 8px;
+}
+.hs-sticky-3 {
+  background: #D6F5E3;
+  transform: rotate(-1.5deg);
+  top: 286px;
+  left: -8px;
+}
+
 /* ──────────────── RIGHT COLUMN ──────────────── */
 .hs-right {
   display: flex;
@@ -3183,6 +3221,13 @@ body {
   /* Footer */
   .home-footer-v2    { padding: 56px 32px 36px !important; }
   .footer-cta-headline { font-size: clamp(24px, 4vw, 44px) !important; }
+}
+
+/* ══════════════════════════════════════════════════════
+   Sticky notes: hide below 768px
+══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hs-sticky { display: none !important; }
 }
 
 /* ══════════════════════════════════════════════════════
