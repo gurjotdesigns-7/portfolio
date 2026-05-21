@@ -53,14 +53,10 @@ function genSplashNotes() {
 }
 
 function SplashScreen() {
-  const [phase, setPhase] = useState(
-    () => sessionStorage.getItem('splashSeen_1') ? 'gone' : 'visible'
-  )
+  const [phase, setPhase] = useState('visible')
   const notes = useMemo(() => genSplashNotes(), [])
 
   useEffect(() => {
-    if (phase === 'gone') return
-    sessionStorage.setItem('splashSeen_1', 'true')
     const t1 = setTimeout(() => setPhase('fading'), 2500)
     const t2 = setTimeout(() => setPhase('gone'),   2900)
     return () => { clearTimeout(t1); clearTimeout(t2) }
