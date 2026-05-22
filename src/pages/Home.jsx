@@ -433,7 +433,7 @@ function PlaygroundSection({ navigate }) {
               <span className="pg-tape"></span>
               <img src={photoCardThumb} alt="Photography" />
               <div className="pg-card-label">
-                <h4>Photography</h4>
+                <h4>Out in the Wild</h4>
                 <p>Moments I didn't design, but framed.</p>
               </div>
             </a>
