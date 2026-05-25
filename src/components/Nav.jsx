@@ -62,14 +62,6 @@ export default function Nav({ page, navigate }) {
 
   return (
     <nav className="nav-pill-wrap">
-      {page === 'mojspot' && (
-        <button className="nav-back-btn" onClick={() => navigate('home')}>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 11L5 7l4-4"/>
-          </svg>
-          Back to work
-        </button>
-      )}
       <div className="nav-pill">
         <button
           className={`nav-pill-link${active === 'top' ? ' nav-pill-active' : ''}`}

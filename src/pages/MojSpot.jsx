@@ -57,8 +57,28 @@ export default function MojSpot({ navigate }) {
     return () => { document.title = 'Gurjot Ahluwalia · UX Designer' }
   }, [])
 
+  // Dark nav pill + plain back arrow
+  useEffect(() => {
+    const navWrap = document.querySelector('.nav-pill-wrap')
+    if (!navWrap) return
+
+    navWrap.classList.add('moj-nav-dark')
+
+    const arrow = document.createElement('button')
+    arrow.className = 'moj-back-arrow'
+    arrow.setAttribute('aria-label', 'Back')
+    arrow.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>`
+    arrow.onclick = () => navigate('home')
+    navWrap.appendChild(arrow)
+
+    return () => {
+      navWrap.classList.remove('moj-nav-dark')
+      navWrap.querySelector('.moj-back-arrow')?.remove()
+    }
+  }, [])
+
   return (
-    <div className="moj-page">
+    <div className="moj-page" style={{ background: '#0a0a0c', minHeight: '100vh' }}>
 
       <section className="moj-hero">
         <div className="moj-hero-inner">
@@ -124,7 +144,7 @@ export default function MojSpot({ navigate }) {
         title="From coupon selection to a live spot"
         desc="Duration selection with dual-currency payment (coins or INR), video eligibility filtering, payment method choice, and the celebratory confirmation. Every step builds confidence before asking for commitment."
         screens={[
-          { src: '/Moj Spot/Verification Active.png',                              caption: 'Coupon Selection — first-time user' },
+          { src: '/Moj Spot/Verification Active-1.png',                            caption: 'Coupon Selection — first-time user' },
           { src: '/Moj Spot/Video Selection Screen- Coupon for 2 days.png',        caption: 'Video Selection — 4 of 4 selected' },
           { src: '/Moj Spot/Video Selection Screen- Coupon for 2 days-1.png',      caption: 'Choose Payment — INR or Mints' },
           { src: '/Moj Spot/Video Selection Screen- Coupon for 2 days-2.png',      caption: 'Payment Successful — verification queued' },
@@ -136,8 +156,8 @@ export default function MojSpot({ navigate }) {
         title="Protecting creators when things go wrong"
         desc="Verification failure gives two explicit paths: try different videos, or get a full refund. The returning user flow shows the last completed campaign before a new purchase."
         screens={[
-          { src: '/Moj Spot/Moj Spot - Rejected.png',    caption: 'Verification Failed — two recovery paths' },
-          { src: '/Moj Spot/Verification Active-1.png',   caption: 'Returning user — last campaign visible' },
+          { src: '/Moj Spot/Moj Spot - Rejected.png',     caption: 'Verification Failed — two recovery paths' },
+          { src: '/Moj Spot/Verification Active-2.png',   caption: 'Returning user — last campaign visible' },
         ]}
       />
 
@@ -146,7 +166,7 @@ export default function MojSpot({ navigate }) {
         title="Simultaneous campaigns and performance visibility"
         desc="My Activity tracks all campaigns with distinct colour coding per state. Spot Insights shows the exact ROI of each campaign and surfaces a direct re-boost CTA."
         screens={[
-          { src: '/Moj Spot/Verification Active-2.png', caption: 'My Activity — processing, live, and gain states' },
+          { src: '/Moj Spot/Verification Active.png',   caption: 'My Activity — processing, live, and gain states' },
           { src: '/Moj Spot/Select video.png',          caption: 'Spot Insights — 25% overall increase in views' },
         ]}
       />

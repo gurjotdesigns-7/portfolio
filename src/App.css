@@ -161,29 +161,44 @@ body {
   pointer-events: auto;
 }
 
-.nav-back-btn {
+/* Dark pill on Moj Spot page */
+.moj-nav-dark .nav-pill {
+  background: rgba(10,10,12,0.75) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+.moj-nav-dark .nav-pill-link {
+  color: rgba(255,255,255,0.5) !important;
+}
+.moj-nav-dark .nav-pill-link:hover {
+  color: rgba(255,255,255,0.9) !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+.moj-nav-dark .nav-pill-link.nav-pill-active {
+  color: #fff !important;
+  background: rgba(255,255,255,0.12) !important;
+}
+
+/* Plain back arrow — no box, no border */
+.moj-back-arrow {
   position: absolute;
-  left: 24px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  background: rgba(255,255,255,0.85);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 8px 14px;
-  cursor: pointer;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 8px 32px rgba(20,20,30,0.06);
-  pointer-events: auto;
-  transition: color 0.2s;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 101;
 }
-.nav-back-btn:hover { color: var(--text); }
+.moj-back-arrow:hover {
+  opacity: 0.65;
+  transform: translateY(-50%) translateX(-2px);
+}
 
 .nav-pill-link {
   padding: 8px 18px;
@@ -3514,8 +3529,25 @@ body {
 .moj-quote-text { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.8; font-style: italic; margin-bottom: 14px; }
 .moj-quote-cite { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.06em; }
 
-.moj-footer { padding: 48px 0; text-align: center; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); }
-.moj-footer-back { color: var(--accent); text-decoration: none; background: none; border: none; cursor: pointer; font-size: 13px; font-family: inherit; }
+.moj-footer {
+  padding: 56px 0;
+  background: #0a0a0c;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+}
+.moj-footer-back {
+  color: #f5c518;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.moj-footer-back:hover { color: #fff; }
 
 @media (max-width: 768px) {
   .moj-stat-inner, .moj-outcome-grid { grid-template-columns: 1fr; }
@@ -3524,5 +3556,5 @@ body {
   .moj-phone-screen { width: 186px; }
   .moj-hero-title { font-size: 36px; }
   .moj-container, .moj-container-narrow, .moj-hero-inner { padding: 0 24px; }
-  .nav-back-btn { display: none; }
+  .moj-back-arrow { display: none; }
 }
