@@ -4,6 +4,7 @@ import CaseStudyKYC from './pages/CaseStudyKYC'
 import CaseStudyCineflow from './pages/CaseStudyCineflow'
 import CaseStudyReferral from './pages/CaseStudyReferral'
 import Photography from './pages/Photography'
+import MojSpot from './pages/MojSpot'
 import Nav from './components/Nav'
 import './App.css'
 
@@ -24,6 +25,7 @@ export default function App() {
       {page === 'cineflow' && <CaseStudyCineflow navigate={navigate} />}
       {page === 'referral' && <CaseStudyReferral navigate={navigate} />}
       {page === 'photography' && <Photography navigate={navigate} />}
+      {page === 'mojspot' && <MojSpot navigate={navigate} />}
     </div>
   )
 }
