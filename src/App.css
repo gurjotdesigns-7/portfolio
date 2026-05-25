@@ -3412,6 +3412,27 @@ body {
   transition: box-shadow 0.4s ease;
 }
 
+/* Coming Soon wrapper */
+.cs-row-coming-soon {
+  position: relative;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.cs-coming-soon-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.55;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 :root {
   --moj-yellow: #f5c518;
   --moj-dark:   #0a0a0c;
