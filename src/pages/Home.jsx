@@ -596,7 +596,7 @@ export default function Home({ navigate }) {
                 </svg>
                 <span>LinkedIn</span>
               </a>
-              <a href="https://drive.google.com/file/d/15FHPBqEyNZWjjyRFjdwy4LfZlbFdV1SY/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Download Resume">
+              <a href="https://drive.google.com/file/d/1xBDQ9yICLssV5GeO0qguskU9HnJhOhaD/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Download Resume">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                   <polyline points="7 10 12 15 17 10"/>
