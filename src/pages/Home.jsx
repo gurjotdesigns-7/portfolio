@@ -275,51 +275,6 @@ function CaseStudyRow({ side, image, alt, eyebrow, title, body, cta, onClick }) 
   )
 }
 
-/* ─── Moj Spot card (inline so cs-row-image-dark can be applied) ── */
-function MojSpotCard({ navigate }) {
-  const { imgRef, txtRef } = useCsReveal()
-  const tiltRef = useRef(null)
-
-  const handleMouseMove = (e) => {
-    const el = tiltRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width  - 0.5
-    const y = (e.clientY - rect.top)  / rect.height - 0.5
-    el.style.transition = 'transform 0.1s ease-out, box-shadow 0.1s ease-out'
-    el.style.transform = `translateY(-8px) perspective(1000px) rotateX(${-y * 8}deg) rotateY(${x * 8}deg)`
-    el.style.boxShadow = '0 24px 48px rgba(0,0,0,0.22)'
-  }
-
-  const handleMouseLeave = () => {
-    const el = tiltRef.current
-    if (!el) return
-    el.style.transition = 'transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out'
-    el.style.transform = ''
-    el.style.boxShadow = ''
-  }
-
-  return (
-    <div className="cs-row">
-      <div className="cs-row-grid cs-row-reverse">
-        <div
-          className="cs-row-image cs-row-image-dark cs-row-anim cs-row-tilt"
-          ref={(el) => { imgRef.current = el; tiltRef.current = el }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <img src="/Moj Spot/Select video.png" alt="Moj Spot creator monetisation" className="cs-row-img-inner" />
-          <div className="cs-row-image-overlay" />
-        </div>
-        <div className="cs-row-text cs-row-anim cs-row-anim-delay" ref={txtRef}>
-          <div className="cs-row-eyebrow">04 — ShareChat · Moj</div>
-          <h3 className="cs-row-title">Moj Spot — Creator Monetisation System</h3>
-          <p className="cs-row-body">Designed a paid content-boosting platform from zero — covering 8 entry points, dual-currency payment, content moderation, and post-campaign analytics. Scaled through multi-campaign support and audience targeting. ₹44L in the first 2.5 months. ₹65L monthly by July.</p>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 /* ─── Playground card ────────────────────────────────── */
 function PlaygroundCard({ image, title, desc, delay = 0 }) {
@@ -553,29 +508,34 @@ export default function Home({ navigate }) {
           </Reveal>
         </div>
         <div className="container case-studies-container">
+          {/* 01 — Moj Spot (Figma prototype) */}
+          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=&node-id=2017-20270&viewport=-2941%2C4169%2C0.38&t=kFWcTi6kwAi89RDq-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=542%3A3090" target="_blank" rel="noopener noreferrer" className="cs-row-link">
+            <CaseStudyRow side="right" image="/moj.png" alt="Moj Spot creator monetisation"
+              eyebrow="01 — ShareChat · Moj" title="Moj Spot — Creator Monetisation System"
+              body="Designed a paid content-boosting platform from zero — covering 8 entry points, dual-currency payment, content moderation, and post-campaign analytics. Scaled through multi-campaign support and audience targeting. ₹44L in the first 2.5 months. ₹65L monthly by July."
+              cta="View case study" onClick={() => {}} />
+          </a>
+          {/* 02 — Referral */}
           <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="right" image="/referral.png" alt="Starter Challenge screens"
-              eyebrow="01 — ShareChat · Vibely" title="Referral & Starter Challenge Growth System"
+            <CaseStudyRow side="left" image="/Referral new.png" alt="Starter Challenge screens"
+              eyebrow="02 — ShareChat · Vibely" title="Referral & Starter Challenge Growth System"
               body="A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift."
               cta="View case study" onClick={() => {}} />
           </a>
+          {/* 03 — Cineflow */}
           <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=182%3A76113&node-id=1166-143377&viewport=395%2C823%2C0.03&t=crlJh790HneX3WER-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1166%3A143377" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="left" image="/cineflow.png" alt="Cineflow characters screen"
-              eyebrow="02 — Cineflow · 48hr Sprint" title="First-time UX for AI Episode Creation"
+            <CaseStudyRow side="right" image="/cineflow.png" alt="Cineflow characters screen"
+              eyebrow="03 — Cineflow · 48hr Sprint" title="First-time UX for AI Episode Creation"
               body="A 48-hour sprint to collapse a fragmented six-tool workflow into one guided experience. Defined a consistent generative pattern — dual options + persistent chat — that scales from idea to exported episode."
               cta="View case study" onClick={() => {}} />
           </a>
+          {/* 04 — KYC */}
           <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=392-24762&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="right" image="/kyc.png" alt="KYC wallet earnings screen"
-              eyebrow="03 — ShareChat · Vibely" title="KYC, Wallet & Cash-out System Redesign"
+            <CaseStudyRow side="left" image="/kyc.png" alt="KYC wallet earnings screen"
+              eyebrow="04 — ShareChat · Vibely" title="KYC, Wallet & Cash-out System Redesign"
               body="A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments."
               cta="View case study" onClick={() => {}} />
           </a>
-          {/* Moj Spot — Coming Soon */}
-          <div className="cs-row-link cs-row-coming-soon" style={{ cursor: 'default' }}>
-            <MojSpotCard navigate={null} />
-            <div className="cs-coming-soon-badge">Coming Soon</div>
-          </div>
         </div>
       </section>
 

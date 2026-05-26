@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Home from './pages/Home'
+import MojSpot from './pages/MojSpot'
 import CaseStudyKYC from './pages/CaseStudyKYC'
 import CaseStudyCineflow from './pages/CaseStudyCineflow'
 import CaseStudyReferral from './pages/CaseStudyReferral'
@@ -20,6 +21,7 @@ export default function App() {
     <div className="app">
       <Nav page={page} navigate={navigate} />
       {page === 'home'        && <Home navigate={navigate} />}
+      {page === 'mojspot'     && <MojSpot navigate={navigate} />}
       {page === 'kyc'         && <CaseStudyKYC navigate={navigate} />}
       {page === 'cineflow'    && <CaseStudyCineflow navigate={navigate} />}
       {page === 'referral'    && <CaseStudyReferral navigate={navigate} />}
