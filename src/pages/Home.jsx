@@ -512,7 +512,7 @@ export default function Home({ navigate }) {
           <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=&node-id=2017-20270&viewport=-2941%2C4169%2C0.38&t=kFWcTi6kwAi89RDq-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=542%3A3090" target="_blank" rel="noopener noreferrer" className="cs-row-link">
             <CaseStudyRow side="right" image="/moj.png" alt="Moj Spot creator monetisation"
               eyebrow="01 — ShareChat · Moj" title="Moj Spot — Creator Monetisation System"
-              body="Designed a paid content-boosting platform from zero — covering 8 entry points, dual-currency payment, content moderation, and post-campaign analytics. Scaled through multi-campaign support and audience targeting. ₹44L in the first 2.5 months. ₹65L monthly by July."
+              body="Tens of millions of creators, zero paid growth tools. Designed Moj Spot from scratch, a content-boosting system that opened a new revenue stream and scaled through targeting, multi-campaign support, and analytics."
               cta="View case study" onClick={() => {}} />
           </a>
           {/* 02 — Referral */}
