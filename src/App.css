@@ -3680,7 +3680,9 @@ body {
     min-height: 1180px !important;
     background-image: url('/PaperBG-crop.png') !important;
     background-position: top center !important;
-    background-size: cover !important;
+    /* 25% bigger than a plain cover-fill (cover = 100% height here since the
+       paper is landscape inside a tall section), anchored to the top edge. */
+    background-size: auto 125% !important;
     background-repeat: no-repeat !important;
   }
   .pg-content {
@@ -3701,7 +3703,9 @@ body {
   }
   .playground-card {
     width: min(85vw, 300px) !important;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+    /* Flat 2D hard-offset shadow to match the rest of the site (was an old
+       soft blurred shadow that survived only in this mobile override). */
+    box-shadow: 7px 7px 0 rgba(26, 25, 23, 0.18) !important;
   }
   .card-minerva { transform: rotate(-2deg) !important; }
   .card-bloom   { transform: rotate(2deg)  !important; margin-top: 0 !important; }
