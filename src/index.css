@@ -33,7 +33,11 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* `clip`, NOT `hidden` — `overflow: hidden` turns the element into a scroll
+     container, which silently disables `position: sticky` on descendants (it
+     broke the curated-projects card pile). `overflow-x: clip` clips the
+     horizontal sway WITHOUT creating a scroll container, so sticky survives. */
+  overflow-x: clip;
 }
 
 body {
@@ -47,7 +51,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
 }
 
