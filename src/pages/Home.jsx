@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
+import CaseStudyStack from '../components/CaseStudyStack'
 
 /* ─── Splash screen ──────────────────────────────────
    45 sticky notes fall once on first load per session.
    sessionStorage key 'splashShown' prevents replay.
 ────────────────────────────────────────────────────── */
-const _SC = ['#FFF3B0', '#E8D5FF', '#FFD6D6']
+const _SC = ['#F1EFFD', '#FEEAEA', '#FFF9EC']
 const _SL = [
   'Retention','Onboarding','Revenue','Brainstorming',
   'Collaboration','Focus Mode','Activation','Growth',
@@ -47,11 +48,11 @@ function genSplashNotes() {
     const rotTo   = rotFrom + _rnd(8, 20) * (Math.random() > 0.5 ? 1 : -1)
     return {
       id:    i,
-      w:     _ri(65, 100),
-      h:     _ri(60, 90),
+      w:     _ri(195, 300),
+      h:     _ri(180, 270),
       color: _pick(_SC),
       left:  _rnd(0, 93),
-      top:   -_ri(60, 250),
+      top:   -_ri(280, 520),
       rotFrom,
       rotTo,
       dur:   _rnd(1.4, 2.0).toFixed(2),
@@ -201,80 +202,38 @@ function HeroSection() {
   )
 }
 
-/* ─── Case study scroll-in animation ─────────────────── */
-function useCsReveal() {
-  const imgRef = useRef(null)
-  const txtRef = useRef(null)
-  useEffect(() => {
-    const els = [imgRef.current, txtRef.current].filter(Boolean)
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('cs-row-visible')
-          } else {
-            entry.target.classList.remove('cs-row-visible')
-          }
-        })
-      },
-      { threshold: 0, rootMargin: '0px 0px -100px 0px' }
-    )
-    els.forEach(el => obs.observe(el))
-    return () => obs.disconnect()
-  }, [])
-  return { imgRef, txtRef }
-}
-
-/* ─── Case-study row ─────────────────────────────────── */
-function CaseStudyRow({ side, image, alt, eyebrow, title, body, cta, onClick }) {
-  const { imgRef, txtRef } = useCsReveal()
-  const tiltRef = useRef(null)
-
-  const handleMouseMove = (e) => {
-    const el = tiltRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width  - 0.5  // -0.5 to 0.5
-    const y = (e.clientY - rect.top)  / rect.height - 0.5
-    const rotY =  x * 8   // max 4deg each side
-    const rotX = -y * 8
-    el.style.transition = 'transform 0.1s ease-out, box-shadow 0.1s ease-out'
-    el.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`
-    el.style.boxShadow = '0 24px 48px rgba(0,0,0,0.22)'
-  }
-
-  const handleMouseLeave = () => {
-    const el = tiltRef.current
-    if (!el) return
-    el.style.transition = 'transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out'
-    el.style.transform = ''
-    el.style.boxShadow = ''
-  }
-
-  return (
-    <div className="cs-row">
-      <div className={`cs-row-grid ${side === 'right' ? 'cs-row-reverse' : ''}`}>
-        <div
-          className="cs-row-image cs-row-anim cs-row-tilt"
-          ref={(el) => { imgRef.current = el; tiltRef.current = el }}
-          onClick={onClick}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <img src={image} alt={alt} className="cs-row-img-inner" />
-          <div className="cs-row-image-overlay" />
-        </div>
-        <div className="cs-row-text cs-row-anim cs-row-anim-delay" ref={txtRef}>
-          {eyebrow && <div className="cs-row-eyebrow">{eyebrow}</div>}
-          <h3 className="cs-row-title">{title}</h3>
-          <p className="cs-row-body">{body}</p>
-          <button className="cs-row-cta" onClick={onClick}>{cta}</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
+/* ─── Case studies data (fed into the sticky CaseStudyStack) ── */
+const CASE_STUDIES = [
+  {
+    eyebrow: '01 — ShareChat · Moj',
+    title: 'Moj Spot — Creator Monetisation System',
+    body: 'Tens of millions of creators, zero paid growth tools. Designed Moj Spot from scratch, a content-boosting system that opened a new revenue stream and scaled through targeting, multi-campaign support, and analytics.',
+    hero: true,
+    image: '/moj.png',
+    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=&node-id=2017-20270&viewport=-2941%2C4169%2C0.38&t=kFWcTi6kwAi89RDq-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=542%3A3090',
+  },
+  {
+    eyebrow: '02 — ShareChat · Vibely',
+    title: 'Referral & Starter Challenge Growth System',
+    body: 'A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift.',
+    image: '/Referral new.png',
+    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307',
+  },
+  {
+    eyebrow: '03 — Cineflow · 48hr Sprint',
+    title: 'First-time UX for AI Episode Creation',
+    body: 'A 48-hour sprint to collapse a fragmented six-tool workflow into one guided experience. Defined a consistent generative pattern — dual options + persistent chat — that scales from idea to exported episode.',
+    image: '/cineflow.png',
+    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=182%3A76113&node-id=1166-143377&viewport=395%2C823%2C0.03&t=crlJh790HneX3WER-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1166%3A143377',
+  },
+  {
+    eyebrow: '04 — ShareChat · Vibely',
+    title: 'KYC, Wallet & Cash-out System Redesign',
+    body: 'A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments.',
+    image: '/kyc.png',
+    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=392-24762&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762',
+  },
+]
 
 /* ─── Playground card ────────────────────────────────── */
 function PlaygroundCard({ image, title, desc, delay = 0 }) {
@@ -292,12 +251,18 @@ function PlaygroundCard({ image, title, desc, delay = 0 }) {
 }
 
 /* ─── Testimonial card ───────────────────────────────── */
-function TestimonialCard({ quote, name, role, initial, color }) {
+function TestimonialCard({ quote, name, role, initial, color, image }) {
   return (
     <article className="testimonial-card">
       <p className="testimonial-quote">{quote}</p>
       <div className="testimonial-meta">
-        <div className="testimonial-avatar" style={{ background: color }}>{initial}</div>
+        {image ? (
+          <div className="testimonial-avatar testimonial-avatar--photo">
+            <img src={image} alt={name} />
+          </div>
+        ) : (
+          <div className="testimonial-avatar" style={{ background: color }}>{initial}</div>
+        )}
         <div>
           <div className="testimonial-name">{name}</div>
           <div className="testimonial-role">{role}</div>
@@ -360,23 +325,23 @@ function Ticker() {
 const TESTI_DATA = [
   {
     quote: "Gurjot is one of the rare designers who makes engineering execution genuinely easier. Handoffs were detailed, edge cases covered, interaction states documented before we started building. He understood engineering constraints without needing them explained twice.",
-    name: 'Lavish Bansal', role: 'Senior Software Engineer · ShareChat', initial: 'L', color: '#DCFCE7',
+    name: 'Lavish Bansal', role: 'Senior Software Engineer · ShareChat', initial: 'L', color: '#DCFCE7', image: '/testimonials/Lavish.jpeg',
   },
   {
     quote: "I was consistently impressed by Gurjot's design skills and thoughtful approach to problem-solving. Strong eye for detail, user-centric thinking, and genuinely collaborative. I truly enjoyed working with him.",
-    name: 'Nidhi Erandole', role: 'Product Design · PayU, Ex-ShareChat', initial: 'N', color: '#FCE7F3',
+    name: 'Nidhi Erandole', role: 'Product Design · PayU, Ex-ShareChat', initial: 'N', color: '#FCE7F3', image: '/testimonials/Nidhi.jpeg',
   },
   {
     quote: "Incredibly thoughtful and collaborative, with strong clarity in problem-solving. What stood out was his sense of ownership and ability to balance user needs with business goals. A great teammate I'd gladly work with again.",
-    name: 'Shubhi Goyal', role: 'Founder · ByteLabs, Ex-ShareChat', initial: 'S', color: '#FEF3C7',
+    name: 'Shubhi Goyal', role: 'Founder · ByteLabs, Ex-ShareChat', initial: 'S', color: '#FEF3C7', image: '/testimonials/Shubhi.jpeg',
   },
   {
     quote: "Gurjot's design contributions created a new revenue stream for our organisation. Moj Spot hit ~₹180K daily revenue from 1000+ creators. His commitment and proactive approach were instrumental in that success.",
-    name: 'Zeenal Patel', role: 'Design Leadership · ShareChat', initial: 'Z', color: '#E0E7FF',
+    name: 'Zeenal Patel', role: 'Design Leadership · ShareChat', initial: 'Z', color: '#E0E7FF', image: '/testimonials/Zeenal.jpeg',
   },
   {
     quote: "Gurjot is a dedicated and extremely talented designer. His expertise in Product Design is beyond par and his hardworking nature is a major plus. A talented, promising, and committed asset.",
-    name: 'Simrat Kaur', role: 'Human Resources Executive', initial: 'S', color: '#E0F2FE',
+    name: 'Simrat Kaur', role: 'Human Resources Executive', initial: 'S', color: '#E0F2FE', image: '/testimonials/Simrat.jpeg',
   },
 ]
 
@@ -390,7 +355,7 @@ function PlaygroundSection({ navigate }) {
     <div id="playground" className="playground-section">
       <div className="pg-paper-wrapper">
 
-        <img src="/PaperBG.png" alt="" className="pg-paper" />
+        <img src="/PaperBG-crop.png" alt="" className="pg-paper" />
 
         <div className="pg-content">
           <h2 className="pg-title">Playground</h2>
@@ -507,36 +472,7 @@ export default function Home({ navigate }) {
             <p className="section-sub">Four projects that shaped how I think about design.</p>
           </Reveal>
         </div>
-        <div className="container case-studies-container">
-          {/* 01 — Moj Spot (Figma prototype) */}
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=&node-id=2017-20270&viewport=-2941%2C4169%2C0.38&t=kFWcTi6kwAi89RDq-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=542%3A3090" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="right" image="/moj.png" alt="Moj Spot creator monetisation"
-              eyebrow="01 — ShareChat · Moj" title="Moj Spot — Creator Monetisation System"
-              body="Tens of millions of creators, zero paid growth tools. Designed Moj Spot from scratch, a content-boosting system that opened a new revenue stream and scaled through targeting, multi-campaign support, and analytics."
-              cta="View case study" onClick={() => {}} />
-          </a>
-          {/* 02 — Referral */}
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="left" image="/Referral new.png" alt="Starter Challenge screens"
-              eyebrow="02 — ShareChat · Vibely" title="Referral & Starter Challenge Growth System"
-              body="A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift."
-              cta="View case study" onClick={() => {}} />
-          </a>
-          {/* 03 — Cineflow */}
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=182%3A76113&node-id=1166-143377&viewport=395%2C823%2C0.03&t=crlJh790HneX3WER-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1166%3A143377" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="right" image="/cineflow.png" alt="Cineflow characters screen"
-              eyebrow="03 — Cineflow · 48hr Sprint" title="First-time UX for AI Episode Creation"
-              body="A 48-hour sprint to collapse a fragmented six-tool workflow into one guided experience. Defined a consistent generative pattern — dual options + persistent chat — that scales from idea to exported episode."
-              cta="View case study" onClick={() => {}} />
-          </a>
-          {/* 04 — KYC */}
-          <a href="https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=392-24762&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762" target="_blank" rel="noopener noreferrer" className="cs-row-link">
-            <CaseStudyRow side="left" image="/kyc.png" alt="KYC wallet earnings screen"
-              eyebrow="04 — ShareChat · Vibely" title="KYC, Wallet & Cash-out System Redesign"
-              body="A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments."
-              cta="View case study" onClick={() => {}} />
-          </a>
-        </div>
+        <CaseStudyStack items={CASE_STUDIES} />
       </section>
 
       <PlaygroundSection navigate={navigate} />
