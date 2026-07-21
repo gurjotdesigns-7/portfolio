@@ -878,6 +878,9 @@ body {
   top: 14px;
   left: 14px;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 7px 15px;
   border-radius: 999px;
   border: 2px solid var(--text);
@@ -888,6 +891,14 @@ body {
   color: var(--text);
   background: #FFF9EC;
   box-shadow: 3px 3px 0 rgba(26, 25, 23, 0.18);
+}
+
+.cs-stack-card__hero-star {
+  color: #F5C518;
+  font-size: 13px;
+  line-height: 1;
+  /* subtle dark edge so the gold star reads against the cream pill */
+  -webkit-text-stroke: 0.5px rgba(26, 25, 23, 0.55);
 }
 
 .cs-stack-card__cover {
@@ -1063,18 +1074,18 @@ body {
     width: 30px;
     height: 30px;
     padding: 0;
-    font-size: 0;
+    gap: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: #FFD84D;
   }
-  .cs-stack-card__hero-tag::before {
-    content: '★';
-    font-size: 16px;
-    line-height: 1;
+  .cs-stack-card__hero-label { display: none; }
+  .cs-stack-card__hero-star {
     color: var(--text);
+    font-size: 16px;
+    -webkit-text-stroke: 0;
   }
 }
 

@@ -201,7 +201,12 @@ export default function CaseStudyStack({ items }) {
           >
             <div className="cs-stack-card__media">
               <div className="cs-stack-card__cover" style={{ backgroundImage: `url("${item.image}")` }} />
-              {item.hero && <span className="cs-stack-card__hero-tag">Hero Project</span>}
+              {item.hero && (
+                <span className="cs-stack-card__hero-tag">
+                  <span className="cs-stack-card__hero-star" aria-hidden="true">★</span>
+                  <span className="cs-stack-card__hero-label">Hero Project</span>
+                </span>
+              )}
             </div>
             <div className="cs-stack-card__body">
               <p className="cs-stack-card__eyebrow">{item.eyebrow}</p>
