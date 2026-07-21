@@ -278,6 +278,73 @@ function TestimonialCard({ quote, name, role, initial, color, image }) {
   )
 }
 
+/* ─── Testimonials marquee (JS-driven) ───────────────────
+   The testimonials scroll used to be a pure CSS keyframe animation
+   (translateX 0 → -50% on a doubled list). On iOS/iPadOS Safari, a wide
+   transform-animated flex row inside overflow:hidden gets aggressively
+   CULLED once scrolled past the first copy — the browser stops painting
+   the duplicate set and the section goes blank after the 5th card. No
+   amount of translateZ/backface/perspective hinting reliably prevented it.
+
+   Driving the transform from a requestAnimationFrame loop instead keeps the
+   layer permanently "active", so WebKit repaints it every frame and never
+   culls the second copy. We advance a pixel offset and wrap it at half the
+   track width (one copy) for a seamless, gap-free loop.
+──────────────────────────────────────────────────────── */
+function TestimonialsMarquee() {
+  const trackRef = useRef(null)
+  const offsetRef = useRef(0)
+  const pausedRef = useRef(false)
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const SPEED = 55 // px per second
+    let raf = 0
+    let last = performance.now()
+
+    const step = (now) => {
+      const dt = Math.min((now - last) / 1000, 0.05) // clamp after tab-switch
+      last = now
+      if (!pausedRef.current) {
+        const half = track.scrollWidth / 2
+        if (half > 0) {
+          offsetRef.current += SPEED * dt
+          if (offsetRef.current >= half) offsetRef.current -= half
+          track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`
+        }
+      }
+      raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+
+    // Pause on hover for mouse users only (touch must never pause it)
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const onEnter = () => { if (fine) pausedRef.current = true }
+    const onLeave = () => { pausedRef.current = false }
+    track.addEventListener('mouseenter', onEnter)
+    track.addEventListener('mouseleave', onLeave)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      track.removeEventListener('mouseenter', onEnter)
+      track.removeEventListener('mouseleave', onLeave)
+    }
+  }, [])
+
+  return (
+    <div className="testi-outer">
+      <div className="testi-track testi-track--js" ref={trackRef}>
+        {[...TESTI_DATA, ...TESTI_DATA].map((t, i) => (
+          <TestimonialCard key={i} {...t} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 /* ─── Personality Ticker ─────────────────────────────────
    Infinite left-scroll strip — sits at the bottom of the
    hero section, visible in the first viewport.
@@ -490,21 +557,7 @@ export default function Home({ navigate }) {
             <p className="section-sub">Words from the people I work with.</p>
           </Reveal>
         </div>
-        {/*
-          Auto-scroll RIGHT: cards loop from right to left direction
-          reversed → new cards appear from the left.
-          SEAMLESS LOOP: TESTI_DATA is doubled. The track starts at
-          translateX(-50%) showing copy 2, animates to 0% showing
-          copy 1. At reset it jumps back to -50% — indistinguishable.
-          Hover pauses the animation for reading comfort.
-        */}
-        <div className="testi-outer">
-          <div className="testi-track">
-            {[...TESTI_DATA, ...TESTI_DATA].map((t, i) => (
-              <TestimonialCard key={i} {...t} />
-            ))}
-          </div>
-        </div>
+        <TestimonialsMarquee />
       </section>
 
       <footer id="contact" className="home-footer-v2">

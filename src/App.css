@@ -589,20 +589,17 @@ body {
      works around it. */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /* Scrolls LEFT: 0 → -50%, same direction as ticker */
+  /* Scrolls LEFT: 0 → -50%, same direction as ticker.
+     NOTE: the JS-driven variant (.testi-track--js) turns this OFF and moves
+     the row from a requestAnimationFrame loop instead, which iOS Safari can't
+     cull. This CSS animation only runs as a no-JS fallback. */
   animation: testi-left 50s linear infinite;
 }
 
-/* Pause-on-hover is for mouse users only. `(hover: hover)` alone isn't a
-   reliable "not touch" check — Apple Pencil-hover-capable iPads report
-   hover:hover as true, and touch itself leaves a "stuck" :hover state on
-   WebKit until something else is tapped. Without `pointer: fine` here, a
-   finger/pencil near the marquee freezes the animation exactly where it
-   was touched (often mid-loop, right around the last card) and it only
-   resumes once the phantom hover clears a few seconds later — matching
-   "disappears after Simrat, then reappears on its own". */
-@media (hover: hover) and (pointer: fine) {
-  .testi-track:hover { animation-play-state: paused; }
+/* JS-driven marquee: kill the CSS keyframe entirely so it can't override the
+   inline transform set each frame from JavaScript. */
+.testi-track--js {
+  animation: none !important;
 }
 
 @keyframes testi-left {
