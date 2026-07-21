@@ -36,6 +36,12 @@ function _ri(a, b)  { return Math.floor(_rnd(a, b + 1)) }
 function _pick(a)   { return a[_ri(0, a.length - 1)] }
 
 function genSplashNotes() {
+  // Notes are sized for desktop by default — scale down on smaller
+  // viewports so they don't overwhelm iPad/phone screens: -30% on iPad,
+  // -50% on phones.
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 1440
+  const scale = vw <= 640 ? 0.375 : vw <= 1024 ? 0.525 : 1
+
   // shuffle label indices so 14 random notes get labels
   const labelSlots = new Set()
   while (labelSlots.size < 14) labelSlots.add(_ri(0, 44))
@@ -48,11 +54,11 @@ function genSplashNotes() {
     const rotTo   = rotFrom + _rnd(8, 20) * (Math.random() > 0.5 ? 1 : -1)
     return {
       id:    i,
-      w:     _ri(195, 300),
-      h:     _ri(180, 270),
+      w:     Math.round(_ri(195, 300) * scale),
+      h:     Math.round(_ri(180, 270) * scale),
       color: _pick(_SC),
       left:  _rnd(0, 93),
-      top:   -_ri(280, 520),
+      top:   -Math.round(_ri(280, 520) * scale),
       rotFrom,
       rotTo,
       dur:   _rnd(1.4, 2.0).toFixed(2),

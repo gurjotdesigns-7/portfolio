@@ -139,16 +139,38 @@ export default function CaseStudyStack({ items }) {
       if (!queued) { queued = true; requestAnimationFrame(update) }
     }
 
+    // iOS/iPadOS fires `resize` on rotation before window.innerHeight has
+    // settled to its final post-rotation value (the toolbar is still
+    // animating in/out), so layout() can bake in a stale viewport height and
+    // never correct itself — the stack's sticky offsets end up sized for the
+    // old orientation, which can push/cover whatever comes after it
+    // (Testimonials). Re-running layout+update a beat after orientation
+    // change catches the settled dimensions.
+    let orientationTimer = null
+    function onOrientationChange() {
+      clearTimeout(orientationTimer)
+      orientationTimer = setTimeout(() => { layout(); update() }, 300)
+    }
+
     layout()
     update()
     window.addEventListener('resize', layout)
     window.addEventListener('resize', onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('orientationchange', onOrientationChange)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', onOrientationChange)
+    }
 
     return () => {
       window.removeEventListener('resize', layout)
       window.removeEventListener('resize', onScroll)
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('orientationchange', onOrientationChange)
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', onOrientationChange)
+      }
+      clearTimeout(orientationTimer)
     }
   }, [items])
 

@@ -109,6 +109,14 @@ body {
   user-select: none;
   line-height: 1.2;
 }
+
+/* Label text scales down alongside the smaller note boxes on iPad/mobile */
+@media (max-width: 1024px) {
+  .splash-note-label { font-size: 18px; padding: 9px; }
+}
+@media (max-width: 640px) {
+  .splash-note-label { font-size: 13px; padding: 6px; }
+}
 @keyframes splash-fall {
   from { transform: translateY(0)     rotate(var(--rot-from)); }
   to   { transform: translateY(120vh) rotate(var(--rot-to));   }
@@ -534,6 +542,11 @@ body {
   overflow: hidden;
   position: relative;
   padding: 4px 0 8px;
+  /* Stabilizes WebKit's 3D/compositing context around the animated track —
+     extra insurance alongside the pointer:fine hover-pause fix and the
+     per-card translateZ(0) layers. */
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
 }
 
 /* Edge fade — masks the hard seams */
@@ -580,7 +593,15 @@ body {
   animation: testi-left 50s linear infinite;
 }
 
-@media (hover: hover) {
+/* Pause-on-hover is for mouse users only. `(hover: hover)` alone isn't a
+   reliable "not touch" check — Apple Pencil-hover-capable iPads report
+   hover:hover as true, and touch itself leaves a "stuck" :hover state on
+   WebKit until something else is tapped. Without `pointer: fine` here, a
+   finger/pencil near the marquee freezes the animation exactly where it
+   was touched (often mid-loop, right around the last card) and it only
+   resumes once the phantom hover clears a few seconds later — matching
+   "disappears after Simrat, then reappears on its own". */
+@media (hover: hover) and (pointer: fine) {
   .testi-track:hover { animation-play-state: paused; }
 }
 
@@ -995,7 +1016,9 @@ body {
   border: 2px solid var(--text);
 }
 
-@media (max-width: 768px) {
+/* Progress dots stay visible on iPad — only true phones hide them (the stack
+   goes single-column there, so a side rail has nowhere clean to sit). */
+@media (max-width: 640px) {
   .cs-progress { display: none; }
 }
 
@@ -1008,8 +1031,14 @@ body {
   white-space: nowrap;
 }
 
+/* iPad landscape / large tablet — narrow the stack a touch so the fixed
+   side progress dots never overlap the card edge. */
+@media (max-width: 1024px) {
+  .cs-stack { width: min(80vw, 950px); }
+}
+
 @media (max-width: 900px) {
-  .cs-stack { width: 92vw; }
+  .cs-stack { width: 78vw; }
   .cs-stack-card__link { gap: clamp(20px, 3vw, 40px); }
 }
 
@@ -1020,10 +1049,30 @@ body {
     gap: 14px;
   }
   .cs-stack-card { padding: 12px; border-radius: 20px; }
-  .cs-stack-card__media { aspect-ratio: 16 / 10; }
+  /* Images stay 1:1 on mobile too (inherits the base aspect-ratio) — square,
+     and taller than the old 16:10 crop, so the photo gets more room. */
   .cs-stack-card__title { font-size: clamp(19px, 5vw, 24px); }
   .cs-stack-card__text { font-size: 14px; max-width: none; }
   .cs-stack-card__foot { flex-wrap: wrap; }
+
+  /* Hero badge becomes a plain yellow star, no text, on mobile */
+  .cs-stack-card__hero-tag {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #FFD84D;
+  }
+  .cs-stack-card__hero-tag::before {
+    content: '★';
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1199,6 +1248,10 @@ body {
   scroll-snap-align: start;
   box-shadow: 5px 5px 0 rgba(26, 25, 23, 0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  /* Give each card its own stable compositing layer — extra insurance
+     against WebKit dropping/culling content inside the animated track. */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* Rotate the three pastel fills across the row */
@@ -1210,7 +1263,7 @@ body {
 }
 
 .testimonial-card:hover {
-  transform: translate(-2px, -2px);
+  transform: translate(-2px, -2px) translateZ(0);
   box-shadow: 8px 8px 0 rgba(26, 25, 23, 0.16);
 }
 
@@ -3498,7 +3551,7 @@ body {
   /* Hero — reduce image, rebalance text */
   .hs-headline { font-size: clamp(42px, 6vw, 72px) !important; }
   .hs-sub      { font-size: clamp(14px, 1.6vw, 16px) !important; }
-  .hs-person-img { max-height: 50vh !important; }
+  .hs-person-img { max-height: 44vh !important; }
   .hs-container  { padding: 0 32px !important; gap: 24px !important; }
 
   /* Section headings */
@@ -3619,11 +3672,16 @@ body {
   .cs-row-cta   { font-size: 12px !important; padding: 10px 18px !important; }
 
   /* ── Playground ──
-     Give the cardboard section enough vertical room */
+     Three cards stack vertically on mobile, so the section is tall. Give the
+     cardboard background enough height (and cover sizing) to reach under ALL
+     three cards — otherwise the last card hangs on the bare dot grid. */
   .playground-section {
-    padding: 80px 0 80px !important;
-    min-height: 640px !important;
+    padding: 80px 0 100px !important;
+    min-height: 1180px !important;
+    background-image: url('/PaperBG-crop.png') !important;
+    background-position: top center !important;
     background-size: cover !important;
+    background-repeat: no-repeat !important;
   }
   .pg-content {
     padding-top: 80px !important;

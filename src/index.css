@@ -33,6 +33,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -46,6 +47,18 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* iOS/iPadOS renders `background-attachment: fixed` unreliably — the dot
+   grid visibly jumps/re-paints while scrolling and during momentum bounce.
+   Touch devices get a normal scrolling background instead (looks identical
+   for a small repeating pattern, just without the desktop parallax feel).
+   Belt-and-suspenders: hover/pointer media features aren't 100% reliable
+   across every touch device, so a width fallback backs them up. */
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+  body { background-attachment: scroll; }
 }
 
 a { color: inherit; text-decoration: none; }
