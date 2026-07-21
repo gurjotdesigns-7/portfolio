@@ -278,23 +278,42 @@ function TestimonialCard({ quote, name, role, initial, color, image }) {
   )
 }
 
-/* ─── Testimonials marquee (JS-driven) ───────────────────
-   The testimonials scroll used to be a pure CSS keyframe animation
-   (translateX 0 → -50% on a doubled list). On iOS/iPadOS Safari, a wide
-   transform-animated flex row inside overflow:hidden gets aggressively
-   CULLED once scrolled past the first copy — the browser stops painting
-   the duplicate set and the section goes blank after the 5th card. No
-   amount of translateZ/backface/perspective hinting reliably prevented it.
+/* ─── Testimonials marquee (windowed conveyor) ───────────
+   Earlier attempts (CSS keyframes, then a full-width rAF transform) both
+   left a very wide row — 10 cards, ~8 screens — living inside overflow.
+   iOS/iPadOS Safari tiles a layer that large and DISCARDS the tiles that
+   sit far off-screen (especially after a few idle seconds), so the section
+   blanks out after the 5th card and only repaints on interaction.
 
-   Driving the transform from a requestAnimationFrame loop instead keeps the
-   layer permanently "active", so WebKit repaints it every frame and never
-   culls the second copy. We advance a pixel offset and wrap it at half the
-   track width (one copy) for a seamless, gap-free loop.
+   The fix is to never have a large off-screen layer at all. We render only
+   as many cards as fit the viewport + a small buffer, and slide a data
+   "window" forward: each time a card fully scrolls off the left, we drop it,
+   advance the window by one, and append a fresh card on the right. The whole
+   rendered row is therefore always ~viewport-sized, so nothing is far enough
+   off-screen to be culled. A requestAnimationFrame loop drives the sub-card
+   offset; React only re-renders once per card (~every few seconds) when the
+   window advances. Cards are keyed by their absolute position in the
+   sequence so React reuses their DOM (no avatar reload) as they shift left.
 ──────────────────────────────────────────────────────── */
 function TestimonialsMarquee() {
   const trackRef = useRef(null)
-  const offsetRef = useRef(0)
+  const fracRef = useRef(0)
+  const startRef = useRef(0)
   const pausedRef = useRef(false)
+  const [count, setCount] = useState(6)
+  const [start, setStart] = useState(0)
+
+  // How many cards are needed to cover the viewport (+2 buffer).
+  useEffect(() => {
+    const recalc = () => {
+      const vw = window.innerWidth
+      const cardW = vw <= 640 ? vw * 0.82 + 12 : 340
+      setCount(Math.max(4, Math.ceil(vw / cardW) + 2))
+    }
+    recalc()
+    window.addEventListener('resize', recalc)
+    return () => window.removeEventListener('resize', recalc)
+  }, [])
 
   useEffect(() => {
     const track = trackRef.current
@@ -308,12 +327,18 @@ function TestimonialsMarquee() {
     const step = (now) => {
       const dt = Math.min((now - last) / 1000, 0.05) // clamp after tab-switch
       last = now
-      if (!pausedRef.current) {
-        const half = track.scrollWidth / 2
-        if (half > 0) {
-          offsetRef.current += SPEED * dt
-          if (offsetRef.current >= half) offsetRef.current -= half
-          track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`
+      const first = track.children[0]
+      if (!pausedRef.current && first) {
+        const cs = getComputedStyle(first)
+        const slotW = first.getBoundingClientRect().width + parseFloat(cs.marginRight || 0)
+        if (slotW > 0) {
+          fracRef.current += SPEED * dt
+          if (fracRef.current >= slotW) {
+            fracRef.current -= slotW
+            startRef.current += 1 // monotonic — keeps keys sliding, no batch remount
+            setStart(startRef.current)
+          }
+          track.style.transform = `translate3d(${-fracRef.current}px, 0, 0)`
         }
       }
       raf = requestAnimationFrame(step)
@@ -332,13 +357,19 @@ function TestimonialsMarquee() {
       track.removeEventListener('mouseenter', onEnter)
       track.removeEventListener('mouseleave', onLeave)
     }
-  }, [])
+  }, [count])
+
+  // Render count+1 cards (extra one buffers the right edge so no gap shows).
+  const slots = Array.from({ length: count + 1 }, (_, i) => ({
+    key: start + i,
+    data: TESTI_DATA[(start + i) % TESTI_DATA.length],
+  }))
 
   return (
     <div className="testi-outer">
       <div className="testi-track testi-track--js" ref={trackRef}>
-        {[...TESTI_DATA, ...TESTI_DATA].map((t, i) => (
-          <TestimonialCard key={i} {...t} />
+        {slots.map(({ key, data }) => (
+          <TestimonialCard key={key} {...data} />
         ))}
       </div>
     </div>

@@ -1028,14 +1028,20 @@ body {
   white-space: nowrap;
 }
 
-/* iPad landscape / large tablet — narrow the stack a touch so the fixed
-   side progress dots never overlap the card edge. */
+/* Tablet range (incl. iPad landscape up to 1366px) — the fixed side progress
+   dots sit ~56px in from the right edge, so the centered stack must stay
+   narrow enough to leave clear space on both sides. These widths are ~15%
+   smaller than before and guarantee a generous gutter to the dots at every
+   tablet size. */
+@media (max-width: 1366px) {
+  .cs-stack { width: min(72vw, 900px); }
+}
 @media (max-width: 1024px) {
-  .cs-stack { width: min(80vw, 950px); }
+  .cs-stack { width: 68vw; }
 }
 
 @media (max-width: 900px) {
-  .cs-stack { width: 78vw; }
+  .cs-stack { width: 66vw; }
   .cs-stack-card__link { gap: clamp(20px, 3vw, 40px); }
 }
 
@@ -3620,12 +3626,13 @@ body {
   .nav-pill-link { padding: 6px 10px !important; font-size: 11px !important; }
 
   /* ── Hero ──
-     Allow section to grow naturally — no overflow clipping
-     Image gets enough room without cropping */
+     Section is exactly one viewport tall and clips its overflow, so the
+     person image is cut cleanly at the bottom — nothing spills below the
+     "Architect at heart…" ticker strip that's pinned to the bottom edge. */
   .hs {
-    height: auto !important;
+    height: 100svh !important;
     min-height: 100svh !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     padding-top: 56px !important;
     padding-bottom: 0 !important;
   }
@@ -3656,6 +3663,8 @@ body {
     width: auto !important;
     max-width: 90% !important;
     object-position: bottom !important;
+    /* Nudge the image up 16px so more of it clears the ticker strip. */
+    transform: translateY(-16px) !important;
   }
   .hs-scroll-indicator { display: none !important; }
 
