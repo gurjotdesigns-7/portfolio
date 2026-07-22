@@ -15,11 +15,15 @@ const STACK = {
   revealPx:   480,   // distance over which an incoming card eases to "pinned"
   revealAt:   0.5,   // reveal a card once this fraction of it is on screen
   persp:      1500,  // 3D perspective (px) applied per card
-  arriveTilt: 15,    // deg an incoming card is inclined as it rises
-  buriedTilt: 3,     // deg each buried card reclines back per card on top
-  scaleStep:  0.035, // how much each buried card shrinks per card on top
-  dimStep:    0.02,  // how much each buried card dims per card on top
-  liftPx:     4,     // how much each buried card tucks up per card on top
+  arriveTilt: 15,    // deg an incoming card is inclined as it rises (entrance only)
+  // Buried cards stay FLAT and full-size so the fully-stacked pile reads as a
+  // clean, equidistant deck (each card's top edge peeks by peekPx, evenly) —
+  // no receding tilt, shrink, or upward tuck. The stack simply scrolls away
+  // naturally as Playground rises in. A faint dim is the only depth cue.
+  buriedTilt: 0,     // deg each buried card reclines back per card on top
+  scaleStep:  0,     // how much each buried card shrinks per card on top
+  dimStep:    0.015, // how much each buried card dims per card on top
+  liftPx:     0,     // how much each buried card tucks up per card on top
 }
 
 const clampNum = (x, a, b) => Math.min(b, Math.max(a, x))

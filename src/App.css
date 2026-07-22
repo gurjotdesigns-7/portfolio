@@ -821,7 +821,10 @@ body {
 ══════════════════════════════════════════════════════ */
 
 .cs-stack {
-  width: min(94vw, 1440px);
+  /* Desktop cards scaled ~15% smaller (was min(94vw, 1440px)). Width drives
+     the whole card, so the 1:1 image and grid shrink proportionally; the
+     font/padding values below are reduced ~15% to match. */
+  width: min(80vw, 1224px);
   margin: 0 auto;
 }
 
@@ -833,7 +836,7 @@ body {
   border-radius: 16px;
   border: 2px solid var(--text);
   box-shadow: 8px 8px 0 rgba(26, 25, 23, 0.14);
-  padding: clamp(20px, 2.4vw, 36px);
+  padding: clamp(17px, 2vw, 31px);
   transform-origin: 50% 0;
   will-change: transform, filter;
 }
@@ -856,7 +859,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: clamp(28px, 4vw, 72px);
+  gap: clamp(24px, 3.4vw, 61px);
   color: inherit;
   text-decoration: none;
 }
@@ -880,11 +883,11 @@ body {
   z-index: 2;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 15px;
+  gap: 5px;
+  padding: 6px 13px;
   border-radius: 999px;
   border: 2px solid var(--text);
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -895,7 +898,7 @@ body {
 
 .cs-stack-card__hero-star {
   color: #F5C518;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 1;
   /* subtle dark edge so the gold star reads against the cream pill */
   -webkit-text-stroke: 0.5px rgba(26, 25, 23, 0.55);
@@ -915,12 +918,12 @@ body {
 .cs-stack-card__body {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .cs-stack-card__eyebrow {
   margin: 0;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -929,7 +932,7 @@ body {
 
 .cs-stack-card__title {
   margin: 0;
-  font-size: clamp(26px, 3.2vw, 40px);
+  font-size: clamp(22px, 2.7vw, 34px);
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.15;
@@ -939,8 +942,8 @@ body {
 .cs-stack-card__text {
   margin: 0;
   max-width: 48ch;
-  font-size: clamp(15px, 1.1vw, 17px);
-  line-height: 1.65;
+  font-size: clamp(13px, 0.95vw, 14.5px);
+  line-height: 1.6;
   color: var(--text-secondary);
 }
 
@@ -954,13 +957,13 @@ body {
   flex: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: 7px;
+  padding: 10px 17px;
   background: var(--text);
   border: 2px solid var(--text);
   color: #fff;
   border-radius: 100px;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: -0.01em;
   box-shadow: 3px 3px 0 rgba(26, 25, 23, 0.18);

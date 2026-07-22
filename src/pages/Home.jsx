@@ -257,9 +257,9 @@ function PlaygroundCard({ image, title, desc, delay = 0 }) {
 }
 
 /* ─── Testimonial card ───────────────────────────────── */
-function TestimonialCard({ quote, name, role, initial, color, image }) {
+function TestimonialCard({ quote, name, role, initial, color, image, cardBg }) {
   return (
-    <article className="testimonial-card">
+    <article className="testimonial-card" style={cardBg ? { background: cardBg } : undefined}>
       <p className="testimonial-quote">{quote}</p>
       <div className="testimonial-meta">
         {image ? (
@@ -360,16 +360,21 @@ function TestimonialsMarquee() {
   }, [count])
 
   // Render count+1 cards (extra one buffers the right edge so no gap shows).
+  // The pastel fill is keyed to each card's ABSOLUTE position in the sequence
+  // (start + i), not its DOM index — so the colour travels with the card as
+  // the window slides and never re-assigns mid-scroll (the abrupt colour
+  // flip that :nth-child produced once cards started recycling positions).
   const slots = Array.from({ length: count + 1 }, (_, i) => ({
     key: start + i,
     data: TESTI_DATA[(start + i) % TESTI_DATA.length],
+    bg: TESTI_COLORS[(start + i) % TESTI_COLORS.length],
   }))
 
   return (
     <div className="testi-outer">
       <div className="testi-track testi-track--js" ref={trackRef}>
-        {slots.map(({ key, data }) => (
-          <TestimonialCard key={key} {...data} />
+        {slots.map(({ key, data, bg }) => (
+          <TestimonialCard key={key} {...data} cardBg={bg} />
         ))}
       </div>
     </div>
@@ -426,6 +431,8 @@ function Ticker() {
    Extracted to array so the section can duplicate cards
    for the seamless auto-scroll loop.
 ────────────────────────────────────────────────────────── */
+const TESTI_COLORS = ['#F1EFFD', '#FEEAEA', '#FFF9EC']
+
 const TESTI_DATA = [
   {
     quote: "Gurjot is one of the rare designers who makes engineering execution genuinely easier. Handoffs were detailed, edge cases covered, interaction states documented before we started building. He understood engineering constraints without needing them explained twice.",
