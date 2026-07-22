@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
 
@@ -336,7 +337,12 @@ function TestimonialsMarquee() {
           if (fracRef.current >= slotW) {
             fracRef.current -= slotW
             startRef.current += 1 // monotonic — keeps keys sliding, no batch remount
-            setStart(startRef.current)
+            // flushSync forces the new window to commit to the DOM *now*, in the
+            // same frame as the offset reset — otherwise React re-renders one
+            // frame late and the old leftmost card flashes back into view for a
+            // frame (the abrupt colour/content glitch). Runs only once per card
+            // (~every few seconds), so the synchronous render is negligible.
+            flushSync(() => setStart(startRef.current))
           }
           track.style.transform = `translate3d(${-fracRef.current}px, 0, 0)`
         }
