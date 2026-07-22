@@ -11,7 +11,9 @@ import { useEffect, useRef } from 'react'
 
 const STACK = {
   baseVh:     5,     // floor: never pin a card higher than this
-  peekPx:     34,    // how much of each earlier card peeks above the next
+  peekPx:     44,    // how much of each earlier card peeks above the next
+                     // (bumped so the stacked tops stay clearly visible as
+                     //  the whole deck scrolls up past the viewport)
   revealPx:   480,   // distance over which an incoming card eases to "pinned"
   revealAt:   0.5,   // reveal a card once this fraction of it is on screen
   persp:      1500,  // 3D perspective (px) applied per card
