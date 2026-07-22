@@ -19,13 +19,15 @@ const STACK = {
   persp:      1500,  // 3D perspective (px) applied per card
   arriveTilt: 15,    // deg an incoming card is inclined as it rises (entrance only)
   // Buried cards stay FLAT and full-size so the fully-stacked pile reads as a
-  // clean, equidistant deck (each card's top edge peeks by peekPx, evenly) —
-  // no receding tilt, shrink, or upward tuck. The stack simply scrolls away
-  // naturally as Playground rises in. A faint dim is the only depth cue.
+  // clean, equidistant deck. The peek is produced by lifting each buried card
+  // up by `liftPx` per card on top of it (liftPx === peekPx), so each earlier
+  // card's top edge shows exactly peekPx above the one in front. Because every
+  // card shares one sticky top, the whole fanned deck holds together through
+  // arrival and as the section scrolls past. A faint dim is the only depth cue.
   buriedTilt: 0,     // deg each buried card reclines back per card on top
   scaleStep:  0,     // how much each buried card shrinks per card on top
-  dimStep:    0.015, // how much each buried card dims per card on top
-  liftPx:     0,     // how much each buried card tucks up per card on top
+  dimStep:    0.02,  // how much each buried card dims per card on top
+  liftPx:     44,    // upward peek per card on top (matches peekPx)
 }
 
 const clampNum = (x, a, b) => Math.min(b, Math.max(a, x))
@@ -84,13 +86,19 @@ export default function CaseStudyStack({ items }) {
     function layout() {
       const vh = window.innerHeight
       cardH = cards[0].offsetHeight
-      // centre the pile: the middle card sits mid-viewport, the rest fan around it
-      const centred = (vh - cardH) / 2 - ((N - 1) / 2) * STACK.peekPx
-      const base = Math.max(centred, (STACK.baseVh / 100) * vh)
-      restTops = cards.map((el, i) => {
-        const t = Math.round(base + i * STACK.peekPx)
-        el.style.setProperty('--top', t + 'px')
-        return t
+      // ALL cards share the SAME sticky top. That's the key to a real deck:
+      // with a shared top they stay stuck together and release together, so
+      // the peeking pile is intact while the last card shows AND as the whole
+      // section scrolls past. The peek itself is produced by a transform lift
+      // (see update): each buried card is nudged up by peekPx per card on top.
+      // We offset the shared top downward by half the fan height so the fanned
+      // pile (which grows upward) stays vertically centred.
+      const fan = (N - 1) * STACK.peekPx
+      const centred = (vh - cardH) / 2 + fan / 2
+      const base = Math.round(Math.max(centred, (STACK.baseVh / 100) * vh))
+      restTops = cards.map((el) => {
+        el.style.setProperty('--top', base + 'px')
+        return base
       })
     }
 

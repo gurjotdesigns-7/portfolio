@@ -850,9 +850,13 @@ body {
   background: #FFF9EC;
 }
 
-/* Shortened so the last card settles quickly and Playground follows close behind */
+/* Scroll room AFTER the last card lands. Because every card shares one sticky
+   top, this tail keeps the whole pile pinned for a stretch — so the fanned,
+   peeking deck stays fully assembled and on screen while you scroll past,
+   instead of releasing the instant the last card arrives. Tune this to trade
+   "how long the peeked deck lingers" against "gap before Playground". */
 .cs-stack-tail {
-  height: clamp(0vh, 1vh, 2vh);
+  height: clamp(24vh, 30vh, 40vh);
 }
 
 .cs-stack-card__link {
