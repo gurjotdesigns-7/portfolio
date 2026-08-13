@@ -219,10 +219,17 @@ export default function CaseStudyStack({ items }) {
               {item.hero && (
                 <span className="cs-stack-card__hero-tag">
                   <span className="cs-stack-card__hero-star" aria-hidden="true">★</span>
-                  <span className="cs-stack-card__hero-label">Hero Project</span>
+                  <span className="cs-stack-card__tag-full">Hero Project</span>
+                  <span className="cs-stack-card__tag-short">Hero</span>
                 </span>
               )}
-              {item.latest && <span className="cs-stack-card__latest-tag">Latest</span>}
+              {item.latest && (
+                <span className="cs-stack-card__latest-tag">
+                  <span className="cs-stack-card__latest-star" aria-hidden="true">★</span>
+                  <span className="cs-stack-card__tag-full">Latest</span>
+                  <span className="cs-stack-card__tag-short">New</span>
+                </span>
+              )}
             </div>
             <div className="cs-stack-card__body">
               <p className="cs-stack-card__eyebrow">{item.eyebrow}</p>

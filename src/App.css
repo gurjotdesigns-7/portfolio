@@ -900,21 +900,26 @@ body {
   box-shadow: 3px 3px 0 rgba(26, 25, 23, 0.18);
 }
 
-.cs-stack-card__hero-star {
+/* Gold star used in front of both the Hero Project and Latest labels.
+   Stroke bumped 75% thicker (0.5px → 0.875px) so the outline reads heavier. */
+.cs-stack-card__hero-star,
+.cs-stack-card__latest-star {
   color: #F5C518;
   font-size: 11px;
   line-height: 1;
-  /* subtle dark edge so the gold star reads against the cream pill */
-  -webkit-text-stroke: 0.5px rgba(26, 25, 23, 0.55);
+  -webkit-text-stroke: 0.875px rgba(26, 25, 23, 0.55);
 }
 
-/* "Latest" pill — same shape/placement (top-left) as the "Hero Project"
-   label, but filled with the card's purple (#F1EFFD). */
+/* "Latest" pill — same shape/placement (top-left) and star as "Hero Project",
+   filled with the card's purple (#F1EFFD). */
 .cs-stack-card__latest-tag {
   position: absolute;
   top: 14px;
   left: 14px;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 6px 13px;
   border-radius: 999px;
   border: 2px solid var(--text);
@@ -926,6 +931,10 @@ body {
   background: #F1EFFD;
   box-shadow: 3px 3px 0 rgba(26, 25, 23, 0.18);
 }
+
+/* Desktop shows the full label ("Hero Project" / "Latest"); the short mobile
+   label ("Hero" / "New") is hidden until the mobile breakpoint. */
+.cs-stack-card__tag-short { display: none; }
 
 .cs-stack-card__cover {
   position: absolute;
@@ -1095,24 +1104,22 @@ body {
   .cs-stack-card__text { font-size: 14px; max-width: none; }
   .cs-stack-card__foot { flex-wrap: wrap; }
 
-  /* Hero badge becomes a plain yellow star, no text, on mobile */
-  .cs-stack-card__hero-tag {
-    width: 30px;
-    height: 30px;
-    padding: 0;
+  /* Mobile tags: short text only ("Hero" / "New"), no star icon, text
+     centred in the capsule both ways. */
+  .cs-stack-card__hero-tag,
+  .cs-stack-card__latest-tag {
     gap: 0;
-    display: flex;
+    padding: 6px 14px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    background: #FFD84D;
+    text-align: center;
+    line-height: 1;
   }
-  .cs-stack-card__hero-label { display: none; }
-  .cs-stack-card__hero-star {
-    color: var(--text);
-    font-size: 16px;
-    -webkit-text-stroke: 0;
-  }
+  .cs-stack-card__hero-star,
+  .cs-stack-card__latest-star { display: none; }
+  .cs-stack-card__tag-full { display: none; }
+  .cs-stack-card__tag-short { display: inline; }
 }
 
 @media (prefers-reduced-motion: reduce) {
