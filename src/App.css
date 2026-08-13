@@ -908,8 +908,8 @@ body {
   -webkit-text-stroke: 0.5px rgba(26, 25, 23, 0.55);
 }
 
-/* "Latest" pill — same theme and placement (top-left) as the "Hero Project"
-   label: cream fill, dark border + text, hard offset shadow. */
+/* "Latest" pill — same shape/placement (top-left) as the "Hero Project"
+   label, but filled with the card's purple (#F1EFFD). */
 .cs-stack-card__latest-tag {
   position: absolute;
   top: 14px;
@@ -923,7 +923,7 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text);
-  background: #FFF9EC;
+  background: #F1EFFD;
   box-shadow: 3px 3px 0 rgba(26, 25, 23, 0.18);
 }
 
