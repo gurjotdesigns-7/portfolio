@@ -205,6 +205,7 @@ export default function CaseStudyStack({ items }) {
           className="cs-stack-card"
           key={item.title}
           ref={(el) => { cardRefs.current[i] = el }}
+          style={item.bg ? { background: item.bg } : undefined}
         >
           <a
             className="cs-stack-card__link"
@@ -221,6 +222,7 @@ export default function CaseStudyStack({ items }) {
                   <span className="cs-stack-card__hero-label">Hero Project</span>
                 </span>
               )}
+              {item.latest && <span className="cs-stack-card__latest-tag">Latest</span>}
             </div>
             <div className="cs-stack-card__body">
               <p className="cs-stack-card__eyebrow">{item.eyebrow}</p>

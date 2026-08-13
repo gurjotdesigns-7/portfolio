@@ -209,34 +209,41 @@ function HeroSection() {
   )
 }
 
-/* ─── Case studies data (fed into the sticky CaseStudyStack) ── */
+/* ─── Case studies data (fed into the sticky CaseStudyStack) ──
+   Each card carries its own `bg` so the pastel fill is deliberate (not the
+   generic nth-child rotation): Moj = yellow, Syfe = purple, etc. */
 const CASE_STUDIES = [
   {
     eyebrow: '01 — ShareChat · Moj',
     title: 'Moj Spot — Creator Monetisation System',
     body: 'Tens of millions of creators, zero paid growth tools. Designed Moj Spot from scratch, a content-boosting system that opened a new revenue stream and scaled through targeting, multi-campaign support, and analytics.',
     hero: true,
+    bg: '#FFF9EC',
     image: '/moj.png',
     href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=&node-id=2017-20270&viewport=-2941%2C4169%2C0.38&t=kFWcTi6kwAi89RDq-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=542%3A3090',
   },
   {
-    eyebrow: '02 — ShareChat · Vibely',
-    title: 'Referral & Starter Challenge Growth System',
-    body: 'A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift.',
-    image: '/Referral new.png',
-    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307',
+    eyebrow: '02 — Syfe · Trading',
+    title: 'Designing Under High Stakes: Speed for traders, AI-driven clarity for new investors',
+    body: "A high-stakes trading domain I'd never designed for, and two users with opposite needs. Researched both through interviews and one north-star flow chart, then built a 3-step trigger-order flow for speed and an AI assistant for clarity, both inside the same Watchlist.",
+    latest: true,
+    bg: '#F1EFFD',
+    image: '/SYFE.png',
+    href: 'https://www.figma.com/proto/IU8jvDPqxYxvlF9vp3WCyp/Syfe?node-id=286-52951&viewport=106%2C-57%2C0.16&t=Wg8SfwLRzFfjHW9m-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=286%3A52951&page-id=286%3A52950',
   },
   {
-    eyebrow: '03 — Cineflow · 48hr Sprint',
-    title: 'First-time UX for AI Episode Creation',
-    body: 'A 48-hour sprint to collapse a fragmented six-tool workflow into one guided experience. Defined a consistent generative pattern — dual options + persistent chat — that scales from idea to exported episode.',
-    image: '/cineflow.png',
-    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=182%3A76113&node-id=1166-143377&viewport=395%2C823%2C0.03&t=crlJh790HneX3WER-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1166%3A143377',
+    eyebrow: '03 — ShareChat · Vibely',
+    title: 'Referral & Starter Challenge Growth System',
+    body: 'A two-part growth system that drove 82.6% first-call activation. Designed sender, receiver, and competition layers — then scaled the same framework from FriendZone into Vibely with minimal engineering lift.',
+    bg: '#FEEAEA',
+    image: '/Referral new.png',
+    href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=362-12307&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=362%3A12307',
   },
   {
     eyebrow: '04 — ShareChat · Vibely',
     title: 'KYC, Wallet & Cash-out System Redesign',
     body: 'A guided redesign of the verification and withdrawal flow for creators on ShareChat. Reduced drop-offs and lifted KYC completion by 18–25% by breaking complex regulatory steps into clear, trust-driven moments.',
+    bg: '#FFF9EC',
     image: '/kyc.png',
     href: 'https://www.figma.com/proto/8axG8i1fABBuCeFsUY2eh2/Case-Studies?page-id=13%3A27480&node-id=392-24762&viewport=4270%2C-2635%2C0.38&t=qPOdin1e9WOOMAGx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=392%3A24762',
   },
