@@ -227,7 +227,10 @@ body {
 }
 
 /* Page top padding for fixed pill */
-.home-page { padding-top: 0; }
+/* Higher specificity than the generic `.page { padding-top: 64px }` below so
+   the home hero (and its background video) sits flush to the very top of the
+   viewport — no dotted-background strip peeking above the video. */
+.page.home-page { padding-top: 0; }
 
 /* ── Container variants ── */
 .container-narrow {
@@ -276,13 +279,99 @@ body {
 ══════════════════════════════════════════════════════ */
 
 .hs {
-  height: calc(100vh - 100px);
+  /* Full viewport so the background video fills top-to-bottom (nav floats
+     over the top, ticker sits at the very bottom) — no page background
+     peeking above or below the video. */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   position: relative;
   overflow: hidden;
+}
+
+/* CSS graph-paper grid background — crisp at any
+   resolution and animated with a GPU transform so scrolling stays smooth. */
+.hs-bg-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: #fdfdfb;
+}
+.hs-bg-grid::before {
+  content: '';
+  position: absolute;
+  /* oversize so the diagonal drift never exposes an edge */
+  inset: -320px;
+  background-image:
+    /* major grid lines — light purple lavender (lightened another ~10%) */
+    linear-gradient(to right,  #E5E1FC 1px, transparent 1px),
+    linear-gradient(to bottom, #E5E1FC 1px, transparent 1px),
+    /* minor grid lines — faint neutral */
+    linear-gradient(to right,  rgba(28, 28, 36, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(28, 28, 36, 0.04) 1px, transparent 1px);
+  /* major grid (every 5 cells) + minor grid — 25% smaller cells */
+  background-size: 90px 90px, 90px 90px, 18px 18px, 18px 18px;
+  /* centre the pattern so the partial cells at the left and right edges are
+     equal on both sides of the screen */
+  background-position: center;
+  /* duration scaled with the smaller period so the drift speed is unchanged */
+  animation: hs-grid-drift 6.5s linear infinite;
+  will-change: transform;
+}
+
+/* Figma-style ruler / scale bars pinned to the left & right edges. Solid
+   faint-lavender strip with tick marks (short minor + full-width major) that
+   drift downward in sync with the grid so it reads like a scrolling canvas. */
+.hs-ruler {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #f7f6fc;
+}
+.hs-ruler-left  { left: 0;  border-right: 1px solid #DCD7FB; }
+.hs-ruler-right { right: 0; border-left: 1px solid #DCD7FB; }
+
+.hs-ruler::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -240px;
+  bottom: -240px;
+  background-image:
+    /* major ticks — lavender line every 90px (matches major grid) */
+    repeating-linear-gradient(to bottom, #C9C1F3 0 1px, transparent 1px 90px),
+    /* minor ticks — short neutral line every 18px (matches minor grid) */
+    repeating-linear-gradient(to bottom, rgba(28, 28, 36, 0.28) 0 1px, transparent 1px 18px);
+  background-size: 100% 90px, 11px 18px;
+  background-repeat: repeat-y;
+  /* Scales are static — no scrolling. */
+}
+/* minor ticks hug the inner edge of each ruler */
+.hs-ruler-left::before  { background-position: left top, right top; }
+.hs-ruler-right::before { background-position: left top, left top; }
+/* On iPad/phone the content uses the full width, so the edge rulers would
+   overlap it — hide them there (the grid background stays). Desktop-only. */
+@media (max-width: 1024px) {
+  .hs-ruler { display: none; }
+}
+/* Drift straight down by exactly one major period (90px, a multiple of 18)
+   so the vertical loop is seamless for the grids and the ruler ticks — no
+   horizontal movement. */
+@keyframes hs-grid-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, 90px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-bg-grid::before { animation: none; }
 }
 
 /* Grid: 1fr / 1.2fr — image column gets more space */
@@ -296,6 +385,9 @@ body {
   padding: 0 48px;
   gap: 32px;
   flex: 1;
+  /* sit above the background video */
+  position: relative;
+  z-index: 1;
 }
 
 /* ──────────────── LEFT COLUMN ──────────────── */
@@ -398,6 +490,9 @@ body {
   align-items: flex-end;
   width: 100%;
   height: 100%;
+  /* explicitly above the hero background video */
+  position: relative;
+  z-index: 2;
 }
 
 /* Float lives on the wrapper — never interrupted by hover */

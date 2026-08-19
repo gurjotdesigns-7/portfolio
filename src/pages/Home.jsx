@@ -158,6 +158,14 @@ function Reveal({ children, delay = 0, className = '' }) {
 function HeroSection() {
   return (
     <section className="hs">
+      {/* EXPERIMENT: hero background is a CSS graph-paper grid (vector-crisp,
+          no video pixelation) with a slow diagonal drift (GPU transform, so it
+          stays smooth while scrolling). Sits behind the text + image. */}
+      <div className="hs-bg-grid" aria-hidden="true" />
+      {/* Figma-style ruler/scale bars on the left & right edges, ticks scroll
+          in sync with the grid. */}
+      <div className="hs-ruler hs-ruler-left" aria-hidden="true" />
+      <div className="hs-ruler hs-ruler-right" aria-hidden="true" />
       <div className="hs-container">
 
         {/* LEFT: text */}

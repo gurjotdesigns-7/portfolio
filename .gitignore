@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Large hero-background experiment sources — not used by the site (the hero
+# background is pure CSS now). Keep them out of the repo.
+public/*.gif
+public/hero-bg.mp4
+public/hero-bg.webm
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
