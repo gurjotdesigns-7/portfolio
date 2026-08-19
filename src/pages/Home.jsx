@@ -215,7 +215,7 @@ function HeroSection() {
 const CASE_STUDIES = [
   {
     eyebrow: '01 — ShareChat · Moj',
-    title: 'Moj Spot — Creator Monetisation System',
+    title: 'Moj Spot - Creator Monetisation System',
     body: 'Tens of millions of creators, zero paid growth tools. Designed Moj Spot from scratch, a content-boosting system that opened a new revenue stream and scaled through targeting, multi-campaign support, and analytics.',
     hero: true,
     bg: '#FFF9EC',
