@@ -318,8 +318,9 @@ body {
   /* centre the pattern so the partial cells at the left and right edges are
      equal on both sides of the screen */
   background-position: center;
-  /* duration scaled with the smaller period so the drift speed is unchanged */
-  animation: hs-grid-drift 6.5s linear infinite;
+  /* Drift UPWARD (reverse) so it moves with the page as the user scrolls down,
+     and ~10% faster (6.5s → 5.9s). */
+  animation: hs-grid-drift 5.9s linear infinite reverse;
   will-change: transform;
 }
 
