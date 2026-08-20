@@ -1,124 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
-
-/* ─── Splash screen ──────────────────────────────────
-   45 sticky notes fall once on first load per session.
-   sessionStorage key 'splashShown' prevents replay.
-────────────────────────────────────────────────────── */
-const _SC = ['#F1EFFD', '#FEEAEA', '#FFF9EC']
-const _SL = [
-  'Retention','Onboarding','Revenue','Brainstorming',
-  'Collaboration','Focus Mode','Activation','Growth',
-  'Trust','Monetisation','Conversion','Iteration','Systems','Craft',
-]
-const _SD = [
-  // image placeholder: box + X
-  ['M8 14 L92 14 L92 86 L8 86 Z', 'M8 14 L92 86', 'M92 14 L8 86'],
-  // three text placeholder lines
-  ['M10 28 L88 32', 'M10 46 L90 44', 'M10 64 L74 67'],
-  // rounded button + label inside
-  ['M20 28 Q20 18 34 18 L66 18 Q80 18 80 28 L80 72 Q80 82 66 82 L34 82 Q20 82 20 72 Z', 'M36 50 L64 50'],
-  // card with header bar + content lines
-  ['M8 12 L92 12 L92 88 L8 88 Z', 'M8 32 L92 32', 'M14 48 L86 48', 'M14 64 L74 64'],
-  // input field with cursor blink
-  ['M8 36 L92 36 L92 64 L8 64 Z', 'M16 50 L42 50', 'M44 42 L44 58'],
-  // nav bar + two content lines
-  ['M8 14 L92 14 L92 36 L8 36 Z', 'M16 25 L28 25', 'M36 25 L52 25', 'M60 25 L72 25', 'M8 52 L92 52', 'M8 66 L68 66'],
-  // avatar circle + name lines
-  ['M14 38 A18 18 0 1 1 13.99 38', 'M52 22 L88 24', 'M52 36 L82 38', 'M10 62 L90 62', 'M10 76 L68 76'],
-  // checkbox list
-  ['M10 18 L28 18 L28 36 L10 36 Z', 'M10 48 L28 48 L28 66 L10 66 Z', 'M34 27 L78 27', 'M34 57 L72 57'],
-]
-
-function _rnd(a, b) { return a + Math.random() * (b - a) }
-function _ri(a, b)  { return Math.floor(_rnd(a, b + 1)) }
-function _pick(a)   { return a[_ri(0, a.length - 1)] }
-
-function genSplashNotes() {
-  // Notes are sized for desktop by default — scale down on smaller
-  // viewports so they don't overwhelm iPad/phone screens: -30% on iPad,
-  // -50% on phones.
-  const vw = typeof window !== 'undefined' ? window.innerWidth : 1440
-  const scale = vw <= 640 ? 0.375 : vw <= 1024 ? 0.525 : 1
-
-  // shuffle label indices so 14 random notes get labels
-  const labelSlots = new Set()
-  while (labelSlots.size < 14) labelSlots.add(_ri(0, 44))
-
-  const labelList = [..._SL]
-  let li = 0
-
-  return Array.from({ length: 45 }, (_, i) => {
-    const rotFrom = _rnd(-20, 20)
-    const rotTo   = rotFrom + _rnd(8, 20) * (Math.random() > 0.5 ? 1 : -1)
-    return {
-      id:    i,
-      w:     Math.round(_ri(195, 300) * scale),
-      h:     Math.round(_ri(180, 270) * scale),
-      color: _pick(_SC),
-      left:  _rnd(0, 93),
-      top:   -Math.round(_ri(280, 520) * scale),
-      rotFrom,
-      rotTo,
-      dur:   _rnd(1.4, 2.0).toFixed(2),
-      delay: _rnd(0, 0.6).toFixed(2),
-      label: labelSlots.has(i) ? labelList[li++] : null,
-      lines: _pick(_SD),
-    }
-  })
-}
-
-function SplashScreen() {
-  const [phase, setPhase] = useState('visible')
-  const notes = useMemo(() => genSplashNotes(), [])
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase('fading'), 2500)
-    const t2 = setTimeout(() => setPhase('gone'),   2900)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
-  }, [])
-
-  if (phase === 'gone') return null
-
-  return (
-    <div className="splash-overlay" style={{ opacity: phase === 'fading' ? 0 : 1 }}>
-      {notes.map(n => (
-        <div
-          key={n.id}
-          className="splash-note"
-          style={{
-            width:          n.w,
-            height:         n.h,
-            background:     n.color,
-            left:           `${n.left}%`,
-            top:            n.top,
-            '--rot-from':   `${n.rotFrom}deg`,
-            '--rot-to':     `${n.rotTo}deg`,
-            '--fall-dur':   `${n.dur}s`,
-            '--fall-delay': `${n.delay}s`,
-          }}
-        >
-          <svg
-            width="100%" height="100%"
-            viewBox="0 0 100 100"
-            fill="none"
-            style={{ position: 'absolute', inset: 0 }}
-            aria-hidden="true"
-          >
-            {n.lines.map((d, j) => (
-              <path key={j} d={d} stroke="#2a2a2a" strokeWidth="1.5" opacity="0.28" strokeLinecap="round" fill="none" />
-            ))}
-          </svg>
-          {n.label && (
-            <span className="splash-note-label">{n.label}</span>
-          )}
-        </div>
-      ))}
-    </div>
-  )
-}
 
 /* ─── Reveal on scroll ─────────────────────────────── */
 function useReveal(delay = 0, threshold = 0.15) {
@@ -173,9 +56,10 @@ function HeroGridCanvas() {
     const BG = '#fdfdfb'
     const MINOR_C = 'rgba(28,28,36,0.04)'
     const MAJOR_C = '#e5e1fc'
-    // string physics — tighter (higher tension) and rings a bit longer
-    // (less damping). Both vertical AND horizontal major lines are strings.
-    const K = 0.02, T = 0.42, DAMP = 0.965, RADIUS = 46, STR = 0.8, CAP = 5
+    // string physics — tighter (higher tension) and rings ~25% longer than
+    // before (DAMP 0.965 → 0.972) so the entry strum is more evident. Both
+    // vertical AND horizontal major lines are strings.
+    const K = 0.02, T = 0.42, DAMP = 0.972, RADIUS = 46, STR = 0.8, CAP = 5
 
     let W = 0, H = 0, dpr = 1, vN = 0, hN = 0, hSpan = 0
     let vStr = []   // vertical major lines:   { x, d[], v[] }  (displaced in x)
@@ -201,6 +85,22 @@ function HeroGridCanvas() {
       for (let k = 0; k < numH; k++) {
         hStr.push({ y: phase - MAJOR + k * MAJOR, d: new Float32Array(hN), v: new Float32Array(hN) })
       }
+    }
+
+    // Entry animation: pluck every string at once (fundamental mode, alternating
+    // direction per line) so the whole grid twangs and settles on load/refresh.
+    function strumAll() {
+      const AMP = 20
+      vStr.forEach((s, k) => {
+        const sign = k % 2 ? 1 : -1
+        for (let i = 1; i < vN - 1; i++) s.d[i] = sign * AMP * Math.sin(Math.PI * i / (vN - 1))
+        s.v.fill(0)
+      })
+      hStr.forEach((s, k) => {
+        const sign = k % 2 ? 1 : -1
+        for (let j = 1; j < hN - 1; j++) s.d[j] = sign * AMP * Math.sin(Math.PI * j / (hN - 1))
+        s.v.fill(0)
+      })
     }
 
     let pmx = -1, pmy = -1
@@ -292,6 +192,7 @@ function HeroGridCanvas() {
     }
 
     build()
+    if (!reduce) strumAll()   // entry twang on load/refresh
     raf = requestAnimationFrame(frame)
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseleave', onLeave)
@@ -742,8 +643,6 @@ export default function Home({ navigate }) {
 
   return (
     <div className="page home-page">
-      <SplashScreen />
-
       <div className="custom-cursor" aria-hidden="true">
         <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0L0 17.5L4.5 13.5L7.5 21L10.5 19.8L7.5 12.5H13L0 0Z" fill="black" stroke="white" strokeWidth="1" strokeLinejoin="round"/>
