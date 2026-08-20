@@ -540,15 +540,62 @@ const TESTI_DATA = [
    Cards in flex row — no absolute positioning on cards.
 ────────────────────────────────────────────────────────── */
 function PlaygroundSection({ navigate }) {
+  // "Side Quests" sticker pops in every time the section is revealed by
+  // scrolling DOWN into it — but not on back-scroll. Trick: the sticker is only
+  // re-armed (reset to hidden) once the section has passed fully BELOW the
+  // viewport. So scrolling up back into it finds it already shown (no pop),
+  // while scrolling down into it from below finds it hidden → it pops. Re-arming
+  // happens off-screen, so there's never a visible flicker.
+  const secRef = useRef(null)
+  useEffect(() => {
+    const el = secRef.current
+    if (!el) return
+    const title = el.querySelector('.pg-title')
+    if (!title) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const T =
+      'opacity 0.55s ease, scale 0.6s cubic-bezier(0.34,1.56,0.64,1), translate 0.6s cubic-bezier(0.34,1.56,0.64,1)'
+    const setState = (visible, animate) => {
+      title.style.transition = animate ? T : 'none'
+      if (!animate) void title.offsetWidth // flush so 'none' applies first
+      title.style.opacity = visible ? '1' : '0'
+      title.style.scale = visible ? '1' : '0.8'
+      title.style.translate = visible ? '0 0' : '0 22px'
+      if (!animate) { void title.offsetWidth; title.style.transition = T }
+    }
+
+    // Initial: hidden+armed only if the section starts fully below the fold;
+    // otherwise show it as-is (no pop on load or when already past).
+    let shown = title.getBoundingClientRect().top < window.innerHeight
+    setState(shown, false)
+
+    const check = () => {
+      const r = title.getBoundingClientRect()
+      const vh = window.innerHeight
+      if (!shown && r.top < vh * 0.82 && r.bottom > 0) {
+        shown = true
+        setState(true, true)   // scrolled down into view → pop
+      } else if (shown && r.top >= vh) {
+        shown = false
+        setState(false, false) // fully below the fold → re-arm (off-screen)
+      }
+    }
+    window.addEventListener('scroll', check, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      window.removeEventListener('scroll', check)
+      window.removeEventListener('resize', check)
+    }
+  }, [])
   return (
-    <div id="playground" className="playground-section">
+    <div id="playground" className="playground-section" ref={secRef}>
       <div className="pg-paper-wrapper">
 
         <img src="/PaperBG-crop.png" alt="" className="pg-paper" />
 
         <div className="pg-content">
-          <h2 className="pg-title">Playground</h2>
-          <p className="pg-sub">Sketches, side projects, and craft explorations.</p>
+          <h2 className="pg-title peel-note peel-note--title peel-note--l">Side Quests</h2>
 
           <div className="pg-cards">
 
@@ -613,31 +660,6 @@ const SECTION_LABELS = [
 /* ─── Page ───────────────────────────────────────────── */
 export default function Home({ navigate }) {
   const [cursorLabel, setCursorLabel] = useState('Hello')
-  const [showStringsMsg, setShowStringsMsg] = useState(false)
-  const stringsMsgShown = useRef(false)
-
-  // The FIRST time the cursor enters the hero (plucks the strings), wait 1s,
-  // then show a playful "Careful with the strings!" label for 4s before
-  // reverting to normal — once only per page load.
-  useEffect(() => {
-    const hero = document.querySelector('.hs')
-    if (!hero) return
-    let showTimer, hideTimer
-    const enter = () => {
-      if (stringsMsgShown.current) return
-      stringsMsgShown.current = true
-      showTimer = setTimeout(() => {
-        setShowStringsMsg(true)
-        hideTimer = setTimeout(() => setShowStringsMsg(false), 4000)
-      }, 1000)
-    }
-    hero.addEventListener('mouseenter', enter)
-    return () => {
-      hero.removeEventListener('mouseenter', enter)
-      clearTimeout(showTimer)
-      clearTimeout(hideTimer)
-    }
-  }, [])
 
   useEffect(() => {
     const cursor = document.querySelector('.custom-cursor')
@@ -669,13 +691,12 @@ export default function Home({ navigate }) {
   // Ease the cursor pill's width between labels: measure the target text width
   // with a hidden twin, then set the pill's width (CSS transitions it).
   const labelRef = useRef(null)
-  const displayLabel = showStringsMsg ? 'Careful with the strings!' : cursorLabel
   useEffect(() => {
     const el = labelRef.current
     if (!el) return
     const twin = document.createElement('span')
     const cs = getComputedStyle(el)
-    twin.textContent = displayLabel
+    twin.textContent = cursorLabel
     twin.style.cssText =
       `position:absolute;left:-9999px;top:-9999px;visibility:hidden;white-space:nowrap;` +
       `box-sizing:border-box;font:${cs.font};padding:${cs.padding};letter-spacing:${cs.letterSpacing};`
@@ -683,7 +704,7 @@ export default function Home({ navigate }) {
     const target = twin.offsetWidth
     document.body.removeChild(twin)
     el.style.width = target + 'px'
-  }, [displayLabel])
+  }, [cursorLabel])
 
   return (
     <div className="page home-page">
@@ -691,7 +712,7 @@ export default function Home({ navigate }) {
         <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0L0 17.5L4.5 13.5L7.5 21L10.5 19.8L7.5 12.5H13L0 0Z" fill="black" stroke="white" strokeWidth="1" strokeLinejoin="round"/>
         </svg>
-        <span className="cursor-label" ref={labelRef}>{displayLabel}</span>
+        <span className="cursor-label" ref={labelRef}>{cursorLabel}</span>
       </div>
 
       <HeroSection />
@@ -700,7 +721,7 @@ export default function Home({ navigate }) {
         <div className="container container-narrow">
           <Reveal className="section-heading">
             <h2 className="section-h2">Curated Projects</h2>
-            <p className="section-sub">Four projects that shaped how I think about design.</p>
+            <p className="peel-note peel-note--l">Four projects that shaped how I think about design.</p>
           </Reveal>
         </div>
         <CaseStudyStack items={CASE_STUDIES} />
@@ -712,7 +733,7 @@ export default function Home({ navigate }) {
         <div className="container container-narrow">
           <Reveal className="section-heading">
             <h2 className="section-h2">Testimonials</h2>
-            <p className="section-sub">Words from the people I work with.</p>
+            <p className="peel-note peel-note--r">Words from the people I work with.</p>
           </Reveal>
         </div>
         <TestimonialsMarquee />

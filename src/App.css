@@ -671,6 +671,58 @@ body {
   line-height: 1.55;
 }
 
+/* ── Sticky-note subtitle ("peel" sticker) ─────────────
+   A cream label with a folded / peeling bottom-right corner that holds a
+   section subtitle. Pure CSS: the body is a rounded rectangle; the ::after is
+   the folded-back paper flap (lighter, lit along the crease) and its
+   drop-shadow paints the soft crease shadow onto the body. */
+.peel-note {
+  position: relative;
+  display: inline-block;
+  max-width: min(90vw, 560px);
+  margin: 4px 0 0;
+  padding: 13px 42px 14px 26px;      /* extra right pad clears the fold */
+  background: #f1e7cd;
+  color: #23252b;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  border-radius: 20px 20px 4px 20px; /* bottom-right kept tight for the fold */
+  /* Flat "pop-art" offset shadow to match the cards (hard edge, no blur) */
+  box-shadow: 5px 5px 0 rgba(26, 25, 23, 0.18);
+}
+.peel-note::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28px;
+  height: 28px;
+  /* folded-back paper: bright along the crease, darker toward the free tip */
+  background: linear-gradient(135deg, #faf3e1 0%, #ecdfbe 42%, #d7c69e 100%);
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  /* hard-edged crease shadow so the fold reads flat like the card style */
+  filter: drop-shadow(-2px -2px 0 rgba(26, 25, 23, 0.16));
+}
+.peel-note--l { transform: rotate(-2.5deg); }
+.peel-note--r { transform: rotate(2.5deg); }
+
+/* Title-sized sticker (e.g. the "Side Quests" heading): roomier padding,
+   larger radius, and a bigger fold so the peel stays proportional to the
+   large display type. Typography is inherited from the heading class. */
+.peel-note--title {
+  padding: 7px 44px 15px 31px;       /* ~15% smaller, in step with the text */
+  border-radius: 24px 24px 7px 24px;
+  color: #23252b;
+  /* flat offset shadow, matching the Playground cards */
+  box-shadow: 7px 7px 0 rgba(26, 25, 23, 0.18);
+}
+.peel-note--title::after {
+  width: 34px;
+  height: 34px;
+}
+
 /* ── Case Studies — alternating rows ── */
 /* Extra top padding gives breathing room after the ticker strip */
 .case-studies-section {
@@ -1196,7 +1248,7 @@ body {
 
 .pg-title {
   font-family: 'Caveat', cursive;
-  font-size: 64px;
+  font-size: 54px;
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.1;
@@ -3427,7 +3479,7 @@ body {
 
 .pg-title {
   font-family: 'Caveat', cursive !important;
-  font-size: clamp(36px, 6vw, 64px) !important;
+  font-size: clamp(31px, 5.1vw, 54px) !important;   /* ~15% smaller */
   font-weight: 700 !important;
   letter-spacing: 0.01em !important;
   line-height: 1.1 !important;

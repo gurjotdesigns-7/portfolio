@@ -74,7 +74,7 @@ export default function Nav({ page, navigate }) {
         <button
           className={`nav-pill-link${active === 'playground' ? ' nav-pill-active' : ''}`}
           onClick={() => handleNav('playground')}
-        >Playground</button>
+        >Side Quests</button>
         <button
           className={`nav-pill-link${active === 'contact' ? ' nav-pill-active' : ''}`}
           onClick={() => handleNav('contact')}
