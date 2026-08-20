@@ -291,37 +291,18 @@ body {
   overflow: hidden;
 }
 
-/* CSS graph-paper grid background — crisp at any
-   resolution and animated with a GPU transform so scrolling stays smooth. */
+/* Hero background grid — now a <canvas> (see HeroGridCanvas) so the vertical
+   major lines can vibrate like guitar strings on cursor contact. */
 .hs-bg-grid {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
   background: #fdfdfb;
-}
-.hs-bg-grid::before {
-  content: '';
-  position: absolute;
-  /* oversize so the diagonal drift never exposes an edge */
-  inset: -320px;
-  background-image:
-    /* major grid lines — light purple lavender (lightened another ~10%) */
-    linear-gradient(to right,  #E5E1FC 1px, transparent 1px),
-    linear-gradient(to bottom, #E5E1FC 1px, transparent 1px),
-    /* minor grid lines — faint neutral */
-    linear-gradient(to right,  rgba(28, 28, 36, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(28, 28, 36, 0.04) 1px, transparent 1px);
-  /* major grid (every 5 cells) + minor grid — 25% smaller cells */
-  background-size: 90px 90px, 90px 90px, 18px 18px, 18px 18px;
-  /* centre the pattern so the partial cells at the left and right edges are
-     equal on both sides of the screen */
-  background-position: center;
-  /* Drift UPWARD (reverse) so it moves with the page as the user scrolls down,
-     and ~10% faster (6.5s → 5.9s). */
-  animation: hs-grid-drift 5.9s linear infinite reverse;
-  will-change: transform;
 }
 
 /* Figma-style ruler / scale bars pinned to the left & right edges. Solid
@@ -363,16 +344,6 @@ body {
    overlap it — hide them there (the grid background stays). Desktop-only. */
 @media (max-width: 1024px) {
   .hs-ruler { display: none; }
-}
-/* Drift straight down by exactly one major period (90px, a multiple of 18)
-   so the vertical loop is seamless for the grids and the ruler ticks — no
-   horizontal movement. */
-@keyframes hs-grid-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(0, 90px, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hs-bg-grid::before { animation: none; }
 }
 
 /* Grid: 1fr / 1.2fr — image column gets more space */

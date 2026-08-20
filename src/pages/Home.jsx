@@ -154,14 +154,170 @@ function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
+/* ─── Hero background grid (canvas) ──────────────────────
+   Graph-paper grid drawn on a canvas so the vertical major lines can behave
+   like guitar strings: as the cursor sweeps across one, that line gets a
+   localized "pluck" that travels along it and decays — a subtle vibration.
+   Minor lines + horizontal major lines just drift upward, as before. */
+function HeroGridCanvas() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const canvas = ref.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const MINOR = 18, MAJOR = 90
+    const DRIFT = 15.25            // px/sec, upward (matches the old CSS drift)
+    const SAMPLE = 12             // px between string sample points
+    const BG = '#fdfdfb'
+    const MINOR_C = 'rgba(28,28,36,0.04)'
+    const MAJOR_C = '#e5e1fc'
+    // string physics — tighter (higher tension) and rings a bit longer
+    // (less damping). Both vertical AND horizontal major lines are strings.
+    const K = 0.02, T = 0.42, DAMP = 0.965, RADIUS = 46, STR = 0.8, CAP = 5
+
+    let W = 0, H = 0, dpr = 1, vN = 0, hN = 0, hSpan = 0
+    let vStr = []   // vertical major lines:   { x, d[], v[] }  (displaced in x)
+    let hStr = []   // horizontal major lines: { y, d[], v[] }  (displaced in y, drifting)
+
+    function build() {
+      const r = canvas.getBoundingClientRect()
+      W = r.width; H = r.height
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = Math.round(W * dpr)
+      canvas.height = Math.round(H * dpr)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      vN = Math.max(8, Math.floor(H / SAMPLE) + 2)
+      hN = Math.max(8, Math.floor(W / SAMPLE) + 2)
+      vStr = []
+      for (let x = (W / 2) % MAJOR; x <= W; x += MAJOR) {
+        vStr.push({ x, d: new Float32Array(vN), v: new Float32Array(vN) })
+      }
+      const numH = Math.ceil(H / MAJOR) + 2
+      hSpan = numH * MAJOR
+      const phase = (H / 2) % MAJOR
+      hStr = []
+      for (let k = 0; k < numH; k++) {
+        hStr.push({ y: phase - MAJOR + k * MAJOR, d: new Float32Array(hN), v: new Float32Array(hN) })
+      }
+    }
+
+    let pmx = -1, pmy = -1
+    function onMove(e) {
+      const r = canvas.getBoundingClientRect()
+      const x = e.clientX - r.left, y = e.clientY - r.top
+      if (x < 0 || x > W || y < 0 || y > H) { pmx = -1; pmy = -1; return }
+      const vx = pmx === -1 ? 0 : x - pmx
+      const vy = pmy === -1 ? 0 : y - pmy
+      pmx = x; pmy = y
+      // horizontal cursor motion plucks the vertical strings (displaced in x)
+      for (const s of vStr) {
+        const dx = Math.abs(x - s.x)
+        if (dx < RADIUS) {
+          const i = Math.max(1, Math.min(vN - 2, Math.round(y / SAMPLE)))
+          const imp = Math.max(-CAP, Math.min(CAP, vx * STR)) * (1 - dx / RADIUS)
+          s.v[i] += imp; s.v[i - 1] += imp * 0.5; s.v[i + 1] += imp * 0.5
+        }
+      }
+      // vertical cursor motion plucks the horizontal strings (displaced in y)
+      for (const s of hStr) {
+        const dy = Math.abs(y - s.y)
+        if (dy < RADIUS) {
+          const j = Math.max(1, Math.min(hN - 2, Math.round(x / SAMPLE)))
+          const imp = Math.max(-CAP, Math.min(CAP, vy * STR)) * (1 - dy / RADIUS)
+          s.v[j] += imp; s.v[j - 1] += imp * 0.5; s.v[j + 1] += imp * 0.5
+        }
+      }
+    }
+    const onLeave = () => { pmx = -1; pmy = -1 }
+
+    function integrate(list, n) {
+      for (const s of list) {
+        const d = s.d, v = s.v
+        for (let i = 1; i < n - 1; i++) {
+          v[i] = (v[i] + (-K * d[i] + T * (d[i - 1] + d[i + 1] - 2 * d[i]))) * DAMP
+        }
+        for (let i = 1; i < n - 1; i++) d[i] += v[i]
+        d[0] = d[n - 1] = 0
+      }
+    }
+
+    let driftY = 0, last = performance.now(), raf = 0
+    function frame(now) {
+      const dt = Math.min((now - last) / 1000, 0.05); last = now
+      driftY = (driftY + DRIFT * dt) % MINOR
+      // drift + recycle the horizontal strings
+      for (const s of hStr) {
+        s.y -= DRIFT * dt
+        if (s.y < -1) { s.y += hSpan; s.d.fill(0); s.v.fill(0) }
+      }
+      if (!reduce) { integrate(vStr, vN); integrate(hStr, hN) }
+
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = BG
+      ctx.fillRect(0, 0, W, H)
+
+      // minor grid — vertical fixed, horizontal drifting
+      ctx.strokeStyle = MINOR_C; ctx.lineWidth = 1; ctx.beginPath()
+      for (let x = (W / 2) % MINOR; x <= W; x += MINOR) {
+        const px = Math.round(x) + 0.5; ctx.moveTo(px, 0); ctx.lineTo(px, H)
+      }
+      const minorPhase = (((H / 2) % MINOR - driftY) % MINOR + MINOR) % MINOR
+      for (let y = minorPhase; y <= H; y += MINOR) {
+        const py = Math.round(y) + 0.5; ctx.moveTo(0, py); ctx.lineTo(W, py)
+      }
+      ctx.stroke()
+
+      // major lines (purple) — both directions are strings, drawn displaced
+      ctx.strokeStyle = MAJOR_C; ctx.lineWidth = 1
+      for (const s of hStr) {
+        ctx.beginPath()
+        for (let j = 0; j < hN; j++) {
+          const x = j * SAMPLE, y = s.y + s.d[j]
+          if (j === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y)
+        }
+        ctx.stroke()
+      }
+      for (const s of vStr) {
+        ctx.beginPath()
+        for (let i = 0; i < vN; i++) {
+          const x = s.x + s.d[i], y = i * SAMPLE
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y)
+        }
+        ctx.stroke()
+      }
+
+      raf = requestAnimationFrame(frame)
+    }
+
+    build()
+    raf = requestAnimationFrame(frame)
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseleave', onLeave)
+    let rt
+    const onResize = () => { clearTimeout(rt); rt = setTimeout(build, 150) }
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseleave', onLeave)
+      window.removeEventListener('resize', onResize)
+      clearTimeout(rt)
+    }
+  }, [])
+
+  return <canvas ref={ref} className="hs-bg-grid" aria-hidden="true" />
+}
+
 /* ─── Hero Section ───────────────────────────────────── */
 function HeroSection() {
   return (
     <section className="hs">
-      {/* EXPERIMENT: hero background is a CSS graph-paper grid (vector-crisp,
-          no video pixelation) with a slow diagonal drift (GPU transform, so it
-          stays smooth while scrolling). Sits behind the text + image. */}
-      <div className="hs-bg-grid" aria-hidden="true" />
+      {/* Hero background: canvas graph-paper grid whose vertical lines vibrate
+          like guitar strings when the cursor sweeps across them. */}
+      <HeroGridCanvas />
       {/* Figma-style ruler/scale bars on the left & right edges, ticks scroll
           in sync with the grid. */}
       <div className="hs-ruler hs-ruler-left" aria-hidden="true" />
