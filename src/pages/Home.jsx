@@ -613,6 +613,31 @@ const SECTION_LABELS = [
 /* ─── Page ───────────────────────────────────────────── */
 export default function Home({ navigate }) {
   const [cursorLabel, setCursorLabel] = useState('Hello')
+  const [showStringsMsg, setShowStringsMsg] = useState(false)
+  const stringsMsgShown = useRef(false)
+
+  // The FIRST time the cursor enters the hero (plucks the strings), wait 1s,
+  // then show a playful "Careful with the strings!" label for 4s before
+  // reverting to normal — once only per page load.
+  useEffect(() => {
+    const hero = document.querySelector('.hs')
+    if (!hero) return
+    let showTimer, hideTimer
+    const enter = () => {
+      if (stringsMsgShown.current) return
+      stringsMsgShown.current = true
+      showTimer = setTimeout(() => {
+        setShowStringsMsg(true)
+        hideTimer = setTimeout(() => setShowStringsMsg(false), 4000)
+      }, 1000)
+    }
+    hero.addEventListener('mouseenter', enter)
+    return () => {
+      hero.removeEventListener('mouseenter', enter)
+      clearTimeout(showTimer)
+      clearTimeout(hideTimer)
+    }
+  }, [])
 
   useEffect(() => {
     const cursor = document.querySelector('.custom-cursor')
@@ -641,13 +666,32 @@ export default function Home({ navigate }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Ease the cursor pill's width between labels: measure the target text width
+  // with a hidden twin, then set the pill's width (CSS transitions it).
+  const labelRef = useRef(null)
+  const displayLabel = showStringsMsg ? 'Careful with the strings!' : cursorLabel
+  useEffect(() => {
+    const el = labelRef.current
+    if (!el) return
+    const twin = document.createElement('span')
+    const cs = getComputedStyle(el)
+    twin.textContent = displayLabel
+    twin.style.cssText =
+      `position:absolute;left:-9999px;top:-9999px;visibility:hidden;white-space:nowrap;` +
+      `box-sizing:border-box;font:${cs.font};padding:${cs.padding};letter-spacing:${cs.letterSpacing};`
+    document.body.appendChild(twin)
+    const target = twin.offsetWidth
+    document.body.removeChild(twin)
+    el.style.width = target + 'px'
+  }, [displayLabel])
+
   return (
     <div className="page home-page">
       <div className="custom-cursor" aria-hidden="true">
         <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0L0 17.5L4.5 13.5L7.5 21L10.5 19.8L7.5 12.5H13L0 0Z" fill="black" stroke="white" strokeWidth="1" strokeLinejoin="round"/>
         </svg>
-        <span className="cursor-label">{cursorLabel}</span>
+        <span className="cursor-label" ref={labelRef}>{displayLabel}</span>
       </div>
 
       <HeroSection />
