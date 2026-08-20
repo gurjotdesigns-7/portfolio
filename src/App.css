@@ -737,6 +737,12 @@ body {
 }
 .sq-draw .sq-underline path { stroke-dashoffset: 0; }
 .sq-draw .sq-underline path:nth-of-type(2) { transition-delay: 0.16s; }
+/* On phones the upper line sits too close to the smaller text and cuts through
+   it, so keep only the lower underline. */
+@media (max-width: 640px) {
+  .sq-underline path:nth-of-type(1) { display: none; }
+  .sq-draw .sq-underline path:nth-of-type(2) { transition-delay: 0s; }
+}
 @media (prefers-reduced-motion: reduce) {
   .sq-underline path { transition: none; }
 }
@@ -1266,7 +1272,7 @@ body {
 
 .pg-title {
   font-family: 'Caveat', cursive;
-  font-size: 54px;
+  font-size: 66px;
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.1;
@@ -3497,7 +3503,7 @@ body {
 
 .pg-title {
   font-family: 'Caveat', cursive !important;
-  font-size: clamp(31px, 5.1vw, 54px) !important;   /* ~15% smaller */
+  font-size: clamp(39px, 6.3vw, 66px) !important;   /* +12%, then +10% */
   font-weight: 700 !important;
   letter-spacing: 0.01em !important;
   line-height: 1.1 !important;
@@ -3707,7 +3713,7 @@ body {
   .playground-section { min-height: 580px !important; }
   .pg-content { padding: 140px 20px 0 !important; }
   .playground-card { width: 240px !important; }
-  .pg-title   { font-size: clamp(28px, 4vw, 40px) !important; }
+  .pg-title   { font-size: clamp(34px, 5vw, 50px) !important; }
 
   /* Testimonials */
   .testimonials-section { padding: 64px 0 80px !important; }
@@ -3835,7 +3841,7 @@ body {
     padding-right: 20px !important;
   }
   .pg-title {
-    font-size: clamp(28px, 8vw, 40px) !important;
+    font-size: clamp(34px, 9.9vw, 50px) !important;
     margin-bottom: 8px !important;
   }
   .pg-sub { margin-bottom: 28px !important; font-size: 13px !important; }
