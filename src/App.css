@@ -708,19 +708,37 @@ body {
 .peel-note--l { transform: rotate(-2.5deg); }
 .peel-note--r { transform: rotate(2.5deg); }
 
-/* Title-sized sticker (e.g. the "Side Quests" heading): roomier padding,
-   larger radius, and a bigger fold so the peel stays proportional to the
-   large display type. Typography is inherited from the heading class. */
-.peel-note--title {
-  padding: 7px 44px 15px 31px;       /* ~15% smaller, in step with the text */
-  border-radius: 24px 24px 7px 24px;
-  color: #23252b;
-  /* flat offset shadow, matching the Playground cards */
-  box-shadow: 7px 7px 0 rgba(26, 25, 23, 0.18);
+/* ── Side Quests — sketch double-underline ─────────────
+   The title is plain marker text; a hand-drawn double underline sits beneath it
+   and "draws" itself (stroke-dashoffset) when the section scrolls into view.
+   preserveAspectRatio="none" stretches the strokes to the text width, while
+   vector-effect keeps the pen weight constant. */
+.pg-content .pg-title { position: relative; display: inline-block; }
+.sq-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.16em;
+  width: 100%;
+  height: 22px;
+  overflow: visible;
+  pointer-events: none;
 }
-.peel-note--title::after {
-  width: 34px;
-  height: 34px;
+.sq-underline path {
+  fill: none;
+  stroke: #1a1917;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;             /* hidden until drawn */
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.sq-draw .sq-underline path { stroke-dashoffset: 0; }
+.sq-draw .sq-underline path:nth-of-type(2) { transition-delay: 0.16s; }
+@media (prefers-reduced-motion: reduce) {
+  .sq-underline path { transition: none; }
 }
 
 /* ── Case Studies — alternating rows ── */

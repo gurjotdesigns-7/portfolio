@@ -540,45 +540,31 @@ const TESTI_DATA = [
    Cards in flex row — no absolute positioning on cards.
 ────────────────────────────────────────────────────────── */
 function PlaygroundSection({ navigate }) {
-  // "Side Quests" sticker pops in every time the section is revealed by
-  // scrolling DOWN into it — but not on back-scroll. Trick: the sticker is only
-  // re-armed (reset to hidden) once the section has passed fully BELOW the
-  // viewport. So scrolling up back into it finds it already shown (no pop),
-  // while scrolling down into it from below finds it hidden → it pops. Re-arming
-  // happens off-screen, so there's never a visible flicker.
+  // Sketch double-underline under "Side Quests" draws itself in each time the
+  // section is revealed by scrolling DOWN into it (not on back-scroll). It is
+  // only re-armed once the section has passed fully BELOW the fold, so the
+  // reset happens off-screen and there's never a visible flicker.
   const secRef = useRef(null)
   useEffect(() => {
     const el = secRef.current
     if (!el) return
     const title = el.querySelector('.pg-title')
     if (!title) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const T =
-      'opacity 0.55s ease, scale 0.6s cubic-bezier(0.34,1.56,0.64,1), translate 0.6s cubic-bezier(0.34,1.56,0.64,1)'
-    const setState = (visible, animate) => {
-      title.style.transition = animate ? T : 'none'
-      if (!animate) void title.offsetWidth // flush so 'none' applies first
-      title.style.opacity = visible ? '1' : '0'
-      title.style.scale = visible ? '1' : '0.8'
-      title.style.translate = visible ? '0 0' : '0 22px'
-      if (!animate) { void title.offsetWidth; title.style.transition = T }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.add('sq-draw') // draw immediately, no animation
+      return
     }
-
-    // Initial: hidden+armed only if the section starts fully below the fold;
-    // otherwise show it as-is (no pop on load or when already past).
-    let shown = title.getBoundingClientRect().top < window.innerHeight
-    setState(shown, false)
-
+    let drawn = title.getBoundingClientRect().top < window.innerHeight
+    if (drawn) el.classList.add('sq-draw')
     const check = () => {
       const r = title.getBoundingClientRect()
       const vh = window.innerHeight
-      if (!shown && r.top < vh * 0.82 && r.bottom > 0) {
-        shown = true
-        setState(true, true)   // scrolled down into view → pop
-      } else if (shown && r.top >= vh) {
-        shown = false
-        setState(false, false) // fully below the fold → re-arm (off-screen)
+      if (!drawn && r.top < vh * 0.82 && r.bottom > 0) {
+        drawn = true
+        el.classList.add('sq-draw')     // scrolled down into view → draw
+      } else if (drawn && r.top >= vh) {
+        drawn = false
+        el.classList.remove('sq-draw')  // fully below the fold → re-arm off-screen
       }
     }
     window.addEventListener('scroll', check, { passive: true })
@@ -595,7 +581,13 @@ function PlaygroundSection({ navigate }) {
         <img src="/PaperBG-crop.png" alt="" className="pg-paper" />
 
         <div className="pg-content">
-          <h2 className="pg-title peel-note peel-note--title peel-note--l">Side Quests</h2>
+          <h2 className="pg-title">
+            Side Quests
+            <svg className="sq-underline" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M3 9 C 55 5, 110 12, 165 8 C 215 4, 260 11, 297 8" pathLength="1" />
+              <path d="M6 18 C 62 15, 120 21, 190 16 C 240 13, 276 19, 294 17" pathLength="1" />
+            </svg>
+          </h2>
 
           <div className="pg-cards">
 
