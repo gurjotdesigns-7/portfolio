@@ -708,6 +708,17 @@ body {
 .peel-note--l { transform: rotate(-2.5deg); }
 .peel-note--r { transform: rotate(2.5deg); }
 
+/* Mobile: smaller subtitle stickers and smaller text inside them. */
+@media (max-width: 640px) {
+  .peel-note {
+    font-size: 12px;
+    padding: 8px 26px 9px 15px;         /* right pad still clears the smaller fold */
+    border-radius: 14px 14px 3px 14px;
+    box-shadow: 4px 4px 0 rgba(26, 25, 23, 0.18);
+  }
+  .peel-note::after { width: 20px; height: 20px; }
+}
+
 /* ── Side Quests — sketch double-underline ─────────────
    The title is plain marker text; a hand-drawn double underline sits beneath it
    and "draws" itself (stroke-dashoffset) when the section scrolls into view.
