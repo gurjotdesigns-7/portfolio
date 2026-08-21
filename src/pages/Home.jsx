@@ -663,6 +663,37 @@ export default function Home({ navigate }) {
   const [cursorLabel, setCursorLabel] = useState('Hello')
   const ctaText = useTypewriter(FOOTER_PHRASES)
 
+  // Footer "slides up into place" as it scrolls into view. Re-arms only once it
+  // has passed fully below the fold, so it replays on each downward reveal but
+  // not on back-scroll, and the reset happens off-screen (no flicker).
+  const footerRef = useRef(null)
+  useEffect(() => {
+    const el = footerRef.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const T = 'transform 0.75s cubic-bezier(0.22, 1, 0.36, 1)'
+    const setState = (up, animate) => {
+      el.style.transition = animate ? T : 'none'
+      if (!animate) void el.offsetWidth
+      el.style.transform = up ? 'translateY(0)' : 'translateY(72px)'
+      if (!animate) { void el.offsetWidth; el.style.transition = T }
+    }
+    let up = el.getBoundingClientRect().top < window.innerHeight * 0.92
+    setState(up, false)
+    const check = () => {
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      if (!up && r.top < vh * 0.92 && r.bottom > 0) { up = true; setState(true, true) }
+      else if (up && r.top >= vh) { up = false; setState(false, false) }
+    }
+    window.addEventListener('scroll', check, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      window.removeEventListener('scroll', check)
+      window.removeEventListener('resize', check)
+    }
+  }, [])
+
   useEffect(() => {
     const cursor = document.querySelector('.custom-cursor')
     if (!cursor) return
@@ -741,7 +772,7 @@ export default function Home({ navigate }) {
         <TestimonialsMarquee />
       </section>
 
-      <footer id="contact" className="home-footer-v2">
+      <footer id="contact" className="home-footer-v2" ref={footerRef}>
 
         {/* ── CTA row: text left, button right ── */}
         <div className="footer-cta-block">

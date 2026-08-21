@@ -1166,8 +1166,8 @@ body {
 }
 .cs-progress-dot--active {
   height: 36px;
-  background: var(--accent);
-  border: 2px solid var(--text);
+  background: #F1EFFD;                     /* light-purple card shade */
+  border: 2px solid var(--accent-light);  /* light-purple outline, not the dark one */
 }
 
 /* Progress dots stay visible on iPad — only true phones hide them (the stack
