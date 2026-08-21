@@ -3869,7 +3869,7 @@ body {
   .playground-section {
     padding: 80px 0 100px !important;
     min-height: 1180px !important;
-    background-image: url('/PaperBG-crop.png') !important;
+    background-image: url('/PaperBG-crop.webp') !important;
     background-position: top center !important;
     /* 25% bigger than a plain cover-fill (cover = 100% height here since the
        paper is landscape inside a tall section), anchored to the top edge. */
@@ -3915,7 +3915,8 @@ body {
   .testi-track { padding: 0 12px 12px !important; }
 
   /* ── Footer ── */
-  .home-footer-v2 { padding: 40px 20px 28px !important; }
+  /* +16px buffer above the CTA text so it clears the torn top edge on mobile */
+  .home-footer-v2 { padding: 56px 20px 28px !important; }
   .footer-cta-block {
     gap: 20px !important;
     margin-bottom: 40px !important;
