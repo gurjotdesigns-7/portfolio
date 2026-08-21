@@ -65,10 +65,10 @@ function HeroGridCanvas() {
     const BG = '#fdfdfb'
     const MINOR_C = 'rgba(28,28,36,0.04)'
     const MAJOR_C = '#e5e1fc'
-    // string physics — tighter (higher tension) and rings ~25% longer than
-    // before (DAMP 0.965 → 0.972) so the entry strum is more evident. Both
-    // vertical AND horizontal major lines are strings.
-    const K = 0.02, T = 0.42, DAMP = 0.972, RADIUS = 46, STR = 0.8, CAP = 5
+    // string physics — tightened ~15% (K 0.02→0.023, T 0.42→0.483) so the
+    // lines snap back crisply like strings instead of sloshing like water.
+    // Both vertical AND horizontal major lines are strings.
+    const K = 0.023, T = 0.483, DAMP = 0.972, RADIUS = 46, STR = 0.8, CAP = 5
 
     let W = 0, H = 0, dpr = 1, vN = 0, hN = 0, hSpan = 0
     let vStr = []   // vertical major lines:   { x, d[], v[] }  (displaced in x)
