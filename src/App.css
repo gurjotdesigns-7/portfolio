@@ -1481,8 +1481,15 @@ body {
 
 /* ── Footer V2 ── */
 .home-footer-v2 {
-  padding: 80px 60px 48px;
-  background: #fff;
+  position: relative;
+  /* Full-bleed so the torn paper edge spans the whole width */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  /* Torn kraft-paper top edge instead of a straight white line. The image is
+     transparent above the tear (page shows through) and solid light-kraft below
+     — a lighter shade of the Side Quests paper for text contrast. */
+  padding: 120px 60px 48px;
+  background: url('/footer-paper.png') top center / 100% 100% no-repeat;
 }
 
 /* ── CTA block: text left, button right ── */
@@ -1501,12 +1508,14 @@ body {
 }
 
 .footer-cta-eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 14px;                 /* +25% */
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: #2d2d2d;                  /* neutral dark ink for the white paper */
   margin: 0;
+  min-height: 1.4em;               /* hold the line so it never collapses mid-type */
 }
 
 .footer-cta-headline {
@@ -1527,7 +1536,6 @@ body {
   justify-content: space-between;
   align-items: center;
   padding-top: 24px;
-  border-top: 1px solid var(--border);
   gap: 16px;
 }
 
@@ -1546,30 +1554,31 @@ body {
 }
 
 .social-icon {
-  height: 40px;
-  padding: 0 16px;
+  height: 44px;
+  padding: 0 18px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
+  /* Dark pill matching the curated-project card CTA: black, 2px border, hard
+     pop-art offset shadow, and a lift-on-hover that turns it purple. */
+  background: var(--text);
+  border: 2px solid var(--text);
+  color: #fff;
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
+  box-shadow: 4px 4px 0 rgba(26, 25, 23, 0.18);
   transition:
-    color 0.25s,
-    border-color 0.25s,
-    transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
-    background 0.25s;
+    transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .social-icon:hover {
-  color: var(--accent);
-  border-color: var(--accent-border);
-  background: var(--accent-dim);
-  transform: translateY(-2px);
+  background: var(--accent);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(26, 25, 23, 0.24);
 }
 
 .footer-cta {
@@ -1612,7 +1621,7 @@ body {
   gap: 16px;
   padding-top: 20px;
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--text-muted);       /* neutral, on the white paper */
   letter-spacing: 0.02em;
 }
 
@@ -3911,7 +3920,7 @@ body {
     gap: 20px !important;
     margin-bottom: 40px !important;
   }
-  .footer-cta-eyebrow  { font-size: 10px !important; }
+  .footer-cta-eyebrow  { font-size: 13px !important; }
   .footer-cta-headline { font-size: clamp(22px, 7vw, 32px) !important; line-height: 1.2 !important; }
   .footer-cta          { padding: 14px 24px !important; font-size: 14px !important; width: 100% !important; justify-content: center !important; }
   .footer-socials      { flex-wrap: wrap !important; gap: 8px !important; }

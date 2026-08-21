@@ -2,6 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
+import useTypewriter from '../hooks/useTypewriter'
+
+/* Footer CTA eyebrow cycles through these as a typewriter. */
+const FOOTER_PHRASES = [
+  "Let's work together",
+  'What are you waiting for?',
+  "Let's collaborate",
+  "Let's connect",
+]
 
 /* ─── Reveal on scroll ─────────────────────────────── */
 function useReveal(delay = 0, threshold = 0.15) {
@@ -652,6 +661,7 @@ const SECTION_LABELS = [
 /* ─── Page ───────────────────────────────────────────── */
 export default function Home({ navigate }) {
   const [cursorLabel, setCursorLabel] = useState('Hello')
+  const ctaText = useTypewriter(FOOTER_PHRASES)
 
   useEffect(() => {
     const cursor = document.querySelector('.custom-cursor')
@@ -737,7 +747,9 @@ export default function Home({ navigate }) {
         <div className="footer-cta-block">
           <Reveal>
             <div className="footer-cta-text">
-              <p className="footer-cta-eyebrow">Let's work together</p>
+              <p className="footer-cta-eyebrow" aria-label="Let's work together">
+                <span aria-hidden="true">{ctaText}<span className="type-caret"></span></span>
+              </p>
               <h2 className="footer-cta-headline">Have something you're<br />trying to build?</h2>
             </div>
           </Reveal>
