@@ -739,11 +739,9 @@ body {
 }
 .sq-draw .sq-underline path { stroke-dashoffset: 0; }
 .sq-draw .sq-underline path:nth-of-type(2) { transition-delay: 0.16s; }
-/* On phones the upper line sits too close to the smaller text and cuts through
-   it, so keep only the lower underline. */
+/* On phones drop the sketch underline entirely — the title stands on its own. */
 @media (max-width: 640px) {
-  .sq-underline path:nth-of-type(1) { display: none; }
-  .sq-draw .sq-underline path:nth-of-type(2) { transition-delay: 0s; }
+  .sq-underline { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sq-underline path { transition: none; }
@@ -3843,7 +3841,7 @@ body {
     padding-right: 20px !important;
   }
   .pg-title {
-    font-size: clamp(39px, 11.4vw, 58px) !important;
+    font-size: clamp(49px, 14.25vw, 72px) !important;   /* +25% on mobile */
     margin-bottom: 8px !important;
   }
   .pg-sub { margin-bottom: 28px !important; font-size: 13px !important; }
