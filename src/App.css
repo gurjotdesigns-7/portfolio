@@ -736,7 +736,14 @@ body {
                               on mobile) */
   overflow: visible;
   pointer-events: none;
+  /* Draw-on via a left-to-right clip-path wipe over SOLID strokes. The old
+     stroke-dashoffset draw broke into gaps: dash length is mis-measured when
+     vector-effect:non-scaling-stroke meets the non-uniform preserveAspectRatio
+     stretch. A rectangular wipe is immune to that. */
+  clip-path: inset(-30% 100% -30% 0);
+  transition: clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
+.sq-draw .sq-underline { clip-path: inset(-30% -6% -30% 0); }
 .sq-underline path {
   fill: none;
   stroke: #1a1917;
@@ -744,18 +751,13 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;             /* hidden until drawn */
-  transition: stroke-dashoffset 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
-.sq-draw .sq-underline path { stroke-dashoffset: 0; }
-.sq-draw .sq-underline path:nth-of-type(2) { transition-delay: 0.16s; }
 /* On phones drop the sketch underline entirely — the title stands on its own. */
 @media (max-width: 640px) {
   .sq-underline { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sq-underline path { transition: none; }
+  .sq-underline { transition: none; clip-path: inset(-30% -6% -30% 0); }
 }
 
 /* ── Case Studies — alternating rows ── */
