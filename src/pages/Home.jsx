@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
-import WarpBackground from '../components/WarpBackground'
 import useTypewriter from '../hooks/useTypewriter'
 
 /* Footer CTA eyebrow cycles through these as a typewriter. */
@@ -753,14 +752,7 @@ export default function Home({ navigate }) {
 
       {/* ── Award: OpenAI "Build What Moves India" winner ── */}
       <section className="award-section" aria-label="Award">
-        <WarpBackground
-          className="award-warp"
-          beamsPerSide={4}
-          beamSize={4}
-          beamDuration={4}
-          perspective={130}
-          gridColor="rgba(30, 30, 46, 0.06)"
-        >
+        <div className="award-paper">
           <div className="award-inner">
             <img
               className="award-badge"
@@ -800,10 +792,6 @@ export default function Home({ navigate }) {
             aria-label="Photos from the OpenAI Build What Moves India finale"
           >
             <figure className="award-photo award-photo--a">
-              <span className="tape tape--tl" />
-              <span className="tape tape--tr" />
-              <span className="tape tape--bl" />
-              <span className="tape tape--br" />
               <img
                 src="/award-photo-1.webp"
                 alt="Sanan Goyal and Gurjot at the OpenAI × Varun Mayya finale"
@@ -813,10 +801,6 @@ export default function Home({ navigate }) {
               />
             </figure>
             <figure className="award-photo award-photo--b">
-              <span className="tape tape--tl" />
-              <span className="tape tape--tr" />
-              <span className="tape tape--bl" />
-              <span className="tape tape--br" />
               <img
                 src="/award-photo-2.webp"
                 alt="Holding the Trip to San Francisco winner cheque as confetti falls"
@@ -826,10 +810,6 @@ export default function Home({ navigate }) {
               />
             </figure>
             <figure className="award-photo award-photo--c">
-              <span className="tape tape--tl" />
-              <span className="tape tape--tr" />
-              <span className="tape tape--bl" />
-              <span className="tape tape--br" />
               <img
                 src="/award-photo-3.webp"
                 alt="Accepting the RaktKhoj win on stage"
@@ -852,7 +832,7 @@ export default function Home({ navigate }) {
               />
             </div>
           </figure>
-        </WarpBackground>
+        </div>
       </section>
 
       <section id="work" className="case-studies-section">

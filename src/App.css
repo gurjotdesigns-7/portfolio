@@ -766,62 +766,36 @@ body {
    keyframes here, and the accents are red. */
 .award-section { padding: clamp(48px, 6vw, 104px) 0; }
 
-.award-warp {          /* same width as the curated-project cards */
-  width: min(80vw, 1224px);
-  margin: 0 auto;
-}
-.warp-bg {
+/* One large sheet of paper — everything in the award section sits on it.
+   All hand-drawn in code (grain via an inline SVG noise) so it stays crisp
+   at any size and never pixelates on mobile. */
+.award-paper {
   position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  padding: clamp(28px, 4vw, 56px);
-  background: #fff;                              /* light theme */
-  border: 2px solid var(--text);
-  box-shadow: 8px 8px 0 rgba(26, 25, 23, 0.14); /* pop-art shadow like the cards */
+  width: min(80vw, 1224px);       /* same width as the curated-project cards */
+  margin: 0 auto;
+  padding: clamp(26px, 4vw, 60px);
+  border-radius: 4px;
+  color: var(--text);
+  background-color: #f6f2e7;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E"),
+    radial-gradient(150% 120% at 50% -12%, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, #faf7ee 0%, #f3eee0 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 36px 64px -34px rgba(26, 25, 23, 0.45),
+    0 2px 6px rgba(26, 25, 23, 0.06);
+  border: 1px solid rgba(26, 25, 23, 0.07);
 }
-.warp-scene {
-  pointer-events: none;
+/* faint inner shading so the sheet reads as real paper, not a flat block */
+.award-paper::after {
+  content: '';
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  clip-path: inset(0);
-  container-type: size;
-  perspective: var(--perspective);
-  transform-style: preserve-3d;
-  /* Keep the streaks to the OUTER frame only — clear the centre where the
-     content sits, fading the beams in toward the card edges. */
-  -webkit-mask: radial-gradient(72% 72% at 50% 50%, transparent 44%, #000 74%);
-  mask: radial-gradient(72% 72% at 50% 50%, transparent 44%, #000 74%);
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 70px rgba(120, 105, 70, 0.06);
 }
-.warp-side {
-  position: absolute;
-  transform-style: preserve-3d;
-  container-type: inline-size;
-  background-size: var(--beam-size) var(--beam-size);
-  background:
-    linear-gradient(var(--grid-color) 0 1px, transparent 1px var(--beam-size)) 50% -0.5px / var(--beam-size) var(--beam-size),
-    linear-gradient(90deg, var(--grid-color) 0 1px, transparent 1px var(--beam-size)) 50% 50% / var(--beam-size) var(--beam-size);
-}
-.warp-top    { height: 100cqmax; width: 100cqi; transform-origin: 50% 0%; transform: rotateX(-90deg); }
-.warp-bottom { top: 100%; height: 100cqmax; width: 100cqi; transform-origin: 50% 0%; transform: rotateX(-90deg); }
-.warp-left   { left: 0; top: 0; height: 100cqmax; width: 100cqh; transform-origin: 0% 0%; transform: rotate(90deg) rotateX(-90deg); }
-.warp-right  { right: 0; top: 0; height: 100cqmax; width: 100cqh; transform-origin: 100% 0%; transform: rotate(-90deg) rotateX(-90deg); }
-.warp-beam {
-  position: absolute;
-  left: var(--x);
-  top: 0;
-  width: var(--beam-size);
-  aspect-ratio: 1 / var(--aspect);
-  background: linear-gradient(var(--beam-color), transparent);
-  border-radius: 999px;
-  opacity: 0.15;                      /* very light — ~80% lighter than before */
-  animation: warp-beam-move var(--duration) linear var(--delay) infinite;
-}
-@keyframes warp-beam-move {
-  from { transform: translate(-50%, 100cqmax); }
-  to   { transform: translate(-50%, -100%); }
-}
-.warp-content { position: relative; }
 
 .award-inner {
   display: flex;
@@ -894,50 +868,41 @@ body {
 .award-cta-arrow { font-size: 16px; line-height: 1; transition: transform 0.18s ease; }
 .award-cta:hover .award-cta-arrow { transform: translate(2px, -2px); }
 
-/* Taped scrapbook collage — each photo is a paper print pinned with tape */
+/* Photo grid — three uniform squares that grow and tilt on hover */
 .award-collage {
-  margin-top: clamp(34px, 4vw, 58px);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(16px, 2.6vw, 36px);
+  margin-top: clamp(30px, 3.6vw, 52px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.8vw, 24px);
 }
 .award-photo {
   position: relative;
   margin: 0;
-  background: #fff;
-  padding: 10px 10px 12px;
-  border-radius: 2px;
-  box-shadow: 0 14px 30px -14px rgba(26, 25, 23, 0.42);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
   z-index: 1;
 }
-.award-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
-.award-photo--a { width: clamp(160px, 21vw, 244px); transform: rotate(-3.5deg); }
-.award-photo--b { width: clamp(214px, 27vw, 318px); transform: rotate(1.8deg); margin-top: 10px; }
-.award-photo--c { width: clamp(152px, 20vw, 232px); transform: rotate(2.8deg); }
-.award-photo:hover {
-  transform: rotate(0deg) translateY(-6px) scale(1.03);
-  box-shadow: 0 26px 46px -18px rgba(26, 25, 23, 0.5);
-  z-index: 3;
+.award-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  background: #e8e4d8;
+  box-shadow: 0 12px 26px -14px rgba(26, 25, 23, 0.4);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
+  will-change: transform;
 }
-/* Masking-tape strips on all four corners */
-.tape {
-  position: absolute;
-  width: 52px;
-  height: 19px;
-  background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px),
-    rgba(214, 202, 168, 0.62);
-  box-shadow: 0 1px 3px rgba(26, 25, 23, 0.16);
-  z-index: 2;
-  pointer-events: none;
-}
-.tape--tl { top: -9px; left: -13px; transform: rotate(-42deg); }
-.tape--tr { top: -9px; right: -13px; transform: rotate(42deg); }
-.tape--bl { bottom: -8px; left: -13px; transform: rotate(42deg); }
-.tape--br { bottom: -8px; right: -13px; transform: rotate(-42deg); }
+/* bias the square crop so faces stay in frame */
+.award-photo--a img { object-position: 50% 26%; }
+.award-photo--b img { object-position: 50% 42%; }
+.award-photo--c img { object-position: 50% 20%; }
+/* grow + tilt on hover; raised above neighbours */
+.award-photo:hover { z-index: 3; }
+.award-photo--a:hover img { transform: scale(1.11) rotate(-2.5deg); }
+.award-photo--b:hover img { transform: scale(1.11) rotate(2deg); }
+.award-photo--c:hover img { transform: scale(1.11) rotate(-2deg); }
+.award-photo:hover img { box-shadow: 0 30px 52px -20px rgba(26, 25, 23, 0.5); }
 
 .award-video-block { margin: clamp(34px, 4vw, 58px) 0 0; }
 .award-embed-label {
@@ -962,22 +927,18 @@ body {
 .award-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* Match the curated-project card widths at each breakpoint */
-@media (max-width: 1366px) { .award-warp { width: min(72vw, 900px); } }
-@media (max-width: 1024px) { .award-warp { width: 68vw; } }
+@media (max-width: 1366px) { .award-paper { width: min(72vw, 900px); } }
+@media (max-width: 1024px) { .award-paper { width: 68vw; } }
 @media (max-width: 760px) {
-  .award-warp { width: 92vw; }
+  .award-paper { width: 92vw; }
   .award-inner { flex-direction: column; text-align: center; gap: 26px; }
   .award-badge { width: clamp(150px, 46vw, 210px); }
   .award-text { max-width: none; }
   .award-tag { margin-left: auto; margin-right: auto; }
   .award-cta { margin-left: auto; margin-right: auto; }
-  .award-collage { gap: 14px 12px; }
-  .award-photo--a { width: 42vw; }
-  .award-photo--b { width: 62vw; margin-top: 4px; }
-  .award-photo--c { width: 42vw; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .warp-beam { animation: none; opacity: 0.55; }
+  /* two squares on top, the wide group shot spanning underneath */
+  .award-collage { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .award-photo--c { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
 }
 
 /* ── Case Studies — alternating rows ── */
