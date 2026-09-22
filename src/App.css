@@ -817,9 +817,11 @@ body {
 .award-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: clamp(28px, 5vw, 72px);
 }
 .award-badge {
+  order: 1;                     /* text on the far left, badge on the right */
   flex: 0 0 auto;
   width: clamp(158px, 20vw, 250px);
   height: auto;
@@ -889,21 +891,21 @@ body {
 .award-cta {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  margin-top: 24px;
-  padding: 12px 22px;
-  font-size: 14px;
-  font-weight: 600;
+  gap: 11px;
+  margin-top: 28px;
+  padding: 16px 32px;
+  font-size: 17px;
+  font-weight: 700;
   color: #fff;
-  background: var(--accent);
+  background: #d92d2d;               /* same red as the RaktKhoj wordmark */
   border: 2px solid var(--text);
   border-radius: 999px;
-  box-shadow: 4px 4px 0 rgba(26, 25, 23, 0.18);
+  box-shadow: 5px 5px 0 rgba(26, 25, 23, 0.2);
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease;
 }
-.award-cta:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(26, 25, 23, 0.22); }
-.award-cta:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 rgba(26, 25, 23, 0.2); }
-.award-cta-arrow { font-size: 16px; line-height: 1; transition: transform 0.18s ease; }
+.award-cta:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 rgba(26, 25, 23, 0.24); }
+.award-cta:active { transform: translate(1px, 1px); box-shadow: 3px 3px 0 rgba(26, 25, 23, 0.22); }
+.award-cta-arrow { font-size: 19px; line-height: 1; transition: transform 0.18s ease; }
 .award-cta:hover .award-cta-arrow { transform: translate(2px, -2px); }
 
 /* Photo grid — three uniform squares that grow and tilt on hover */
@@ -970,7 +972,7 @@ body {
 @media (max-width: 760px) {
   .award-paper { width: 92vw; }
   .award-inner { flex-direction: column; text-align: center; gap: 26px; }
-  .award-badge { width: clamp(150px, 46vw, 210px); }
+  .award-badge { order: 0; width: clamp(150px, 46vw, 210px); }
   .award-text { max-width: none; }
   .award-tag { margin-left: auto; margin-right: auto; }
   .award-cta { margin-left: auto; margin-right: auto; }

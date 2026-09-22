@@ -786,7 +786,7 @@ export default function Home({ navigate }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Check out the live demo
+                RaktKhoj demo
                 <span className="award-cta-arrow" aria-hidden="true">↗</span>
               </a>
             </div>
