@@ -760,6 +760,120 @@ body {
   .sq-underline { transition: none; clip-path: inset(-30% -6% -30% 0); }
 }
 
+/* ── Award: winner badge on a warp-background panel ────
+   Dark rounded panel with a 3D perspective grid and RED light beams streaking
+   up each side. Adapted from the shadcn/motion "WarpBackground": beams are CSS
+   keyframes here, and the accents are red. */
+.award-section { padding: clamp(48px, 6vw, 104px) 0; }
+
+.warp-bg {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: clamp(28px, 4vw, 60px);
+  background: radial-gradient(130% 120% at 50% 0%, #14141f 0%, #0a0a12 55%, #060609 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.65);
+}
+.warp-scene {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(0);
+  container-type: size;
+  perspective: var(--perspective);
+  transform-style: preserve-3d;
+}
+.warp-side {
+  position: absolute;
+  transform-style: preserve-3d;
+  container-type: inline-size;
+  background-size: var(--beam-size) var(--beam-size);
+  background:
+    linear-gradient(var(--grid-color) 0 1px, transparent 1px var(--beam-size)) 50% -0.5px / var(--beam-size) var(--beam-size),
+    linear-gradient(90deg, var(--grid-color) 0 1px, transparent 1px var(--beam-size)) 50% 50% / var(--beam-size) var(--beam-size);
+}
+.warp-top    { height: 100cqmax; width: 100cqi; transform-origin: 50% 0%; transform: rotateX(-90deg); }
+.warp-bottom { top: 100%; height: 100cqmax; width: 100cqi; transform-origin: 50% 0%; transform: rotateX(-90deg); }
+.warp-left   { left: 0; top: 0; height: 100cqmax; width: 100cqh; transform-origin: 0% 0%; transform: rotate(90deg) rotateX(-90deg); }
+.warp-right  { right: 0; top: 0; height: 100cqmax; width: 100cqh; transform-origin: 100% 0%; transform: rotate(-90deg) rotateX(-90deg); }
+.warp-beam {
+  position: absolute;
+  left: var(--x);
+  top: 0;
+  width: var(--beam-size);
+  aspect-ratio: 1 / var(--aspect);
+  background: linear-gradient(var(--beam-color), transparent);
+  border-radius: 999px;
+  filter: drop-shadow(0 0 7px var(--beam-color));
+  animation: warp-beam-move var(--duration) linear var(--delay) infinite;
+}
+@keyframes warp-beam-move {
+  from { transform: translate(-50%, 100cqmax); }
+  to   { transform: translate(-50%, -100%); }
+}
+.warp-content { position: relative; }
+
+.award-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+}
+.award-badge {
+  flex: 0 0 auto;
+  width: clamp(158px, 20vw, 250px);
+  height: auto;
+  filter: drop-shadow(0 18px 44px rgba(46, 68, 255, 0.32));
+}
+.award-text { color: #fff; max-width: 620px; }
+.award-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ff5a5a;
+  border: 1px solid rgba(255, 90, 90, 0.4);
+  background: rgba(255, 90, 90, 0.09);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+.award-title {
+  font-size: clamp(26px, 3.4vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0 0 16px;
+  color: #fff;
+}
+.award-lead {
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.84);
+  margin: 0 0 14px;
+}
+.award-body {
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.66);
+  margin: 0;
+}
+.award-hi { color: #ff7a7a; font-weight: 600; }
+
+@media (max-width: 760px) {
+  .award-inner { flex-direction: column; text-align: center; gap: 26px; }
+  .award-badge { width: clamp(150px, 46vw, 210px); }
+  .award-text { max-width: none; }
+  .award-tag { margin-left: auto; margin-right: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .warp-beam { animation: none; opacity: 0.55; }
+}
+
 /* ── Case Studies — alternating rows ── */
 /* Extra top padding gives breathing room after the ticker strip */
 .case-studies-section {

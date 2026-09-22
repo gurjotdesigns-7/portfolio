@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
+import WarpBackground from '../components/WarpBackground'
 import useTypewriter from '../hooks/useTypewriter'
 
 /* Footer CTA eyebrow cycles through these as a typewriter. */
@@ -749,6 +750,37 @@ export default function Home({ navigate }) {
       </div>
 
       <HeroSection />
+
+      {/* ── Award: OpenAI "Build What Moves India" winner ── */}
+      <section className="award-section" aria-label="Award">
+        <div className="container">
+          <WarpBackground beamsPerSide={4} beamSize={4} beamDuration={4} perspective={130}>
+            <div className="award-inner">
+              <img
+                className="award-badge"
+                src="/winner-badge.webp"
+                alt="OpenAI — Build What Moves India 2026, Winner badge"
+                width="965"
+                height="1792"
+                loading="lazy"
+              />
+              <div className="award-text">
+                <span className="award-tag">★ Winner</span>
+                <h2 className="award-title">Build What Moves India 2026</h2>
+                <p className="award-lead">
+                  A national hackathon by OpenAI and Varun Mayya, won from 13,000+ entries.
+                </p>
+                <p className="award-body">
+                  <span className="award-hi">कोष</span> is a store of blood.{' '}
+                  <span className="award-hi">खोज</span> is the search for it. Sanan Goyal and I
+                  rebuilt e-RaktKosh into <span className="award-hi">RaktKhoj</span>, a working
+                  prototype that reaches donors when no bank nearby has the blood.
+                </p>
+              </div>
+            </div>
+          </WarpBackground>
+        </div>
+      </section>
 
       <section id="work" className="case-studies-section">
         <div className="container container-narrow">
