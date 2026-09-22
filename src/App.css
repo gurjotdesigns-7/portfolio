@@ -970,12 +970,19 @@ body {
 @media (max-width: 1366px) { .award-paper { width: min(72vw, 900px); } }
 @media (max-width: 1024px) { .award-paper { width: 68vw; } }
 @media (max-width: 760px) {
-  .award-paper { width: 92vw; }
-  .award-inner { flex-direction: column; text-align: center; gap: 26px; }
-  .award-badge { order: 0; width: clamp(150px, 46vw, 210px); }
+  .award-paper { width: 92vw; padding: clamp(22px, 6vw, 34px); }
+  /* stack, left-aligned, with a smaller medal so it stops dominating */
+  .award-inner { flex-direction: column; align-items: flex-start; text-align: left; gap: 16px; }
+  .award-badge { order: 0; width: clamp(104px, 30vw, 144px); }
   .award-text { max-width: none; }
-  .award-tag { margin-left: auto; margin-right: auto; }
-  .award-cta { margin-left: auto; margin-right: auto; }
+  .award-tag { display: none; }              /* the medal already says "winner" — drop the capsule */
+  .award-cta {                               /* full-length button on mobile */
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 22px;
+    padding: 16px 24px;
+  }
   /* two squares on top, the wide group shot spanning underneath */
   .award-collage { grid-template-columns: 1fr 1fr; gap: 12px; }
   .award-photo--c { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
