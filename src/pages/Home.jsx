@@ -753,33 +753,106 @@ export default function Home({ navigate }) {
 
       {/* ── Award: OpenAI "Build What Moves India" winner ── */}
       <section className="award-section" aria-label="Award">
-        <div className="container">
-          <WarpBackground beamsPerSide={4} beamSize={4} beamDuration={4} perspective={130}>
-            <div className="award-inner">
+        <WarpBackground
+          className="award-warp"
+          beamsPerSide={4}
+          beamSize={4}
+          beamDuration={4}
+          perspective={130}
+          gridColor="rgba(30, 30, 46, 0.06)"
+        >
+          <div className="award-inner">
+            <img
+              className="award-badge"
+              src="/winner-badge.webp"
+              alt="OpenAI — Build What Moves India 2026, Winner badge"
+              width="965"
+              height="1792"
+              loading="lazy"
+            />
+            <div className="award-text">
+              <span className="award-tag">★ Winner</span>
+              <h2 className="award-title">Build What Moves India 2026</h2>
+              <p className="award-lead">
+                A national hackathon by OpenAI and Varun Mayya, won from 13,000+ entries.
+              </p>
+              <p className="award-body">
+                <span className="award-hi">कोष</span> is a store of blood.{' '}
+                <span className="award-hi-blue">खोज</span> is the search for it. Sanan Goyal and I
+                rebuilt e-RaktKosh into <span className="award-hi">RaktKhoj</span>, a working
+                prototype that reaches donors when no bank nearby has the blood.
+              </p>
+              <a
+                className="award-cta"
+                href="https://raktkhoj.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Check out the live demo
+                <span className="award-cta-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div
+            className="award-collage"
+            role="group"
+            aria-label="Photos from the OpenAI Build What Moves India finale"
+          >
+            <figure className="award-photo award-photo--a">
+              <span className="tape tape--tl" />
+              <span className="tape tape--tr" />
+              <span className="tape tape--bl" />
+              <span className="tape tape--br" />
               <img
-                className="award-badge"
-                src="/winner-badge.webp"
-                alt="OpenAI — Build What Moves India 2026, Winner badge"
-                width="965"
-                height="1792"
+                src="/award-photo-1.webp"
+                alt="Sanan Goyal and Gurjot at the OpenAI × Varun Mayya finale"
+                width="1125"
+                height="1500"
                 loading="lazy"
               />
-              <div className="award-text">
-                <span className="award-tag">★ Winner</span>
-                <h2 className="award-title">Build What Moves India 2026</h2>
-                <p className="award-lead">
-                  A national hackathon by OpenAI and Varun Mayya, won from 13,000+ entries.
-                </p>
-                <p className="award-body">
-                  <span className="award-hi">कोष</span> is a store of blood.{' '}
-                  <span className="award-hi">खोज</span> is the search for it. Sanan Goyal and I
-                  rebuilt e-RaktKosh into <span className="award-hi">RaktKhoj</span>, a working
-                  prototype that reaches donors when no bank nearby has the blood.
-                </p>
-              </div>
+            </figure>
+            <figure className="award-photo award-photo--b">
+              <span className="tape tape--tl" />
+              <span className="tape tape--tr" />
+              <span className="tape tape--bl" />
+              <span className="tape tape--br" />
+              <img
+                src="/award-photo-2.webp"
+                alt="Holding the Trip to San Francisco winner cheque as confetti falls"
+                width="1500"
+                height="1192"
+                loading="lazy"
+              />
+            </figure>
+            <figure className="award-photo award-photo--c">
+              <span className="tape tape--tl" />
+              <span className="tape tape--tr" />
+              <span className="tape tape--bl" />
+              <span className="tape tape--br" />
+              <img
+                src="/award-photo-3.webp"
+                alt="Accepting the RaktKhoj win on stage"
+                width="844"
+                height="1500"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+
+          <figure className="award-video-block">
+            <figcaption className="award-embed-label">▶ Watch the demo</figcaption>
+            <div className="award-video">
+              <iframe
+                src="https://www.youtube.com/embed/sgtufOZ8ryo?autoplay=1&mute=1&rel=0&playsinline=1"
+                title="RaktKhoj — demo video"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
             </div>
-          </WarpBackground>
-        </div>
+          </figure>
+        </WarpBackground>
       </section>
 
       <section id="work" className="case-studies-section">

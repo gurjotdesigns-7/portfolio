@@ -9,8 +9,13 @@ import { useMemo } from 'react'
    lives in the .warp-* CSS. */
 
 function Beam({ x, delay, duration, aspect }) {
-  // Slight red-hue variation per beam so the streaks read with depth.
-  const hue = Math.floor(Math.random() * 22) - 6 // ~ -6..16 → crimson→red-orange
+  // RED, BLUE (from the winner badge) and the brand PURPLE — kept very light.
+  const p = Math.random()
+  const hue = p < 0.34
+    ? Math.floor(Math.random() * 20) - 6   // red
+    : p < 0.67
+      ? 216 + Math.floor(Math.random() * 22) // blue
+      : 248 + Math.floor(Math.random() * 12) // brand purple
   return (
     <div
       className="warp-beam"
@@ -19,7 +24,7 @@ function Beam({ x, delay, duration, aspect }) {
         '--aspect': aspect,
         '--delay': `${delay}s`,
         '--duration': `${duration}s`,
-        '--beam-color': `hsl(${hue} 90% 60%)`,
+        '--beam-color': `hsl(${hue} 85% 62%)`,
       }}
     />
   )

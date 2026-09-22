@@ -766,14 +766,18 @@ body {
    keyframes here, and the accents are red. */
 .award-section { padding: clamp(48px, 6vw, 104px) 0; }
 
+.award-warp {          /* same width as the curated-project cards */
+  width: min(80vw, 1224px);
+  margin: 0 auto;
+}
 .warp-bg {
   position: relative;
   overflow: hidden;
-  border-radius: 28px;
-  padding: clamp(28px, 4vw, 60px);
-  background: radial-gradient(130% 120% at 50% 0%, #14141f 0%, #0a0a12 55%, #060609 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.65);
+  border-radius: 16px;
+  padding: clamp(28px, 4vw, 56px);
+  background: #fff;                              /* light theme */
+  border: 2px solid var(--text);
+  box-shadow: 8px 8px 0 rgba(26, 25, 23, 0.14); /* pop-art shadow like the cards */
 }
 .warp-scene {
   pointer-events: none;
@@ -784,6 +788,10 @@ body {
   container-type: size;
   perspective: var(--perspective);
   transform-style: preserve-3d;
+  /* Keep the streaks to the OUTER frame only — clear the centre where the
+     content sits, fading the beams in toward the card edges. */
+  -webkit-mask: radial-gradient(72% 72% at 50% 50%, transparent 44%, #000 74%);
+  mask: radial-gradient(72% 72% at 50% 50%, transparent 44%, #000 74%);
 }
 .warp-side {
   position: absolute;
@@ -806,7 +814,7 @@ body {
   aspect-ratio: 1 / var(--aspect);
   background: linear-gradient(var(--beam-color), transparent);
   border-radius: 999px;
-  filter: drop-shadow(0 0 7px var(--beam-color));
+  opacity: 0.15;                      /* very light — ~80% lighter than before */
   animation: warp-beam-move var(--duration) linear var(--delay) infinite;
 }
 @keyframes warp-beam-move {
@@ -826,7 +834,7 @@ body {
   height: auto;
   filter: drop-shadow(0 18px 44px rgba(46, 68, 255, 0.32));
 }
-.award-text { color: #fff; max-width: 620px; }
+.award-text { color: var(--text); max-width: 620px; }
 .award-tag {
   display: inline-flex;
   align-items: center;
@@ -835,9 +843,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #ff5a5a;
-  border: 1px solid rgba(255, 90, 90, 0.4);
-  background: rgba(255, 90, 90, 0.09);
+  color: #d92d2d;
+  border: 1px solid rgba(217, 45, 45, 0.35);
+  background: rgba(217, 45, 45, 0.07);
   padding: 6px 14px;
   border-radius: 999px;
   margin-bottom: 18px;
@@ -848,27 +856,125 @@ body {
   letter-spacing: -0.025em;
   line-height: 1.1;
   margin: 0 0 16px;
-  color: #fff;
+  color: var(--text);
 }
 .award-lead {
   font-size: clamp(15px, 1.4vw, 18px);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.84);
+  color: var(--text-secondary);
   margin: 0 0 14px;
 }
 .award-body {
   font-size: clamp(14px, 1.2vw, 16px);
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--text-secondary);
   margin: 0;
 }
-.award-hi { color: #ff7a7a; font-weight: 600; }
+.award-hi { color: #d92d2d; font-weight: 600; }
+.award-hi-blue { color: #2f47e0; font-weight: 600; }
 
+/* ── Extended card: demo button, taped photo collage, demo video ── */
+.award-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 24px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: 2px solid var(--text);
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 rgba(26, 25, 23, 0.18);
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease;
+}
+.award-cta:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(26, 25, 23, 0.22); }
+.award-cta:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 rgba(26, 25, 23, 0.2); }
+.award-cta-arrow { font-size: 16px; line-height: 1; transition: transform 0.18s ease; }
+.award-cta:hover .award-cta-arrow { transform: translate(2px, -2px); }
+
+/* Taped scrapbook collage — each photo is a paper print pinned with tape */
+.award-collage {
+  margin-top: clamp(34px, 4vw, 58px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.6vw, 36px);
+}
+.award-photo {
+  position: relative;
+  margin: 0;
+  background: #fff;
+  padding: 10px 10px 12px;
+  border-radius: 2px;
+  box-shadow: 0 14px 30px -14px rgba(26, 25, 23, 0.42);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+  z-index: 1;
+}
+.award-photo img { display: block; width: 100%; height: auto; border-radius: 1px; }
+.award-photo--a { width: clamp(160px, 21vw, 244px); transform: rotate(-3.5deg); }
+.award-photo--b { width: clamp(214px, 27vw, 318px); transform: rotate(1.8deg); margin-top: 10px; }
+.award-photo--c { width: clamp(152px, 20vw, 232px); transform: rotate(2.8deg); }
+.award-photo:hover {
+  transform: rotate(0deg) translateY(-6px) scale(1.03);
+  box-shadow: 0 26px 46px -18px rgba(26, 25, 23, 0.5);
+  z-index: 3;
+}
+/* Masking-tape strips on all four corners */
+.tape {
+  position: absolute;
+  width: 52px;
+  height: 19px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 6px, transparent 6px 12px),
+    rgba(214, 202, 168, 0.62);
+  box-shadow: 0 1px 3px rgba(26, 25, 23, 0.16);
+  z-index: 2;
+  pointer-events: none;
+}
+.tape--tl { top: -9px; left: -13px; transform: rotate(-42deg); }
+.tape--tr { top: -9px; right: -13px; transform: rotate(42deg); }
+.tape--bl { bottom: -8px; left: -13px; transform: rotate(42deg); }
+.tape--br { bottom: -8px; right: -13px; transform: rotate(-42deg); }
+
+.award-video-block { margin: clamp(34px, 4vw, 58px) 0 0; }
+.award-embed-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.award-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid var(--text);
+  box-shadow: 6px 6px 0 rgba(26, 25, 23, 0.12);
+  background: #000;
+}
+.award-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Match the curated-project card widths at each breakpoint */
+@media (max-width: 1366px) { .award-warp { width: min(72vw, 900px); } }
+@media (max-width: 1024px) { .award-warp { width: 68vw; } }
 @media (max-width: 760px) {
+  .award-warp { width: 92vw; }
   .award-inner { flex-direction: column; text-align: center; gap: 26px; }
   .award-badge { width: clamp(150px, 46vw, 210px); }
   .award-text { max-width: none; }
   .award-tag { margin-left: auto; margin-right: auto; }
+  .award-cta { margin-left: auto; margin-right: auto; }
+  .award-collage { gap: 14px 12px; }
+  .award-photo--a { width: 42vw; }
+  .award-photo--b { width: 62vw; margin-top: 4px; }
+  .award-photo--c { width: 42vw; }
 }
 @media (prefers-reduced-motion: reduce) {
   .warp-beam { animation: none; opacity: 0.55; }
