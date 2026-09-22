@@ -753,6 +753,55 @@ export default function Home({ navigate }) {
       {/* ── Award: OpenAI "Build What Moves India" winner ── */}
       <section className="award-section" aria-label="Award">
         <div className="award-paper">
+          {/* tape holding the sheet down at all four corners */}
+          <span className="paper-tape paper-tape--tl" aria-hidden="true" />
+          <span className="paper-tape paper-tape--tr" aria-hidden="true" />
+          <span className="paper-tape paper-tape--bl" aria-hidden="true" />
+          <span className="paper-tape paper-tape--br" aria-hidden="true" />
+
+          {/* celebratory confetti-pop stickers, minimal sketch style */}
+          <svg className="award-sticker award-sticker--1" aria-hidden="true" viewBox="0 0 100 100" fill="none">
+            <g stroke="#1f1d1b" strokeWidth="2.6" strokeLinecap="round">
+              <path d="M50 50 L50 20" />
+              <path d="M50 50 L74 30" />
+              <path d="M50 50 L80 54" />
+              <path d="M50 50 L28 28" />
+              <path d="M50 50 L22 58" />
+              <path d="M50 50 L38 78" />
+              <path d="M50 50 L64 76" />
+            </g>
+            <rect x="45" y="9" width="9" height="9" transform="rotate(20 50 13)" fill="#d92d2d" />
+            <path d="M78 24 l8 -3 -2 8 z" fill="#1f1d1b" />
+            <circle cx="87" cy="56" r="3.4" fill="#d92d2d" />
+            <path d="M14 62 l8 2 -4 6 z" fill="#1f1d1b" />
+            <rect x="32" y="80" width="8" height="8" transform="rotate(-15 36 84)" fill="#d92d2d" />
+            <circle cx="66" cy="83" r="3" fill="#1f1d1b" />
+          </svg>
+          <svg
+            className="award-sticker award-sticker--2"
+            aria-hidden="true"
+            viewBox="0 0 100 100"
+            fill="none"
+            stroke="#1f1d1b"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+          >
+            <path d="M18 80 C 30 60, 46 66, 52 46 S 74 32, 84 16" />
+            <path d="M26 86 C 40 76, 44 82, 58 66" />
+            <circle cx="85" cy="14" r="3" fill="#d92d2d" stroke="none" />
+            <path d="M69 30 l6 -2 -1 6 z" fill="#1f1d1b" stroke="none" />
+            <circle cx="40" cy="52" r="2.6" fill="#1f1d1b" stroke="none" />
+          </svg>
+          <svg className="award-sticker award-sticker--3" aria-hidden="true" viewBox="0 0 100 100" fill="none">
+            <path
+              d="M50 16 C 52 40, 60 48, 84 50 C 60 52, 52 60, 50 84 C 48 60, 40 52, 16 50 C 40 48, 48 40, 50 16 Z"
+              fill="#d92d2d"
+            />
+            <circle cx="21" cy="23" r="3" fill="#1f1d1b" />
+            <circle cx="81" cy="79" r="3.2" fill="#1f1d1b" />
+            <path d="M79 21 l6 -1 -1 6 z" fill="#1f1d1b" />
+          </svg>
+
           <div className="award-inner">
             <img
               className="award-badge"
@@ -770,7 +819,7 @@ export default function Home({ navigate }) {
               </p>
               <p className="award-body">
                 <span className="award-hi">कोष</span> is a store of blood.{' '}
-                <span className="award-hi-blue">खोज</span> is the search for it. Sanan Goyal and I
+                <span className="award-hi">खोज</span> is the search for it. Sanan Goyal and I
                 rebuilt e-RaktKosh into <span className="award-hi">RaktKhoj</span>, a working
                 prototype that reaches donors when no bank nearby has the blood.
               </p>

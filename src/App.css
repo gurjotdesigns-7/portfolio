@@ -778,7 +778,7 @@ body {
   color: var(--text);
   background-color: #f6f2e7;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.05'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E"),
     radial-gradient(150% 120% at 50% -12%, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 55%),
     linear-gradient(180deg, #faf7ee 0%, #f3eee0 100%);
   box-shadow:
@@ -787,6 +787,20 @@ body {
     0 2px 6px rgba(26, 25, 23, 0.06);
   border: 1px solid rgba(26, 25, 23, 0.07);
 }
+/* wrinkles / soft folds — each crease is a shadow edge chased by a highlight */
+.award-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(103deg, transparent 0 30%, rgba(26, 22, 12, 0.035) 34.5%, rgba(255, 255, 255, 0.55) 36%, transparent 40%),
+    linear-gradient(168deg, transparent 0 56%, rgba(26, 22, 12, 0.03) 60.5%, rgba(255, 255, 255, 0.45) 62%, transparent 67%),
+    linear-gradient(52deg, transparent 0 71%, rgba(26, 22, 12, 0.03) 74.5%, rgba(255, 255, 255, 0.42) 76%, transparent 81%),
+    linear-gradient(140deg, transparent 0 14%, rgba(26, 22, 12, 0.022) 17.5%, rgba(255, 255, 255, 0.35) 19%, transparent 24%);
+  opacity: 0.9;
+}
 /* faint inner shading so the sheet reads as real paper, not a flat block */
 .award-paper::after {
   content: '';
@@ -794,8 +808,31 @@ body {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow: inset 0 0 70px rgba(120, 105, 70, 0.06);
+  box-shadow: inset 0 0 70px rgba(120, 105, 70, 0.07);
 }
+
+/* Masking tape pinning the sheet at each corner */
+.paper-tape {
+  position: absolute;
+  width: clamp(66px, 8vw, 106px);
+  height: 30px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0 7px, transparent 7px 14px),
+    rgba(210, 198, 162, 0.55);
+  box-shadow: 0 2px 6px rgba(26, 25, 23, 0.16);
+  z-index: 6;
+  pointer-events: none;
+}
+.paper-tape--tl { top: -13px; left: -32px; transform: rotate(-45deg); }
+.paper-tape--tr { top: -13px; right: -32px; transform: rotate(45deg); }
+.paper-tape--bl { bottom: -13px; left: -32px; transform: rotate(45deg); }
+.paper-tape--br { bottom: -13px; right: -32px; transform: rotate(-45deg); }
+
+/* Celebratory sketch stickers floating around the sheet */
+.award-sticker { position: absolute; pointer-events: none; z-index: 4; }
+.award-sticker--1 { width: clamp(48px, 6vw, 78px); top: -24px; right: 13%; transform: rotate(7deg); }
+.award-sticker--2 { width: clamp(52px, 6.6vw, 84px); top: 9%; left: -26px; transform: rotate(-9deg); }
+.award-sticker--3 { width: clamp(40px, 5vw, 64px); bottom: 40%; right: -22px; transform: rotate(10deg); }
 
 .award-inner {
   display: flex;
@@ -896,7 +933,7 @@ body {
 /* bias the square crop so faces stay in frame */
 .award-photo--a img { object-position: 50% 26%; }
 .award-photo--b img { object-position: 50% 42%; }
-.award-photo--c img { object-position: 50% 20%; }
+.award-photo--c img { object-position: 50% 60%; }
 /* grow + tilt on hover; raised above neighbours */
 .award-photo:hover { z-index: 3; }
 .award-photo--a:hover img { transform: scale(1.11) rotate(-2.5deg); }
