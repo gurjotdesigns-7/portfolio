@@ -746,6 +746,7 @@ export default function Home({ navigate }) {
           <span className="paper-tape paper-tape--br" aria-hidden="true" />
 
           <div className="award-inner">
+            <div className="award-stamp-cluster">
             <div className="award-stamp">
             <img
               className="award-badge"
@@ -755,6 +756,8 @@ export default function Home({ navigate }) {
               height="1792"
               loading="lazy"
             />
+            </div>
+            <span className="award-ink-seal" aria-label="Certified">CERTIFIED</span>
             </div>
             <div className="award-text">
               <span className="award-tag">★ Winner</span>
