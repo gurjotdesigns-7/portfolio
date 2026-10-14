@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
+import HeroPortraitGrid from '../components/HeroPortraitGrid'
 import useTypewriter from '../hooks/useTypewriter'
 
 /* Footer CTA eyebrow cycles through these as a typewriter. */
@@ -224,7 +225,7 @@ function HeroGridCanvas() {
 /* ─── Hero Section ───────────────────────────────────── */
 function HeroSection() {
   return (
-    <section className="hs">
+    <section className="hs hs-emoji-hero">
       {/* Hero background: canvas graph-paper grid whose vertical lines vibrate
           like guitar strings when the cursor sweeps across them. */}
       <HeroGridCanvas />
@@ -234,11 +235,13 @@ function HeroSection() {
       <div className="hs-ruler hs-ruler-right" aria-hidden="true" />
       <div className="hs-container">
 
-        {/* LEFT: text */}
+        <HeroPortraitGrid />
+
+        {/* Original hero text, now on the right. */}
         <div className="hs-left">
 
           <div className="hs-enter-greeting">
-            <h1 className="hs-headline">Hi, I'm<br />Gurjot.</h1>
+            <h1 className="hs-headline">Hi, I'm<br /><span className="hs-emoji-name">Gurjot.</span></h1>
           </div>
 
           <div className="hs-enter-bio">
@@ -249,28 +252,10 @@ function HeroSection() {
             </p>
           </div>
 
-          <div className="hs-enter-scroll">
-            <div className="hs-scroll-indicator">
-              <div className="hs-scroll-line" />
-              <span className="hs-scroll-label">Scroll</span>
-            </div>
-          </div>
+
 
         </div>
 
-        {/* RIGHT: image — outer div floats, inner img zooms on hover */}
-        <div className="hs-right">
-          <div className="hs-enter-photo">
-            <div className="hs-img-float">
-              <img
-                className="hs-person-img"
-                src="/hero.png"
-                alt="Gurjot Ahluwalia"
-                draggable="false"
-              />
-            </div>
-          </div>
-        </div>
 
       </div>
 
@@ -847,16 +832,19 @@ export default function Home({ navigate }) {
           </div>
 
           <figure className="award-video-block">
-            <figcaption className="award-embed-label">▶ Watch the demo</figcaption>
+            <figcaption className="award-embed-label">▶ Watch our RaktKhoj pitch</figcaption>
             <div className="award-video">
               <iframe
-                src="https://www.youtube.com/embed/sgtufOZ8ryo?autoplay=1&mute=1&rel=0&playsinline=1"
-                title="RaktKhoj — demo video"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                src="https://drive.google.com/file/d/1kHIoODrETwcCStskXGiCEbTj7ftWNzTg/preview"
+                title="RaktKhoj pitch video"
+                allow="autoplay; encrypted-media; fullscreen"
                 allowFullScreen
                 loading="lazy"
               />
             </div>
+            <a className="award-pitch-link" href="https://drive.google.com/file/d/1kHIoODrETwcCStskXGiCEbTj7ftWNzTg/view" target="_blank" rel="noopener noreferrer">
+              Open the pitch video ↗
+            </a>
           </figure>
         </div>
       </section>

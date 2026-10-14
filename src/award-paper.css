@@ -1,0 +1,41 @@
+/* Textured stationery treatment, scoped to the award sheet. */
+.award-paper {
+  background-color: #f4eddc;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath d='M0 0h240v240H0z' filter='url(%23grain)' opacity='.19'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(8deg, #967b4510 0 1px, transparent 1px 5px),
+    radial-gradient(ellipse at 12% 18%, #fffdf4b0, transparent 55%),
+    linear-gradient(115deg, #efe6d2, #fbf5e7 38%, #f2e8d1);
+  border: 1px solid #b5a27b55;
+  border-radius: 3px 6px 4px 2px;
+  box-shadow: inset 0 1px 0 #fff9, 0 5px 9px -5px #51432e4d, 0 28px 46px -27px #51432e70;
+}
+.award-paper::after {
+  box-shadow: inset 0 0 65px #9c824818, inset 2px 0 2px #fff7, inset -2px 0 3px #8d764b15;
+  /* Uneven, softly lit wrinkles instead of a single straight fold. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='crumple' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .024' numOctaves='3' seed='12' stitchTiles='stitch'/%3E%3CfeDiffuseLighting surfaceScale='7' diffuseConstant='1' lighting-color='%23ffffff'%3E%3CfeDistantLight azimuth='225' elevation='48'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Cpath d='M0 0h640v640H0z' filter='url(%23crumple)'/%3E%3C/svg%3E");
+  background-size: 640px 640px;
+  mix-blend-mode: soft-light;
+  opacity: .3;
+}
+.award-paper .paper-tape {
+  width: clamp(84px, 9vw, 126px);
+  height: 38px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.38 .8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath d='M0 0h120v40H0z' filter='url(%23t)' opacity='.2'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(0deg, #fff3 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, #c7b580b8, #e1d2a2dc 12%, #d7c594bd 75%, #c1aa73b8);
+  clip-path: polygon(2% 0, 98% 2%, 96% 13%, 100% 23%, 97% 33%, 100% 44%, 96% 54%, 99% 65%, 97% 76%, 100% 88%, 97% 100%, 1% 98%, 3% 88%, 0 77%, 3% 66%, 0 55%, 4% 43%, 1% 32%, 4% 21%, 0 11%);
+  box-shadow: inset 0 1px 0 #fff8, inset 0 -2px 3px #8c713f30;
+  filter: drop-shadow(0 2px 1px #5c4c3033);
+}
+.award-paper .paper-tape::after { content: ''; position: absolute; inset: 3px 10%; border-top: 1px solid #fff5; border-bottom: 1px solid #8e774b16; }
+.award-paper .paper-tape--tl { top: -12px; left: -30px; transform: rotate(-39deg); }
+.award-paper .paper-tape--tr { top: -9px; right: -28px; transform: rotate(34deg); }
+.award-paper .paper-tape--bl { bottom: -11px; left: -27px; transform: rotate(34deg); }
+.award-paper .paper-tape--br { bottom: -13px; right: -29px; transform: rotate(-38deg); }
+@media (max-width: 640px) {
+  .award-paper .paper-tape { width: 76px; height: 27px; }
+  .award-paper .paper-tape--tl, .award-paper .paper-tape--bl { left: -12px; }
+  .award-paper .paper-tape--tr, .award-paper .paper-tape--br { right: -12px; }
+}

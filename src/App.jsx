@@ -7,6 +7,8 @@ import CaseStudyReferral from './pages/CaseStudyReferral'
 import Photography from './pages/Photography'
 import Nav from './components/Nav'
 import './App.css'
+import './emoji-hero.css'
+import './award-paper.css'
 
 export default function App() {
   const [page, setPage] = useState('home')
