@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
 import HeroPortraitGrid from '../components/HeroPortraitGrid'
+import PitchVideo from '../components/PitchVideo'
 import useTypewriter from '../hooks/useTypewriter'
 
 /* Footer CTA eyebrow cycles through these as a typewriter. */
@@ -833,15 +834,7 @@ export default function Home({ navigate }) {
 
           <figure className="award-video-block">
             <figcaption className="award-embed-label">▶ Watch our RaktKhoj pitch</figcaption>
-            <div className="award-video">
-              <iframe
-                src="https://www.youtube.com/embed/okJqVvkQTQ8?start=435&autoplay=1&mute=1&playsinline=1&rel=0"
-                title="RaktKhoj pitch — Build What Moves India"
-                allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-                allowFullScreen
-                loading="eager"
-              />
-            </div>
+            <PitchVideo />
             <a className="award-pitch-link" href="https://www.youtube.com/watch?v=okJqVvkQTQ8&t=435s" target="_blank" rel="noopener noreferrer">
               Open the pitch video ↗
             </a>
