@@ -750,28 +750,46 @@ export default function Home({ navigate }) {
             <div className="award-stamp">
             <svg className="award-badge award-badge-print" viewBox="0 0 200 300" role="img" aria-label="Winner — OpenAI and Varun Mayya, Build What Moves India 2026">
               <defs>
-                <pattern id="stamp-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
-                  <path d="M0 0V5" stroke="currentColor" strokeWidth=".45" opacity=".2" />
+                <pattern id="stamp-engraving" width="4" height="4" patternUnits="userSpaceOnUse">
+                  <path d="M0 4L4 0M-1 1L1-1M3 5L5 3" stroke="currentColor" strokeWidth=".5" opacity=".45" />
                 </pattern>
+                <pattern id="stamp-scrollwork" width="14" height="28" patternUnits="userSpaceOnUse">
+                  <path d="M7 0C-2 5 16 9 7 14S-2 23 7 28M7 0C16 5-2 9 7 14S16 23 7 28" fill="none" stroke="currentColor" strokeWidth=".75" />
+                </pattern>
+                <g id="stamp-rosette" fill="none" stroke="currentColor">
+                  <circle r="8" strokeWidth="1" /><circle r="5.5" strokeWidth=".6" />
+                  <path d="M0-7Q3-3 7 0Q3 3 0 7Q-3 3-7 0Q-3-3 0-7Z" strokeWidth=".9" />
+                  <circle r="1.5" fill="currentColor" />
+                </g>
               </defs>
-              <path d="M8 58 Q100 20 192 58 V236 Q100 273 8 236Z" fill="url(#stamp-hatch)" />
+              <rect x="3" y="3" width="194" height="294" fill="none" stroke="currentColor" strokeWidth="2.5" />
+              <rect x="8" y="8" width="184" height="284" fill="none" stroke="currentColor" strokeWidth=".8" />
+              <rect x="12" y="12" width="176" height="276" fill="url(#stamp-engraving)" />
+              <rect x="12" y="48" width="17" height="208" fill="url(#stamp-scrollwork)" stroke="currentColor" strokeWidth=".8" />
+              <rect x="171" y="48" width="17" height="208" fill="url(#stamp-scrollwork)" stroke="currentColor" strokeWidth=".8" />
+              <ellipse cx="100" cy="153" rx="70" ry="103" fill="#f6ecd6" stroke="currentColor" strokeWidth="2" />
+              <ellipse cx="100" cy="153" rx="65" ry="98" fill="none" stroke="currentColor" strokeWidth=".8" />
+              <ellipse cx="100" cy="153" rx="61" ry="94" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="1 3" />
+              <rect x="31" y="18" width="138" height="29" fill="#f6ecd6" stroke="currentColor" strokeWidth="1" />
+              <path d="M22 86H178V117H22Z" fill="currentColor" />
+              <path d="M25 89H175M25 114H175" stroke="#f6ecd6" strokeWidth=".6" />
               <g fill="none" stroke="currentColor" strokeWidth=".8">
-                <path d="M4 35V4H35 M165 4H196V35 M4 265V296H35 M165 296H196V265" />
-                <path d="M10 27V10H27 M173 10H190V27 M10 273V290H27 M173 290H190V273" />
-                <path d="M18 65Q100 27 182 65 M18 70Q100 32 182 70 M18 235Q100 273 182 235 M18 240Q100 278 182 240" />
-                <path d="M23 118H177 M23 122H177 M45 215H80 M120 215H155" />
-                <path d="M54 94Q37 78 48 64 M48 82L37 75 M46 73L54 64 M146 94Q163 78 152 64 M152 82L163 75 M154 73L146 64" />
+                <path d="M69 78Q80 62 100 72Q120 62 131 78M80 72Q100 52 120 72" />
+                <path d="M64 205H86M114 205H136 M66 244Q100 255 134 244" />
+                <path d="M58 216Q48 202 52 187M52 204L45 199M51 195L58 188 M142 216Q152 202 148 187M148 204L155 199M149 195L142 188" />
               </g>
+              <use href="#stamp-rosette" x="21" y="31" /><use href="#stamp-rosette" x="179" y="31" />
+              <use href="#stamp-rosette" x="21" y="273" /><use href="#stamp-rosette" x="179" y="273" />
+              <rect x="36" y="259" width="128" height="27" fill="#f6ecd6" stroke="currentColor" strokeWidth="1" />
               <g fill="currentColor" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif">
-                <text x="100" y="30" fontSize="17" letterSpacing="2">OpenAI</text>
-                <text x="100" y="86" fontSize="30">✦</text>
-                <text x="100" y="111" fontSize="28" fontWeight="bold" letterSpacing="2">WINNER</text>
-                <text x="100" y="149" fontSize="14" letterSpacing="1.8">BUILD WHAT</text>
-                <text x="100" y="174" fontSize="25" fontWeight="bold" letterSpacing="1">MOVES</text>
-                <text x="100" y="202" fontSize="31" fontWeight="bold" letterSpacing="3">INDIA</text>
-                <text x="100" y="220" fontSize="15">✧</text>
-                <text x="100" y="244" fontSize="18" letterSpacing="4">2026</text>
-                <text x="100" y="281" fontSize="11" letterSpacing="1.5">VARUN MAYYA</text>
+                <text x="100" y="38" fontSize="18" fontWeight="bold" letterSpacing="2">OpenAI</text>
+                <text x="100" y="108" fill="#f6ecd6" fontSize="23" fontWeight="bold" letterSpacing="2">WINNER</text>
+                <text x="100" y="142" fontSize="12" letterSpacing="1.4">BUILD WHAT</text>
+                <text x="100" y="166" fontSize="23" fontWeight="bold" letterSpacing=".7">MOVES</text>
+                <text x="100" y="195" fontSize="29" fontWeight="bold" letterSpacing="2">INDIA</text>
+                <text x="100" y="211" fontSize="16">✦</text>
+                <text x="100" y="237" fontSize="19" fontWeight="bold" letterSpacing="3">2026</text>
+                <text x="100" y="276" fontSize="10" fontWeight="bold" letterSpacing="1">VARUN MAYYA</text>
               </g>
             </svg>
             </div>
