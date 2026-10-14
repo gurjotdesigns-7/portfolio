@@ -842,7 +842,7 @@ export default function Home({ navigate }) {
                 loading="lazy"
               />
             </div>
-            <a className="award-pitch-link" href="https://drive.google.com/file/d/1kHIoODrETwcCStskXGiCEbTj7ftWNzTg/view" target="_blank" rel="noopener noreferrer">
+            <a className="award-pitch-link" href="https://www.youtube.com/watch?v=okJqVvkQTQ8&t=435s" target="_blank" rel="noopener noreferrer">
               Open the pitch video ↗
             </a>
           </figure>
