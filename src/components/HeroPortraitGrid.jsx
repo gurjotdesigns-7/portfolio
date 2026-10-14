@@ -52,7 +52,7 @@ export default function HeroPortraitGrid() {
     setManual(next)
     setCycle(v => v + 1)
     resumeTimer.current = setTimeout(() => {
-      setResumeAt(next === 'photos' ? -5 : 0)
+      setResumeAt(next === 'photos' ? -6 : 0)
       setManual(null)
       setCycle(v => v + 1)
     }, 3000)

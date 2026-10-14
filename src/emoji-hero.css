@@ -61,7 +61,7 @@
 
 @media (max-width: 700px) { .hs-emoji-name { margin-left: .18em; } }
 
-/* Ten-second loop: emojis 4s, shuffle/flip 1s, photos 3s, return 1s, rest 1s. */
+/* Ten-second loop: emojis 5s, shuffle/flip 1s, photos 3s, return 1s. */
 .hs-portrait-gallery { position: relative; width: 100%; max-width: 540px; align-self: center; }
 .hs-flip-grid { --tile-gap: 14px; gap: var(--tile-gap); perspective: 1200px; isolation: isolate; }
 .hs-flip-grid .hs-emoji-tile { padding: 0; overflow: visible; border: 0; position: relative; transform-style: preserve-3d; background: transparent; }
@@ -75,11 +75,11 @@
 .hs-flip-grid.is-ready:not(.is-reduced) .hs-emoji-tile { animation: portrait-shuffle 10s infinite cubic-bezier(.45,0,.25,1); animation-play-state: var(--play-state); }
 .hs-flip-grid.is-ready:not(.is-reduced) .hs-card-flipper { animation: portrait-flip 10s infinite cubic-bezier(.45,0,.25,1); animation-play-state: var(--play-state); }
 @keyframes portrait-shuffle {
-  0%,40%,90%,100% { transform: translate(0,0) rotate(0) scale(1); }
-  45%,85% { transform: translate(calc(var(--cx) * (100% + var(--tile-gap)) * .7),calc(var(--cy) * (100% + var(--tile-gap)) * .7)) rotate(var(--twist)) scale(.82); }
-  50%,80% { transform: translate(calc(var(--dx) * (100% + var(--tile-gap))),calc(var(--dy) * (100% + var(--tile-gap)))) rotate(0) scale(1); }
+  0%,50%,100% { transform: translate(0,0) rotate(0) scale(1); }
+  55%,95% { transform: translate(calc(var(--cx) * (100% + var(--tile-gap)) * .7),calc(var(--cy) * (100% + var(--tile-gap)) * .7)) rotate(var(--twist)) scale(.82); }
+  60%,90% { transform: translate(calc(var(--dx) * (100% + var(--tile-gap))),calc(var(--dy) * (100% + var(--tile-gap)))) rotate(0) scale(1); }
 }
-@keyframes portrait-flip { 0%,40%,90%,100% { transform: rotateY(0); } 50%,80% { transform: rotateY(180deg); } }
+@keyframes portrait-flip { 0%,50%,100% { transform: rotateY(0); } 60%,90% { transform: rotateY(180deg); } }
 .hs-gallery-controls { position: absolute; top: calc(100% + 12px); right: 0; }
 .hs-gallery-controls button { color: var(--text-muted); font: inherit; font-size: 11px; background: transparent; border: 0; padding: 8px 0 8px 16px; min-height: 44px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
 .hs-gallery-controls button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
