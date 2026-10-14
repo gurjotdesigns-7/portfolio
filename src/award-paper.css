@@ -107,27 +107,24 @@
 .award-stamp-cluster .award-stamp { width: 100%; }
 .award-ink-seal {
   position: absolute;
-  left: -46px;
+  left: -72px;
   bottom: 22px;
   display: grid;
   place-items: center;
-  width: 100px;
-  height: 100px;
-  border: 3px double #a4392e;
-  border-radius: 49% 51% 48% 52%;
-  outline: 2px solid #a4392e;
-  outline-offset: -9px;
-  color: #a4392e;
+  width: 146px;
+  height: 146px;
+  overflow: visible;
+  color: #92382e;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .06em;
   transform: rotate(-17deg);
-  opacity: .82;
+  opacity: .9;
   mix-blend-mode: multiply;
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='ink'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' seed='8'/%3E%3CfeColorMatrix type='luminanceToAlpha'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 .35 .85 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cpath d='M0 0h120v120H0z' fill='white' filter='url(%23ink)'/%3E%3C/svg%3E");
   mask-size: 100% 100%;
 }
 @media (max-width: 640px) {
   .award-stamp-cluster { order: 0; width: clamp(104px, 30vw, 144px); }
-  .award-ink-seal { width: 76px; height: 76px; left: -28px; bottom: 8px; font-size: 9px; }
+  .award-ink-seal { width: 108px; height: 108px; left: -42px; bottom: 4px; }
 }

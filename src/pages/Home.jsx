@@ -757,7 +757,28 @@ export default function Home({ navigate }) {
               loading="lazy"
             />
             </div>
-            <span className="award-ink-seal" aria-label="Certified">CERTIFIED</span>
+            <svg className="award-ink-seal" viewBox="0 0 180 180" role="img" aria-label="Certified winner — Build What Moves India 2026">
+              <defs>
+                <path id="seal-top-arc" d="M 26,90 A 64,64 0 0,1 154,90" />
+                <path id="seal-bottom-arc" d="M 24,90 A 66,66 0 0,0 156,90" />
+              </defs>
+              <g fill="none" stroke="currentColor">
+                <circle cx="90" cy="90" r="85" strokeWidth="2.5" />
+                <circle cx="90" cy="90" r="79" strokeWidth="1" />
+                <circle cx="90" cy="90" r="75" strokeWidth="1.5" strokeDasharray="1 3" />
+                <circle cx="90" cy="90" r="52" strokeWidth="1" />
+                <path d="M 34 76 H 146 M 34 105 H 146 M 59 117 H 77 M 103 117 H 121" strokeWidth="1.3" />
+                <path d="M 66 61 Q 77 52 90 59 Q 103 52 114 61 M 76 57 Q 90 44 104 57" strokeWidth="1.2" />
+              </g>
+              <g fill="currentColor" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif" fontWeight="bold">
+                <text fontSize="10" letterSpacing="1.4"><textPath href="#seal-top-arc" startOffset="50%">BUILD WHAT MOVES INDIA</textPath></text>
+                <text fontSize="11" letterSpacing="3"><textPath href="#seal-bottom-arc" startOffset="50%">WINNER · 2026</textPath></text>
+                <text x="90" y="97" fontSize="20" letterSpacing=".7">CERTIFIED</text>
+                <text x="90" y="122" fontSize="16">✦</text>
+                <text x="24" y="96" fontSize="13">✦</text>
+                <text x="156" y="96" fontSize="13">✦</text>
+              </g>
+            </svg>
             </div>
             <div className="award-text">
               <span className="award-tag">★ Winner</span>
