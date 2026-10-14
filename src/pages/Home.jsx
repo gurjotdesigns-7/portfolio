@@ -762,17 +762,17 @@ export default function Home({ navigate }) {
                   <circle r="1.5" fill="currentColor" />
                 </g>
               </defs>
-              <rect x="3" y="3" width="194" height="294" fill="none" stroke="currentColor" strokeWidth="2.5" />
+              <rect x="3" y="3" width="194" height="294" fill="none" stroke="currentColor" strokeWidth=".8" />
               <rect x="8" y="8" width="184" height="284" fill="none" stroke="currentColor" strokeWidth=".8" />
               <rect x="12" y="12" width="176" height="276" fill="url(#stamp-engraving)" />
               <rect x="12" y="48" width="17" height="208" fill="url(#stamp-scrollwork)" stroke="currentColor" strokeWidth=".8" />
               <rect x="171" y="48" width="17" height="208" fill="url(#stamp-scrollwork)" stroke="currentColor" strokeWidth=".8" />
-              <ellipse cx="100" cy="153" rx="70" ry="103" fill="#f6ecd6" stroke="currentColor" strokeWidth="2" />
+              <ellipse cx="100" cy="153" rx="70" ry="103" fill="#fffef9" stroke="currentColor" strokeWidth="2" />
               <ellipse cx="100" cy="153" rx="65" ry="98" fill="none" stroke="currentColor" strokeWidth=".8" />
               <ellipse cx="100" cy="153" rx="61" ry="94" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="1 3" />
-              <rect x="31" y="18" width="138" height="29" fill="#f6ecd6" stroke="currentColor" strokeWidth="1" />
+              <rect x="31" y="18" width="138" height="29" fill="#fffef9" stroke="currentColor" strokeWidth="1" />
               <path d="M22 86H178V117H22Z" fill="currentColor" />
-              <path d="M25 89H175M25 114H175" stroke="#f6ecd6" strokeWidth=".6" />
+              <path d="M25 89H175M25 114H175" stroke="#fffef9" strokeWidth=".6" />
               <g fill="none" stroke="currentColor" strokeWidth=".8">
                 <path d="M69 78Q80 62 100 72Q120 62 131 78M80 72Q100 52 120 72" />
                 <path d="M64 205H86M114 205H136 M66 244Q100 255 134 244" />
@@ -780,10 +780,10 @@ export default function Home({ navigate }) {
               </g>
               <use href="#stamp-rosette" x="21" y="31" /><use href="#stamp-rosette" x="179" y="31" />
               <use href="#stamp-rosette" x="21" y="273" /><use href="#stamp-rosette" x="179" y="273" />
-              <rect x="36" y="259" width="128" height="27" fill="#f6ecd6" stroke="currentColor" strokeWidth="1" />
+              <rect x="36" y="259" width="128" height="27" fill="#fffef9" stroke="currentColor" strokeWidth="1" />
               <g fill="currentColor" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif">
                 <text x="100" y="38" fontSize="18" fontWeight="bold" letterSpacing="2">OpenAI</text>
-                <text x="100" y="108" fill="#f6ecd6" fontSize="23" fontWeight="bold" letterSpacing="2">WINNER</text>
+                <text x="100" y="108" fill="#fffef9" fontSize="23" fontWeight="bold" letterSpacing="2">WINNER</text>
                 <text x="100" y="142" fontSize="12" letterSpacing="1.4">BUILD WHAT</text>
                 <text x="100" y="166" fontSize="23" fontWeight="bold" letterSpacing=".7">MOVES</text>
                 <text x="100" y="195" fontSize="29" fontWeight="bold" letterSpacing="2">INDIA</text>
