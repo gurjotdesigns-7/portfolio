@@ -178,3 +178,43 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+
+/* One press on entry: the seal appears at contact, then the tool lifts away. */
+.stamp-press { --seal-angle: -17deg; }
+.stamp-press-tool {
+  position: absolute;
+  z-index: 3;
+  left: -72px;
+  bottom: 58px;
+  width: 146px;
+  height: auto;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 50% 80%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stamp-press:not(.is-pressed) .award-ink-seal { opacity: 0; }
+  .stamp-press.is-pressed .stamp-press-tool { animation: rubber-stamp-press 2.6s .2s both; }
+  .stamp-press.is-pressed .award-ink-seal { animation: ink-impression 2.6s .2s both; }
+}
+@keyframes rubber-stamp-press {
+  0% { opacity: 0; transform: translate(45px, -120px) rotate(12deg) scale(1.12); }
+  18% { opacity: 1; transform: translate(20px, -65px) rotate(0deg) scale(1.08); }
+  42% { opacity: 1; transform: translate(0, -8px) rotate(var(--seal-angle)) scale(1); }
+  49%, 56% { opacity: 1; transform: translate(0, 0) rotate(var(--seal-angle)) scale(1.03, .95); }
+  68% { opacity: 1; transform: translate(8px, -35px) rotate(-6deg) scale(1.04); }
+  88%, 100% { opacity: 0; transform: translate(40px, -140px) rotate(12deg) scale(1.1); }
+}
+@keyframes ink-impression {
+  0%, 48% { opacity: 0; transform: rotate(var(--seal-angle)) scale(.96); }
+  55% { opacity: 1; transform: rotate(var(--seal-angle)) scale(1.02); }
+  65%, 100% { opacity: .9; transform: rotate(var(--seal-angle)) scale(1); }
+}
+@media (max-width: 760px) {
+  .stamp-press { --seal-angle: 13deg; }
+  .stamp-press-tool { width: 108px; left: auto; right: -64px; bottom: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp-press-tool { display: none; }
+  .stamp-press .award-ink-seal { animation: none; opacity: .9; }
+}

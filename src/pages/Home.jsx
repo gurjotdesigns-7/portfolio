@@ -4,6 +4,7 @@ import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
 import HeroPortraitGrid from '../components/HeroPortraitGrid'
 import PitchVideo from '../components/PitchVideo'
+import StampPress from '../components/StampPress'
 import useTypewriter from '../hooks/useTypewriter'
 
 /* Footer CTA eyebrow cycles through these as a typewriter. */
@@ -746,7 +747,7 @@ export default function Home({ navigate }) {
           <span className="paper-tape paper-tape--br" aria-hidden="true" />
 
           <div className="award-inner">
-            <div className="award-stamp-cluster">
+            <StampPress>
             <div className="award-stamp">
             <svg className="award-badge award-badge-print" viewBox="0 0 200 300" role="img" aria-label="Winner — OpenAI and Varun Mayya, Build What Moves India 2026">
               <defs>
@@ -815,7 +816,7 @@ export default function Home({ navigate }) {
                 <text x="156" y="96" fontSize="13">✦</text>
               </g>
             </svg>
-            </div>
+            </StampPress>
             <div className="award-text">
               <span className="award-tag">★ Winner</span>
               <h2 className="award-title">Build What Moves India 2026</h2>
