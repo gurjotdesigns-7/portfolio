@@ -746,6 +746,7 @@ export default function Home({ navigate }) {
           <span className="paper-tape paper-tape--br" aria-hidden="true" />
 
           <div className="award-inner">
+            <div className="award-stamp">
             <img
               className="award-badge"
               src="/winner-badge.webp"
@@ -754,6 +755,7 @@ export default function Home({ navigate }) {
               height="1792"
               loading="lazy"
             />
+            </div>
             <div className="award-text">
               <span className="award-tag">★ Winner</span>
               <h2 className="award-title">Build What Moves India 2026</h2>

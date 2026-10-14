@@ -825,7 +825,7 @@ body {
   flex: 0 0 auto;
   width: clamp(158px, 20vw, 250px);
   height: auto;
-  filter: drop-shadow(0 18px 44px rgba(46, 68, 255, 0.32));
+  filter: none;
 }
 .award-text { color: var(--text); max-width: 620px; }
 .award-tag {
