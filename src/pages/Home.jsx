@@ -835,11 +835,11 @@ export default function Home({ navigate }) {
             <figcaption className="award-embed-label">▶ Watch our RaktKhoj pitch</figcaption>
             <div className="award-video">
               <iframe
-                src="https://drive.google.com/file/d/1kHIoODrETwcCStskXGiCEbTj7ftWNzTg/preview"
-                title="RaktKhoj pitch video"
-                allow="autoplay; encrypted-media; fullscreen"
+                src="https://www.youtube.com/embed/okJqVvkQTQ8?start=435&autoplay=1&mute=1&playsinline=1&rel=0"
+                title="RaktKhoj pitch — Build What Moves India"
+                allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
                 allowFullScreen
-                loading="lazy"
+                loading="eager"
               />
             </div>
             <a className="award-pitch-link" href="https://www.youtube.com/watch?v=okJqVvkQTQ8&t=435s" target="_blank" rel="noopener noreferrer">
