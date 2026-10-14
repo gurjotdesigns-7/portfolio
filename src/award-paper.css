@@ -185,12 +185,12 @@
   position: absolute;
   z-index: 3;
   left: -72px;
-  bottom: 58px;
+  bottom: 22px;
   width: 146px;
   height: auto;
   pointer-events: none;
   opacity: 0;
-  transform-origin: 50% 80%;
+  transform-origin: 50% 55%;
 }
 @media (prefers-reduced-motion: no-preference) {
   .stamp-press:not(.is-pressed) .award-ink-seal { opacity: 0; }
@@ -212,7 +212,7 @@
 }
 @media (max-width: 760px) {
   .stamp-press { --seal-angle: 13deg; }
-  .stamp-press-tool { width: 108px; left: auto; right: -64px; bottom: 40px; }
+  .stamp-press-tool { width: 108px; left: auto; right: -64px; bottom: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .stamp-press-tool { display: none; }
