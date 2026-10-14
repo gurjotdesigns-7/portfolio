@@ -150,7 +150,7 @@
 
 /* Flat engraved ink replaces the original glossy medal artwork. */
 .award-stamp .award-badge-print {
-  color: #334a45;
+  color: #243f87;
   filter: none;
   opacity: .9;
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300'%3E%3Cfilter id='print'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='23'/%3E%3CfeColorMatrix type='luminanceToAlpha'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='.2 .65 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cpath d='M0 0h200v300H0z' filter='url(%23print)'/%3E%3C/svg%3E");
