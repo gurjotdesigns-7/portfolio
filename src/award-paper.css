@@ -65,6 +65,7 @@
   padding: 18px;
   background: #fffaf0;
   transform: rotate(3deg);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
   mask-image:
     radial-gradient(circle at 7px 0, transparent 4px, #000 4.5px),
     radial-gradient(circle at 7px 100%, transparent 4px, #000 4.5px),
@@ -77,8 +78,13 @@
 .award-stamp::after {
   content: '';
   position: absolute;
-  inset: 10px;
-  border: 1px solid #73674955;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  background: #ded3ba;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  box-shadow: inset 2px 2px 0 #b8a98b55;
   pointer-events: none;
 }
 .award-stamp .award-badge {
