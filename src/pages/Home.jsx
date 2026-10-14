@@ -156,7 +156,17 @@ function HeroGridCanvas() {
     }
 
     let driftY = 0, last = performance.now(), raf = 0
+    let inView = true
+    const visibility = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting
+    })
+    visibility.observe(canvas)
     function frame(now) {
+      if (!inView || document.hidden) {
+        last = now
+        raf = requestAnimationFrame(frame)
+        return
+      }
       const dt = Math.min((now - last) / 1000, 0.05); last = now
       driftY = (driftY + DRIFT * dt) % MINOR
       // drift + recycle the horizontal strings
@@ -214,6 +224,7 @@ function HeroGridCanvas() {
 
     return () => {
       cancelAnimationFrame(raf)
+      visibility.disconnect()
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseleave', onLeave)
       window.removeEventListener('resize', onResize)
@@ -390,6 +401,17 @@ function TestimonialsMarquee() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const SPEED = 55 // px per second
+    let inView = false
+    let slotW = 0
+    const measure = () => {
+      const first = track.children[0]
+      if (first) slotW = first.getBoundingClientRect().width + parseFloat(getComputedStyle(first).marginRight || 0)
+    }
+    const sizeObserver = new ResizeObserver(measure)
+    sizeObserver.observe(track)
+    const visibility = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting })
+    visibility.observe(track)
+    measure()
     let raf = 0
     let last = performance.now()
 
@@ -397,9 +419,7 @@ function TestimonialsMarquee() {
       const dt = Math.min((now - last) / 1000, 0.05) // clamp after tab-switch
       last = now
       const first = track.children[0]
-      if (!pausedRef.current && first) {
-        const cs = getComputedStyle(first)
-        const slotW = first.getBoundingClientRect().width + parseFloat(cs.marginRight || 0)
+      if (inView && !document.hidden && !pausedRef.current && first) {
         if (slotW > 0) {
           fracRef.current += SPEED * dt
           if (fracRef.current >= slotW) {
@@ -428,6 +448,8 @@ function TestimonialsMarquee() {
 
     return () => {
       cancelAnimationFrame(raf)
+      visibility.disconnect()
+      sizeObserver.disconnect()
       track.removeEventListener('mouseenter', onEnter)
       track.removeEventListener('mouseleave', onLeave)
     }

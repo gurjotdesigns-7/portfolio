@@ -1171,10 +1171,13 @@ body {
   margin: 0 auto;
 }
 
-.cs-stack-card {
+/* Measure the stationary slot, animate only the card inside it. */
+.cs-stack-slot {
   position: sticky;
   top: var(--top, 88px);
   margin: 0 0 46vh;
+}
+.cs-stack-card {
   background: #F1EFFD;
   border-radius: 16px;
   border: 2px solid var(--text);
@@ -1183,13 +1186,13 @@ body {
   transform-origin: 50% 0;
   will-change: transform, filter;
 }
-.cs-stack-card:last-child { margin-bottom: 0; }
+.cs-stack-slot:last-child { margin-bottom: 0; }
 
 /* Rotate the three pastel fills down the stack */
-.cs-stack-card:nth-child(3n+2) {
+.cs-stack-slot:nth-child(3n+2) .cs-stack-card {
   background: #FEEAEA;
 }
-.cs-stack-card:nth-child(3n) {
+.cs-stack-slot:nth-child(3n) .cs-stack-card {
   background: #FFF9EC;
 }
 

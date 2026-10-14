@@ -72,6 +72,7 @@ export default function CaseStudyStack({ items }) {
 
   useEffect(() => {
     const cards = cardRefs.current.filter(Boolean)
+    const surfaces = cards.map(card => card.firstElementChild)
     const dots = dotRefs.current.filter(Boolean)
     const N = cards.length
     if (!N) return
@@ -82,6 +83,7 @@ export default function CaseStudyStack({ items }) {
     let cardH = 400
     let lastCur = -1
     let queued = false
+    let frameId = 0
 
     function layout() {
       const vh = window.innerHeight
@@ -119,7 +121,7 @@ export default function CaseStudyStack({ items }) {
       let suffix = 0
       for (let i = N - 1; i >= 0; i--) {
         const b = suffix
-        const el = cards[i]
+        const el = surfaces[i]
         if (reduce) {
           el.style.transform = ''
           el.style.filter = ''
@@ -129,7 +131,7 @@ export default function CaseStudyStack({ items }) {
             `perspective(${STACK.persp}px) translateY(${(-b * STACK.liftPx).toFixed(2)}px) rotateX(${rx.toFixed(2)}deg) scale(${(1 - STACK.scaleStep * b).toFixed(4)})`
           el.style.filter = `brightness(${(1 - STACK.dimStep * b).toFixed(4)})`
         }
-        el.style.zIndex = String(10 + i)
+        cards[i].style.zIndex = String(10 + i)
 
         if (!shown[i] && tops[i] <= revealLine) {
           el.classList.add('cs-stack-card--in')
@@ -150,7 +152,7 @@ export default function CaseStudyStack({ items }) {
     }
 
     function onScroll() {
-      if (!queued) { queued = true; requestAnimationFrame(update) }
+      if (!queued) { queued = true; frameId = requestAnimationFrame(update) }
     }
 
     // iOS/iPadOS fires `resize` on rotation before window.innerHeight has
@@ -185,6 +187,7 @@ export default function CaseStudyStack({ items }) {
         window.visualViewport.removeEventListener('resize', onOrientationChange)
       }
       clearTimeout(orientationTimer)
+      cancelAnimationFrame(frameId)
     }
   }, [items])
 
@@ -201,10 +204,9 @@ export default function CaseStudyStack({ items }) {
       </nav>
       <div className="cs-stack">
       {items.map((item, i) => (
+        <div className="cs-stack-slot" key={item.title} ref={(el) => { cardRefs.current[i] = el }}>
         <article
           className="cs-stack-card"
-          key={item.title}
-          ref={(el) => { cardRefs.current[i] = el }}
           style={item.bg ? { background: item.bg } : undefined}
         >
           <a
@@ -244,6 +246,7 @@ export default function CaseStudyStack({ items }) {
             </div>
           </a>
         </article>
+        </div>
       ))}
       <div className="cs-stack-tail" aria-hidden="true" />
       <p className="cs-stack-sr" ref={liveRef} aria-live="polite" />
