@@ -748,14 +748,32 @@ export default function Home({ navigate }) {
           <div className="award-inner">
             <div className="award-stamp-cluster">
             <div className="award-stamp">
-            <img
-              className="award-badge"
-              src="/winner-badge.webp"
-              alt="OpenAI — Build What Moves India 2026, Winner badge"
-              width="965"
-              height="1792"
-              loading="lazy"
-            />
+            <svg className="award-badge award-badge-print" viewBox="0 0 200 300" role="img" aria-label="Winner — OpenAI and Varun Mayya, Build What Moves India 2026">
+              <defs>
+                <pattern id="stamp-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+                  <path d="M0 0V5" stroke="currentColor" strokeWidth=".45" opacity=".2" />
+                </pattern>
+              </defs>
+              <path d="M8 58 Q100 20 192 58 V236 Q100 273 8 236Z" fill="url(#stamp-hatch)" />
+              <g fill="none" stroke="currentColor" strokeWidth=".8">
+                <path d="M4 35V4H35 M165 4H196V35 M4 265V296H35 M165 296H196V265" />
+                <path d="M10 27V10H27 M173 10H190V27 M10 273V290H27 M173 290H190V273" />
+                <path d="M18 65Q100 27 182 65 M18 70Q100 32 182 70 M18 235Q100 273 182 235 M18 240Q100 278 182 240" />
+                <path d="M23 118H177 M23 122H177 M45 215H80 M120 215H155" />
+                <path d="M54 94Q37 78 48 64 M48 82L37 75 M46 73L54 64 M146 94Q163 78 152 64 M152 82L163 75 M154 73L146 64" />
+              </g>
+              <g fill="currentColor" textAnchor="middle" fontFamily="Georgia, 'Times New Roman', serif">
+                <text x="100" y="30" fontSize="17" letterSpacing="2">OpenAI</text>
+                <text x="100" y="86" fontSize="30">✦</text>
+                <text x="100" y="111" fontSize="28" fontWeight="bold" letterSpacing="2">WINNER</text>
+                <text x="100" y="149" fontSize="14" letterSpacing="1.8">BUILD WHAT</text>
+                <text x="100" y="174" fontSize="25" fontWeight="bold" letterSpacing="1">MOVES</text>
+                <text x="100" y="202" fontSize="31" fontWeight="bold" letterSpacing="3">INDIA</text>
+                <text x="100" y="220" fontSize="15">✧</text>
+                <text x="100" y="244" fontSize="18" letterSpacing="4">2026</text>
+                <text x="100" y="281" fontSize="11" letterSpacing="1.5">VARUN MAYYA</text>
+              </g>
+            </svg>
             </div>
             <svg className="award-ink-seal" viewBox="0 0 180 180" role="img" aria-label="Certified winner — Build What Moves India 2026">
               <defs>
