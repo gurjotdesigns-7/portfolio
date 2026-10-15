@@ -7,7 +7,7 @@ export default function Connect() {
     <div className="connect-card">
       <div className="connect-copy">
         <p className="connect-eyebrow">30-MINUTE GOOGLE MEET</p>
-        <h2>Setup time for a wholesome conversation</h2>
+        <h2>Setup time for a call</h2>
         <p>Have a project in mind, a design question, or just want to say hello? Let’s find a time to talk.</p>
         <p className="connect-hours">Every day · 2–8 pm IST</p>
         <p className="connect-provider">Choose a date and an available time, then confirm your booking here.</p>
