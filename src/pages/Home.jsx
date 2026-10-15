@@ -938,8 +938,6 @@ export default function Home({ navigate }) {
         <CaseStudyStack items={CASE_STUDIES} />
       </section>
 
-      <Experience />
-
       <PlaygroundSection navigate={navigate} />
 
       <section id="testimonials" className="testimonials-section">
@@ -951,6 +949,8 @@ export default function Home({ navigate }) {
         </div>
         <TestimonialsMarquee />
       </section>
+
+      <Experience />
 
       <footer id="contact" className="home-footer-v2" ref={footerRef}>
 

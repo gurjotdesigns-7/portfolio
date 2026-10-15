@@ -35,14 +35,14 @@ export default function Experience() {
   return <section id="experience" className="experience-section" aria-labelledby="experience-heading">
     <header className="section-heading">
       <h2 id="experience-heading" className="section-h2">Experience</h2>
-      <p className="experience-caption">From spaces to screens.</p>
+      <p className="peel-note peel-note--l">From spaces to screens.</p>
     </header>
     <ol className="experience-timeline">
       {experience.map((job, index) => <li className="experience-entry" key={job.company}>
         <div className="experience-date"><span className="experience-dot" aria-hidden="true" /><span>{job.period}</span></div>
         <article className={`experience-paper experience-paper--${index}`}>
           <ThumbPin />
-          <div className="experience-company"><span className="experience-company-mark" aria-hidden="true">{index === 0 ? 'S' : index === 1 ? 'A' : 'AG'}</span><div><h3>{job.company}</h3><p>{job.location}</p></div></div>
+          <div className="experience-company"><div><h3>{job.company}</h3><p>{job.location}</p></div></div>
           <h4 className="experience-title">{job.title}</h4>
           <p className="experience-description">{job.description}</p>
           {job.highlights && <ul className="experience-highlights">{job.highlights.map(text => <li key={text}>{text}</li>)}</ul>}
