@@ -765,8 +765,6 @@ export default function Home({ navigate }) {
         <div className="award-paper">
           {/* tape holding the sheet down at all four corners */}
           <span className="paper-tape paper-tape--tl" aria-hidden="true" />
-          <span className="paper-tape paper-tape--tr" aria-hidden="true" />
-          <span className="paper-tape paper-tape--bl" aria-hidden="true" />
           <span className="paper-tape paper-tape--br" aria-hidden="true" />
 
           <div className="award-inner">

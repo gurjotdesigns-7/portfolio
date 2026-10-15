@@ -27,10 +27,6 @@ const experience = [
   },
 ]
 
-function ThumbPin() {
-  return <span className="experience-pin" aria-hidden="true"><span /></span>
-}
-
 export default function Experience() {
   return <section id="experience" className="experience-section" aria-labelledby="experience-heading">
     <header className="section-heading">
@@ -41,7 +37,7 @@ export default function Experience() {
       {experience.map((job, index) => <li className="experience-entry" key={job.company}>
         <div className="experience-date"><span className="experience-dot" aria-hidden="true" /><span>{job.period}</span></div>
         <article className={`experience-paper experience-paper--${index}`}>
-          <ThumbPin />
+          <span className="paper-tape experience-tape" aria-hidden="true" />
           <div className="experience-company"><div><h3>{job.company}</h3><p>{job.location}</p></div></div>
           <h4 className="experience-title">{job.title}</h4>
           <p className="experience-description">{job.description}</p>

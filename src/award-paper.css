@@ -34,7 +34,7 @@
   mix-blend-mode: soft-light;
   opacity: .3;
 }
-.award-paper .paper-tape {
+.award-paper .paper-tape, .experience-paper .experience-tape {
   width: clamp(84px, 9vw, 126px);
   height: 38px;
   background:
@@ -45,13 +45,13 @@
   box-shadow: inset 0 1px 0 #fff8, inset 0 -2px 3px #8c713f30;
   filter: drop-shadow(0 2px 1px #5c4c3033);
 }
-.award-paper .paper-tape::after { content: ''; position: absolute; inset: 3px 10%; border-top: 1px solid #fff5; border-bottom: 1px solid #8e774b16; }
+.award-paper .paper-tape::after, .experience-paper .experience-tape::after { content: ''; position: absolute; inset: 3px 10%; border-top: 1px solid #fff5; border-bottom: 1px solid #8e774b16; }
 .award-paper .paper-tape--tl { top: -12px; left: -30px; transform: rotate(-39deg); }
 .award-paper .paper-tape--tr { top: -9px; right: -28px; transform: rotate(34deg); }
 .award-paper .paper-tape--bl { bottom: -11px; left: -27px; transform: rotate(34deg); }
 .award-paper .paper-tape--br { bottom: -13px; right: -29px; transform: rotate(-38deg); }
 @media (max-width: 640px) {
-  .award-paper .paper-tape { width: 76px; height: 27px; }
+  .award-paper .paper-tape, .experience-paper .experience-tape { width: 76px; height: 27px; }
   .award-paper .paper-tape--tl, .award-paper .paper-tape--bl { left: -12px; }
   .award-paper .paper-tape--tr, .award-paper .paper-tape--br { right: -12px; }
 }
