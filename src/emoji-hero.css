@@ -122,3 +122,9 @@ button.hs-flip-grid:focus-visible { outline: 2px solid var(--text); outline-offs
 .hs-gallery-controls { left: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .hs-click-hint { font-size: 11px; color: var(--text-muted); }
 @media (max-width: 700px) { .hs-portrait-gallery { margin-bottom: 0; } }
+
+.hs-book-call { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 48px; margin-top: 28px; padding: 13px 24px; border: 2px solid var(--accent); border-radius: 999px; background: var(--accent); color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+.hs-book-call:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--accent-border); }
+.hs-book-call:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+#connect { scroll-margin-top: 100px; }
+@media (prefers-reduced-motion: reduce) { .hs-book-call { transition: none; } }

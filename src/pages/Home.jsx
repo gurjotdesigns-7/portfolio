@@ -265,9 +265,8 @@ function HeroSection() {
               <br /><br />
               <span className="muted">Fuelled by <strong>football, long drives, and nature.</strong> I believe <strong>the best design ideas come when you're not at a desk.</strong></span>
             </p>
+            <a className="hs-book-call" href="#connect">Book a call <span aria-hidden="true">↗</span></a>
           </div>
-
-
 
         </div>
 
