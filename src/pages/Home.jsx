@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import photoCardThumb from '../assets/photography/IMG_2503.jpeg'
 import CaseStudyStack from '../components/CaseStudyStack'
+import Experience from '../components/Experience'
 import HeroPortraitGrid from '../components/HeroPortraitGrid'
 import PitchVideo from '../components/PitchVideo'
 import StampPress from '../components/StampPress'
@@ -936,6 +937,8 @@ export default function Home({ navigate }) {
         </div>
         <CaseStudyStack items={CASE_STUDIES} />
       </section>
+
+      <Experience />
 
       <PlaygroundSection navigate={navigate} />
 
