@@ -1,8 +1,8 @@
 .connect-section { width: min(80vw, 1224px); margin: 0 auto; padding: 0 0 100px; }
-.connect-card { background: #f1effd; border: 2px solid var(--text); border-radius: 16px; box-shadow: 8px 8px 0 #1a191724; padding: clamp(28px, 4vw, 60px); display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); align-items: center; gap: clamp(32px, 5vw, 80px); margin-top: 0; }
+.connect-card { background: #f1effd; border: 2px solid var(--text); border-radius: 16px; box-shadow: 8px 8px 0 #1a191724; padding: clamp(28px, 4vw, 60px); display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 32px; margin-top: 0; }
 .connect-eyebrow { color: #8370b4; font-size: 11px; font-weight: 600; letter-spacing: .12em; margin-bottom: 18px; }
 .connect-copy h2 { font-size: clamp(28px, 3vw, 42px); line-height: 1.2; letter-spacing: -.04em; margin-bottom: 20px; }
-.connect-copy > p:not(.connect-eyebrow) { font-size: 15px; line-height: 1.8; color: #706b79; max-width: 430px; }
+.connect-copy > p:not(.connect-eyebrow) { font-size: 15px; line-height: 1.8; color: #706b79; max-width: 680px; }
 .connect-provider { display: block; margin-top: 12px; font-size: 11px; color: #706b79; }
 .connect-booking { min-width: 0; background: #fff; border: 2px solid var(--text); border-radius: 14px; overflow: hidden; }
 .connect-booking-frame { display: block; width: 100%; height: 660px; border: 0; }
