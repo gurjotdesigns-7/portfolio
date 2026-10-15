@@ -41,6 +41,23 @@
 .hs-emoji-tile img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .hs-emoji-hero .hs-left { max-width: 460px; min-width: 0; gap: 26px; }
 .hs-emoji-hero .hs-sub { max-width: 440px; }
+/* Desktop copy follows the same outer gutter as the award paper. */
+@media (min-width: 1025px) {
+  .hs-emoji-hero .hs-container {
+    width: min(80vw, 1224px);
+    max-width: none;
+    padding-inline: 0;
+  }
+  .hs-emoji-hero .hs-left,
+  .hs-emoji-hero .hs-enter-bio,
+  .hs-emoji-hero .hs-sub {
+    width: 100%;
+    max-width: none;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .hs-emoji-hero .hs-container { width: min(72vw, 900px); }
+}
 @media (min-width: 701px) and (max-width: 1024px) {
   .hs.hs-emoji-hero { min-height: 800px; }
   .hs-emoji-hero .hs-container { padding: 128px 32px 100px !important; gap: 32px !important; }
