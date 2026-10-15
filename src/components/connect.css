@@ -1,0 +1,23 @@
+.connect-section { width: min(80vw, 1224px); margin: 0 auto; padding: 0 0 100px; }
+.connect-card { background: #f1effd; border: 2px solid var(--text); border-radius: 16px; box-shadow: 8px 8px 0 #1a191724; padding: clamp(28px, 4vw, 60px); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(32px, 5vw, 80px); margin-top: 0; }
+.connect-eyebrow { color: #8370b4; font-size: 11px; font-weight: 600; letter-spacing: .12em; margin-bottom: 18px; }
+.connect-copy h2 { font-size: clamp(28px, 3vw, 42px); line-height: 1.2; letter-spacing: -.04em; margin-bottom: 20px; }
+.connect-copy > p:not(.connect-eyebrow) { font-size: 15px; line-height: 1.8; color: #706b79; max-width: 430px; }
+.connect-book { display: inline-flex; align-items: center; gap: 24px; min-height: 48px; padding: 13px 22px; margin-top: 28px; border: 2px solid var(--text); border-radius: 40px; background: var(--text); color: #fff; font-size: 13px; font-weight: 500; text-decoration: none; box-shadow: 3px 3px 0 #1a191724; transition: transform .2s, box-shadow .2s; }
+.connect-book:hover { transform: translateY(-2px); box-shadow: 3px 5px 0 #1a191724; }
+.connect-book:focus-visible { outline: 3px solid #8770d8; outline-offset: 5px; }
+.connect-provider { display: block; margin-top: 12px; font-size: 11px; color: #706b79; }
+.connect-calendar { background: #fffdf6; border: 2px solid var(--text); border-radius: 14px; padding: 24px; box-shadow: 5px 6px 0 #1a19171c; transform: rotate(3deg); position: relative; }
+.connect-calendar-binding { position: absolute; left: 22%; right: 22%; top: -13px; display: flex; justify-content: space-between; }
+.connect-calendar-binding i { width: 9px; height: 24px; background: #b8adce; border: 2px solid var(--text); border-radius: 5px; }
+.connect-calendar-top { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 16px; font-weight: 600; font-size: 17px; border-bottom: 1px solid #ddd5c7; }
+.connect-calendar-top > span:last-child { color: #8b75bc; font-size: 29px; }
+.connect-calendar-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 6px; padding-top: 16px; }
+.connect-calendar-grid > span { display: grid; place-items: center; aspect-ratio: 1; font-size: 13px; color: #68616e; }
+.connect-calendar-grid .connect-weekday { font-size: 10px; color: #9a91a2; }
+.connect-calendar-grid .connect-today { border: 2px solid #8972bc; border-radius: 50%; color: #55407b; background: #ede7fb; font-weight: 600; }
+.connect-calendar-note { font-family: 'Caveat',cursive; text-align: center; font-size: 22px; color: #82715b; margin-top: 18px; }
+@media (max-width:1366px) { .connect-section { width: min(72vw,900px); }.connect-card { gap: 32px; }.connect-calendar { padding: 20px; } }
+@media (max-width:1024px) { .connect-section { width:68vw; }.connect-card { grid-template-columns:1fr; }.connect-calendar { width:100%;max-width:380px;justify-self:center; } }
+@media (max-width:760px) { .connect-section { width:92vw; padding-bottom:64px; }.connect-card { padding:28px 22px; margin-top:0; gap:38px; }.connect-calendar { padding:16px; transform:rotate(2deg); }.connect-copy > p:not(.connect-eyebrow) { font-size:14px; }.connect-calendar-note { font-size:20px; } }
+@media (prefers-reduced-motion:reduce) { .connect-book { transition:none; } }
