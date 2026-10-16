@@ -88,3 +88,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent, #7044dd
   .cs-stack-card { padding: 20px; }
   .cs-stack-card__title { font-size: clamp(1.25rem, 2.4vw, 1.75rem); }
 }
+
+/* Lift the iPad content without moving its cardboard background. */
+@media (min-width: 701px) and (max-width: 1180px) {
+  .playground-section .pg-content { translate: 0 -32px; }
+}
