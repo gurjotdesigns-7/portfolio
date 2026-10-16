@@ -389,7 +389,7 @@ function TestimonialsMarquee() {
   useEffect(() => {
     const recalc = () => {
       const vw = window.innerWidth
-      setCompact(vw <= 1180 || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      setCompact(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
       const cardW = vw <= 640 ? vw * 0.82 + 12 : 340
       setCount(Math.max(4, Math.ceil(vw / cardW) + 2))
     }

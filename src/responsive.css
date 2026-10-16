@@ -74,13 +74,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent, #7044dd
     padding: 4px var(--page-gutter) 16px !important;
     scrollbar-width: thin;
   }
-  .testi-outer--static .testimonial-card {
+  .testimonials-section .testimonial-card {
     height: auto;
     min-height: 320px;
-    margin: 0 !important;
     scroll-snap-align: start;
   }
-  .testi-outer--static .testimonial-quote { font-size: 1rem !important; line-height: 1.65; }
+  .testimonials-section .testimonial-quote { font-size: 1rem !important; line-height: 1.65; }
 }
 
 /* iPad retains the project deck; phones use normal document flow. */
