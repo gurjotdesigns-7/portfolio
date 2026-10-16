@@ -89,7 +89,7 @@ export default function CaseStudyStack({ items }) {
     function layout() {
       const vh = window.innerHeight
       cardH = Math.max(...cards.map(card => card.offsetHeight))
-      staticLayout = window.innerWidth <= 1180 || cardH + 220 > vh || reduce
+      staticLayout = window.innerWidth <= 700 || reduce
       cards[0].parentElement.classList.toggle('cs-stack--static', staticLayout)
       // ALL cards share the SAME sticky top. That's the key to a real deck:
       // with a shared top they stay stuck together and release together, so
