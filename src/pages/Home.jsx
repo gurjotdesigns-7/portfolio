@@ -442,19 +442,41 @@ function TestimonialsMarquee() {
     }
     raf = requestAnimationFrame(step)
 
-    // Pause on hover for mouse users only (touch must never pause it)
-    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    const onEnter = () => { if (fine) pausedRef.current = true }
-    const onLeave = () => { pausedRef.current = false }
-    track.addEventListener('mouseenter', onEnter)
-    track.addEventListener('mouseleave', onLeave)
+    // Listen on the stationary viewport so a moving card cannot end a hold.
+    const viewport = track.parentElement
+    const heldPointers = new Set()
+    let mouseHover = false
+    const syncPause = () => { pausedRef.current = mouseHover || heldPointers.size > 0 }
+    const onEnter = (event) => {
+      if (event.pointerType === 'mouse') { mouseHover = true; syncPause() }
+    }
+    const onLeave = (event) => {
+      if (event.pointerType === 'mouse') { mouseHover = false; syncPause() }
+    }
+    const onHold = (event) => {
+      if (event.pointerType !== 'mouse') { heldPointers.add(event.pointerId); syncPause() }
+    }
+    const onRelease = (event) => { heldPointers.delete(event.pointerId); syncPause() }
+    const resetPause = () => { heldPointers.clear(); mouseHover = false; syncPause() }
+    viewport.addEventListener('pointerenter', onEnter)
+    viewport.addEventListener('pointerleave', onLeave)
+    viewport.addEventListener('pointerdown', onHold, { passive: true })
+    // Global release also handles lifting outside the testimonial area.
+    window.addEventListener('pointerup', onRelease, { passive: true })
+    window.addEventListener('pointercancel', onRelease, { passive: true })
+    window.addEventListener('blur', resetPause)
 
     return () => {
       cancelAnimationFrame(raf)
       visibility.disconnect()
       sizeObserver.disconnect()
-      track.removeEventListener('mouseenter', onEnter)
-      track.removeEventListener('mouseleave', onLeave)
+      viewport.removeEventListener('pointerenter', onEnter)
+      viewport.removeEventListener('pointerleave', onLeave)
+      viewport.removeEventListener('pointerdown', onHold)
+      window.removeEventListener('pointerup', onRelease)
+      window.removeEventListener('pointercancel', onRelease)
+      window.removeEventListener('blur', resetPause)
+      resetPause()
     }
   }, [count, compact])
 
