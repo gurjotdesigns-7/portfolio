@@ -471,7 +471,7 @@ function TestimonialsMarquee() {
 
   return (
     <div className={`testi-outer${compact ? ' testi-outer--static' : ''}`}>
-      <div className="testi-track testi-track--js" ref={trackRef}>
+      <div className="testi-track testi-track--js" ref={trackRef} tabIndex={compact ? 0 : undefined} role={compact ? "region" : undefined} aria-label={compact ? "Testimonials" : undefined}>
         {slots.map(({ key, data, bg }) => (
           <TestimonialCard key={key} {...data} cardBg={bg} />
         ))}

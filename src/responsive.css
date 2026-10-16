@@ -59,4 +59,26 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent, #7044dd
 .testi-outer--static::before, .testi-outer--static::after { display: none; }
 .testi-outer--static .testi-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; padding: 0; gap: 24px; transform: none !important; animation: none !important; }
 .testi-outer--static .testimonial-card { width: auto !important; min-width: 0; margin: 0; transform: none !important; }
-@media (max-width: 700px) { .testi-outer--static .testi-track { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 700px) {
+  .testi-outer--static { width: 100%; }
+  .testi-outer--static .testi-track {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82vw, 360px);
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--page-gutter);
+    padding: 4px var(--page-gutter) 16px !important;
+    scrollbar-width: thin;
+  }
+  .testi-outer--static .testimonial-card {
+    height: auto;
+    min-height: 320px;
+    margin: 0 !important;
+    scroll-snap-align: start;
+  }
+  .testi-outer--static .testimonial-quote { font-size: 1rem !important; line-height: 1.65; }
+}
