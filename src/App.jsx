@@ -9,6 +9,7 @@ import Nav from './components/Nav'
 import './App.css'
 import './emoji-hero.css'
 import './award-paper.css'
+import './responsive.css'
 
 export default function App() {
   const [page, setPage] = useState('home')

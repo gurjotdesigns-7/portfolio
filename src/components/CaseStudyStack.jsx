@@ -81,13 +81,16 @@ export default function CaseStudyStack({ items }) {
     const shown = new Array(N).fill(false)
     let restTops = []
     let cardH = 400
+    let staticLayout = false
     let lastCur = -1
     let queued = false
     let frameId = 0
 
     function layout() {
       const vh = window.innerHeight
-      cardH = cards[0].offsetHeight
+      cardH = Math.max(...cards.map(card => card.offsetHeight))
+      staticLayout = window.innerWidth <= 1180 || cardH + 220 > vh || reduce
+      cards[0].parentElement.classList.toggle('cs-stack--static', staticLayout)
       // ALL cards share the SAME sticky top. That's the key to a real deck:
       // with a shared top they stay stuck together and release together, so
       // the peeking pile is intact while the last card shows AND as the whole
@@ -106,6 +109,13 @@ export default function CaseStudyStack({ items }) {
 
     function update() {
       queued = false
+      if (staticLayout) {
+        surfaces.forEach(surface => {
+          surface.style.transform = ''; surface.style.filter = ''
+          surface.classList.add('cs-stack-card--in')
+        })
+        return
+      }
       const vh = window.innerHeight
       const revealLine = vh - STACK.revealAt * cardH
       const hideLine = vh - 0.04 * cardH

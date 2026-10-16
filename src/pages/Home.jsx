@@ -262,8 +262,8 @@ function HeroSection() {
           <div className="hs-enter-bio">
             <p className="hs-sub">
               <span className="muted">UX Designer-II at <strong>ShareChat.</strong> <strong>4+ years</strong> designing systems that <strong>activate users, retain creators, and move revenue metrics.</strong> Background in architecture, obsessed with how structure shapes behaviour.</span>
-              <br /><br />
-              <span className="muted">Fuelled by <strong>football, long drives, and nature.</strong> I believe <strong>the best design ideas come when you're not at a desk.</strong></span>
+              <span className="hs-personal-note"><br /><br />
+              <span className="muted">Fuelled by <strong>football, long drives, and nature.</strong> I believe <strong>the best design ideas come when you're not at a desk.</strong></span></span>
             </p>
             <a className="footer-cta site-cta hs-book-call" href="#connect">Book a call <span className="footer-cta-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></span></a>
           </div>
@@ -382,12 +382,14 @@ function TestimonialsMarquee() {
   const startRef = useRef(0)
   const pausedRef = useRef(false)
   const [count, setCount] = useState(6)
+  const [compact, setCompact] = useState(false)
   const [start, setStart] = useState(0)
 
   // How many cards are needed to cover the viewport (+2 buffer).
   useEffect(() => {
     const recalc = () => {
       const vw = window.innerWidth
+      setCompact(vw <= 1180 || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
       const cardW = vw <= 640 ? vw * 0.82 + 12 : 340
       setCount(Math.max(4, Math.ceil(vw / cardW) + 2))
     }
@@ -398,7 +400,7 @@ function TestimonialsMarquee() {
 
   useEffect(() => {
     const track = trackRef.current
-    if (!track) return
+    if (!track || compact) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const SPEED = 55 // px per second
@@ -454,21 +456,21 @@ function TestimonialsMarquee() {
       track.removeEventListener('mouseenter', onEnter)
       track.removeEventListener('mouseleave', onLeave)
     }
-  }, [count])
+  }, [count, compact])
 
   // Render count+1 cards (extra one buffers the right edge so no gap shows).
   // The pastel fill is keyed to each card's ABSOLUTE position in the sequence
   // (start + i), not its DOM index — so the colour travels with the card as
   // the window slides and never re-assigns mid-scroll (the abrupt colour
   // flip that :nth-child produced once cards started recycling positions).
-  const slots = Array.from({ length: count + 1 }, (_, i) => ({
-    key: start + i,
-    data: TESTI_DATA[(start + i) % TESTI_DATA.length],
-    bg: TESTI_COLORS[(start + i) % TESTI_COLORS.length],
+  const slots = Array.from({ length: compact ? TESTI_DATA.length : count + 1 }, (_, i) => ({
+    key: compact ? i : start + i,
+    data: TESTI_DATA[((compact ? 0 : start) + i) % TESTI_DATA.length],
+    bg: TESTI_COLORS[((compact ? 0 : start) + i) % TESTI_COLORS.length],
   }))
 
   return (
-    <div className="testi-outer">
+    <div className={`testi-outer${compact ? ' testi-outer--static' : ''}`}>
       <div className="testi-track testi-track--js" ref={trackRef}>
         {slots.map(({ key, data, bg }) => (
           <TestimonialCard key={key} {...data} cardBg={bg} />
